@@ -228,7 +228,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
                   placeholder="Search invoice number or client name..."
                   value={invoiceSearchQuery}
                   onChange={e => setInvoiceSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                  className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)] transition-all"
                 />
                 <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               </div>
@@ -236,7 +236,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
               <select
                 value={selectedInvoiceId}
                 onChange={e => setSelectedInvoiceId(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)] transition-all"
               >
                 <option value="">-- Choose Invoice to Return Items From --</option>
                 {filteredInvoices.map(inv => (
@@ -248,14 +248,14 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
             </div>
 
             {selectedInvoice && (
-              <div className="mt-2.5 p-3 bg-indigo-50/60 border border-indigo-100 rounded-xl flex items-center justify-between text-xs">
+              <div className="mt-2.5 p-3 bg-[var(--accent-color-light)]/60 border border-[var(--accent-color-light)] rounded-xl flex items-center justify-between text-xs">
                 <div>
                   <span className="font-bold text-slate-900">{selectedInvoice.clientName}</span>
                   <span className="text-slate-500 ml-2 font-mono">Invoice #{selectedInvoice.invoiceNumber}</span>
                 </div>
                 <div className="text-right">
                   <span className="text-slate-500">Date: {selectedInvoice.date.split('T')[0]}</span>
-                  <span className="font-bold text-indigo-700 ml-3">Total: {formatCurrency(selectedInvoice.grandTotal)}</span>
+                  <span className="font-bold text-[var(--accent-color-dark)] ml-3">Total: {formatCurrency(selectedInvoice.grandTotal)}</span>
                 </div>
               </div>
             )}
@@ -360,7 +360,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
                   <select
                     value={refundMethod}
                     onChange={e => setRefundMethod(e.target.value as any)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
                   >
                     <option value="CASH">Cash Refund</option>
                     <option value="CARD">Credit / Debit Card Reversal</option>
@@ -383,7 +383,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
                     placeholder="Customer statement or inspection findings..."
                     value={notes}
                     onChange={e => setNotes(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
                   />
                 </div>
               </div>
@@ -407,7 +407,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
                         step="0.01"
                         value={restockingFee}
                         onChange={e => setRestockingFee(parseFloat(e.target.value) || 0)}
-                        className="w-20 text-right px-2 py-0.5 bg-white border border-slate-200 rounded-md font-mono text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                        className="w-20 text-right px-2 py-0.5 bg-white border border-slate-200 rounded-md font-mono text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[var(--accent-color)]"
                       />
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ERPProvider, useERP } from './context/ERPContext';
 import { Sidebar, NavTab } from './components/Sidebar';
 import { Header } from './components/Header';
@@ -31,6 +31,27 @@ import { ExpenseModal } from './components/Modals/ExpenseModal';
 import { CategoriesModal } from './components/Modals/CategoriesModal';
 
 import { Client, Product, SaleInvoice } from './types/erp';
+
+const ThemeApplier: React.FC = () => {
+  const { settings } = useERP();
+  useEffect(() => {
+    const root = document.documentElement;
+    const accentMap: Record<string, string> = {
+      indigo: '#4f46e5',
+      emerald: '#10b981',
+      violet: '#8b5cf6',
+      rose: '#f43f5e',
+      amber: '#f59e0b',
+      slate: '#64748b',
+      cyan: '#06b6d4',
+    };
+    const color = accentMap[settings.themeAccent] || accentMap.indigo;
+    root.style.setProperty('--accent-color', color);
+    root.style.setProperty('--accent-color-light', `${color}1a`);
+    root.style.setProperty('--accent-color-dark', `${color}cc`);
+  }, [settings.themeAccent]);
+  return null;
+};
 
 const MainAppContent: React.FC = () => {
   const { sales } = useERP();
@@ -119,7 +140,9 @@ const MainAppContent: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen w-full bg-slate-50 font-sans text-slate-800 overflow-hidden select-none">
+    <>
+      <ThemeApplier />
+      <div className="flex h-screen w-full bg-slate-50 font-sans text-slate-800 overflow-hidden select-none">
       {/* Navigation Sidebar with Mobile Drawer */}
       <Sidebar
         activeTab={activeTab}
@@ -326,6 +349,7 @@ const MainAppContent: React.FC = () => {
         onClose={() => setIsCategoriesModalOpen(false)}
       />
     </div>
+    </>
   );
 };
 

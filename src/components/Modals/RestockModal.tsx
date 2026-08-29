@@ -101,7 +101,7 @@ export const RestockModal: React.FC<RestockModalProps> = ({
                 const prod = products.find(p => p.id === e.target.value);
                 if (prod) setUnitCost(prod.purchasePrice);
               }}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-indigo-500"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-[var(--accent-color)]"
             >
               {products.map(p => (
                 <option key={p.id} value={p.id}>

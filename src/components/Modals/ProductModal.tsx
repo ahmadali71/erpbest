@@ -108,7 +108,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-lg w-full my-8 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
+            <div className="w-8 h-8 bg-[var(--accent-color)] rounded-lg flex items-center justify-center text-white">
               <Package className="w-4 h-4" />
             </div>
             <div>
@@ -144,7 +144,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               placeholder="e.g., Apple MacBook Pro M3"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-indigo-500"
+               className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-[var(--accent-color)]"
             />
           </div>
 
@@ -167,7 +167,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-indigo-500"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-[var(--accent-color)]"
               >
                 {categories.map(c => (
                   <option key={c.id} value={c.name}>
@@ -286,7 +286,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold shadow-xs transition-colors"
+              className="px-4 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-bold shadow-xs transition-colors"
             >
               {productToEdit ? 'Save Product Changes' : 'Add to Inventory Catalog'}
             </button>

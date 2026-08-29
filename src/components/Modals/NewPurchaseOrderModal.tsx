@@ -95,7 +95,7 @@ export const NewPurchaseOrderModal: React.FC<NewPurchaseOrderModalProps> = ({ is
         {/* Header */}
         <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-indigo-600" />
+            <ShoppingBag className="w-5 h-5 text-[var(--accent-color)]" />
             <h3 className="font-bold text-slate-800 text-sm sm:text-base">
               Create New Purchase Order (PO)
             </h3>
@@ -116,7 +116,7 @@ export const NewPurchaseOrderModal: React.FC<NewPurchaseOrderModalProps> = ({ is
                 required
                 value={supplierId}
                 onChange={e => setSupplierId(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)] bg-white"
               >
                 <option value="">Choose Supplier...</option>
                 {suppliers.map(s => (
@@ -133,7 +133,7 @@ export const NewPurchaseOrderModal: React.FC<NewPurchaseOrderModalProps> = ({ is
                 type="date"
                 value={expectedDeliveryDate}
                 onChange={e => setExpectedDeliveryDate(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)] bg-white"
               />
             </div>
           </div>
@@ -147,7 +147,7 @@ export const NewPurchaseOrderModal: React.FC<NewPurchaseOrderModalProps> = ({ is
               <button
                 type="button"
                 onClick={handleAddItem}
-                className="flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+                className="flex items-center gap-1 text-xs font-semibold text-[var(--accent-color)] hover:text-[var(--accent-color-dark)]"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Item Row</span>
@@ -228,14 +228,14 @@ export const NewPurchaseOrderModal: React.FC<NewPurchaseOrderModalProps> = ({ is
               value={notes}
               onChange={e => setNotes(e.target.value)}
               placeholder="e.g. Standard sea freight container #88. Deliver to Dallas Receiving Bay 3."
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)]"
             />
           </div>
 
           {/* Total Bar */}
-          <div className="p-3 bg-indigo-50/70 border border-indigo-100 rounded-xl flex items-center justify-between">
+          <div className="p-3 bg-[var(--accent-color-light)]/70 border border-[var(--accent-color-light)] rounded-xl flex items-center justify-between">
             <span className="font-semibold text-slate-700">Estimated Total Order Value:</span>
-            <span className="text-xl font-bold text-indigo-700">${totalCost.toFixed(2)}</span>
+            <span className="text-xl font-bold text-[var(--accent-color-dark)]">${totalCost.toFixed(2)}</span>
           </div>
 
           {/* Footer Actions */}
@@ -250,7 +250,7 @@ export const NewPurchaseOrderModal: React.FC<NewPurchaseOrderModalProps> = ({ is
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-xs flex items-center gap-1.5"
+              className="px-5 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg font-semibold shadow-xs flex items-center gap-1.5"
             >
               <Truck className="w-4 h-4" />
               <span>{isSubmitting ? 'Creating PO...' : 'Issue Purchase Order'}</span>

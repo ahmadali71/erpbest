@@ -119,7 +119,7 @@ export const ReturnsView: React.FC<ReturnsViewProps> = ({
         );
       case 'BANK_TRANSFER':
         return (
-          <span className="px-2 py-0.5 text-[10px] font-bold bg-indigo-50 text-indigo-700 rounded-full border border-indigo-100 flex items-center gap-1">
+          <span className="px-2 py-0.5 text-[10px] font-bold bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-full border border-[var(--accent-color-light)] flex items-center gap-1">
             <Building className="w-2.5 h-2.5" />
             Bank Transfer
           </span>
@@ -181,7 +181,7 @@ export const ReturnsView: React.FC<ReturnsViewProps> = ({
             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
               Returns Processed
             </span>
-            <div className="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+            <div className="w-8 h-8 rounded-xl bg-[var(--accent-color-light)] border border-[var(--accent-color-light)] flex items-center justify-center text-[var(--accent-color)]">
               <RotateCcw className="w-4 h-4" />
             </div>
           </div>

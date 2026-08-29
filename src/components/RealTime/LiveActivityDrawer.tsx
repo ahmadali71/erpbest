@@ -47,7 +47,7 @@ export const LiveActivityDrawer: React.FC<LiveActivityDrawerProps> = ({ isOpen, 
       case 'STOCK_ADJUSTED':
       case 'PRODUCT_CREATED':
       case 'PRODUCT_UPDATED':
-        return <Package className="w-4 h-4 text-indigo-600" />;
+        return <Package className="w-4 h-4 text-[var(--accent-color)]" />;
       case 'EXPENSE_ADDED':
         return <Receipt className="w-4 h-4 text-red-600" />;
       case 'PO_CREATED':

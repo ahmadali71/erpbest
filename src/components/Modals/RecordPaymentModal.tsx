@@ -115,7 +115,7 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
               required
               value={amount}
               onChange={(e) => setAmount(parseFloat(e.target.value) || '')}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-mono font-bold text-slate-900 outline-none focus:bg-white focus:border-indigo-500"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-mono font-bold text-slate-900 outline-none focus:bg-white focus:border-[var(--accent-color)]"
             />
           </div>
 
@@ -126,7 +126,7 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
             <select
               value={method}
               onChange={(e) => setMethod(e.target.value as PaymentMethod)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-indigo-500"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-[var(--accent-color)]"
             >
               <option value="CASH">Cash</option>
               <option value="CARD">Bank Card / POS Terminal</option>

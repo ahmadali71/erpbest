@@ -147,7 +147,7 @@ export const ReportsView: React.FC = () => {
       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <h2 className="text-base font-bold text-slate-800 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-indigo-600" />
+            <TrendingUp className="w-5 h-5 text-[var(--accent-color)]" />
             <span>Business Intelligence & Financial Reports</span>
           </h2>
           <p className="text-xs text-slate-400">
@@ -164,7 +164,7 @@ export const ReportsView: React.FC = () => {
                 onClick={() => setTimeRange(range)}
                 className={`px-3 py-1 text-xs font-semibold rounded-md capitalize transition-all ${
                   timeRange === range
-                    ? 'bg-white text-indigo-700 shadow-xs'
+                    ? 'bg-white text-[var(--accent-color-dark)] shadow-xs'
                     : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
@@ -183,7 +183,7 @@ export const ReportsView: React.FC = () => {
 
           <button
             onClick={() => window.print()}
-            className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center gap-1.5"
+            className="px-3 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center gap-1.5"
           >
             <Printer className="w-3.5 h-3.5" />
             <span>Print Report</span>
@@ -262,7 +262,7 @@ export const ReportsView: React.FC = () => {
           <button
             onClick={() => setReportTab('pnl')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              reportTab === 'pnl' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              reportTab === 'pnl' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Profit & Loss Statement
@@ -270,7 +270,7 @@ export const ReportsView: React.FC = () => {
           <button
             onClick={() => setReportTab('products')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              reportTab === 'products' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              reportTab === 'products' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Product Sales Velocity ({productPerformance.length})
@@ -278,7 +278,7 @@ export const ReportsView: React.FC = () => {
           <button
             onClick={() => setReportTab('clients')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              reportTab === 'clients' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              reportTab === 'clients' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Top Customer Accounts ({topClients.length})
@@ -286,7 +286,7 @@ export const ReportsView: React.FC = () => {
           <button
             onClick={() => setReportTab('payment_methods')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              reportTab === 'payment_methods' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              reportTab === 'payment_methods' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Payment Channels & Settlement
@@ -312,7 +312,7 @@ export const ReportsView: React.FC = () => {
                   <span>Less: Cost of Goods Sold (COGS)</span>
                   <span className="text-red-600">-{formatCurrency(totalCostOfGoodsSold)}</span>
                 </div>
-                <div className="flex justify-between text-xs font-bold text-indigo-700 pt-2 border-t border-slate-200">
+                <div className="flex justify-between text-xs font-bold text-[var(--accent-color-dark)] pt-2 border-t border-slate-200">
                   <span>Gross Profit</span>
                   <span>{formatCurrency(grossProfit)} ({grossMarginPct}%)</span>
                 </div>

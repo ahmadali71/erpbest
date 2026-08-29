@@ -30,7 +30,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ invoice, isOpen, onC
           <div className="flex items-center gap-1.5">
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Print Receipt</span>
@@ -79,7 +79,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ invoice, isOpen, onC
             </div>
             <div className="flex justify-between">
               <span className="text-slate-500">PAYMENT METHOD:</span>
-              <span className="font-semibold text-indigo-700">{invoice.paymentMethod}</span>
+              <span className="font-semibold text-[var(--accent-color-dark)]">{invoice.paymentMethod}</span>
             </div>
           </div>
 

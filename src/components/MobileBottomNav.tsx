@@ -30,7 +30,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       <button
         onClick={() => setActiveTab('dashboard')}
         className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-lg transition-colors ${
-          activeTab === 'dashboard' ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'
+          activeTab === 'dashboard' ? 'text-[var(--accent-color)] font-bold' : 'text-slate-500 hover:text-slate-800'
         }`}
       >
         <LayoutDashboard className="w-5 h-5 mb-0.5" />
@@ -50,7 +50,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       <button
         onClick={() => setActiveTab('inventory')}
         className={`relative flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-lg transition-colors ${
-          activeTab === 'inventory' ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'
+          activeTab === 'inventory' ? 'text-[var(--accent-color)] font-bold' : 'text-slate-500 hover:text-slate-800'
         }`}
       >
         <Package className="w-5 h-5 mb-0.5" />
@@ -63,7 +63,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       <button
         onClick={() => setActiveTab('sales')}
         className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-lg transition-colors ${
-          activeTab === 'sales' ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'
+          activeTab === 'sales' ? 'text-[var(--accent-color)] font-bold' : 'text-slate-500 hover:text-slate-800'
         }`}
       >
         <ShoppingCart className="w-5 h-5 mb-0.5" />
@@ -73,7 +73,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       <button
         onClick={onOpenMenu}
         className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-lg transition-colors ${
-          isMoreActive ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'
+          isMoreActive ? 'text-[var(--accent-color)] font-bold' : 'text-slate-500 hover:text-slate-800'
         }`}
       >
         <Menu className="w-5 h-5 mb-0.5" />

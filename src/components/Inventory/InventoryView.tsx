@@ -104,7 +104,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">{products.length} SKUs</h3>
             <p className="text-xs text-slate-500 mt-0.5">{categories.length} Active Categories</p>
           </div>
-          <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-[var(--accent-color-light)] text-[var(--accent-color)] rounded-xl flex items-center justify-center">
             <Boxes className="w-5 h-5" />
           </div>
         </div>
@@ -154,7 +154,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                 placeholder="Search by SKU, product name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 outline-none transition-all"
+                className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[var(--accent-color)] outline-none transition-all"
               />
             </div>
 
@@ -191,7 +191,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
 
             <button
               onClick={onOpenAddProduct}
-              className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center gap-1.5"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Add Product</span>
@@ -205,7 +205,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
             onClick={() => setSelectedCategory('ALL')}
             className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
               selectedCategory === 'ALL'
-                ? 'bg-indigo-600 text-white'
+                ? 'bg-[var(--accent-color)] text-white'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -220,7 +220,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                 onClick={() => setSelectedCategory(cat.name)}
                 className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
                   isSelected
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-[var(--accent-color)] text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -280,7 +280,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                   </div>
                   <div>
                     <p className="text-[10px] text-slate-400 font-medium">Selling Price</p>
-                    <p className="font-mono font-bold text-indigo-700">{formatCurrency(product.sellingPrice)}</p>
+                    <p className="font-mono font-bold text-[var(--accent-color-dark)]">{formatCurrency(product.sellingPrice)}</p>
                   </div>
                   <div>
                     <p className="text-[10px] text-slate-400 font-medium">Margin</p>
@@ -301,7 +301,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => onOpenRestock(product.id)}
-                      className="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-semibold flex items-center gap-1"
+                      className="px-2.5 py-1 bg-[var(--accent-color-light)] hover:bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-lg text-xs font-semibold flex items-center gap-1"
                     >
                       <PlusCircle className="w-3.5 h-3.5" />
                       <span>Restock</span>
@@ -452,7 +452,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => onOpenRestock(product.id)}
-                            className="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded text-[11px] font-semibold flex items-center gap-1 transition-colors"
+                            className="px-2 py-1 bg-[var(--accent-color-light)] hover:bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded text-[11px] font-semibold flex items-center gap-1 transition-colors"
                             title="Restock this product"
                           >
                             <PlusCircle className="w-3 h-3" />

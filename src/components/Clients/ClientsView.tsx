@@ -74,7 +74,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">{totalClientsCount} Accounts</h3>
             <p className="text-xs text-slate-500 mt-0.5">Active business customers</p>
           </div>
-          <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-[var(--accent-color-light)] text-[var(--accent-color)] rounded-xl flex items-center justify-center">
             <Users className="w-5 h-5" />
           </div>
         </div>
@@ -96,7 +96,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">{formatCurrency(totalOutstanding)}</h3>
             <p className="text-xs text-slate-500 mt-0.5">Net receivables ledger</p>
           </div>
-          <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-[var(--accent-color-light)] text-[var(--accent-color)] rounded-xl flex items-center justify-center">
             <DollarSign className="w-5 h-5" />
           </div>
         </div>
@@ -112,7 +112,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
               placeholder="Search by name, company, phone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 outline-none transition-all"
+                className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[var(--accent-color)] outline-none transition-all"
             />
           </div>
 
@@ -120,7 +120,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
             <button
               onClick={() => setFilterBalance('ALL')}
               className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
-                filterBalance === 'ALL' ? 'bg-white text-indigo-700 shadow-xs font-semibold' : 'text-slate-600'
+                filterBalance === 'ALL' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-semibold' : 'text-slate-600'
               }`}
             >
               All
@@ -146,7 +146,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
 
         <button
           onClick={onOpenAddClient}
-          className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5 self-stretch sm:self-auto"
+          className="px-3.5 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5 self-stretch sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Add Client</span>
@@ -202,7 +202,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] text-slate-400">Total Spent:</span>
-                    <span className="font-mono font-bold text-indigo-700">
+                    <span className="font-mono font-bold text-[var(--accent-color-dark)]">
                       {formatCurrency(client.totalSpent)} ({clientInvoices.length} sales)
                     </span>
                   </div>
@@ -211,7 +211,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                 <div className="flex items-center justify-between pt-1">
                   <button
                     onClick={() => onSelectClientLedger(client)}
-                    className="text-xs text-indigo-600 font-semibold hover:underline flex items-center gap-1"
+                      className="text-xs text-[var(--accent-color)] font-semibold hover:underline flex items-center gap-1"
                   >
                     <History className="w-3.5 h-3.5" />
                     <span>View Ledger</span>
@@ -220,7 +220,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => onOpenNewSaleForClient(client)}
-                      className="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-semibold flex items-center gap-1"
+                      className="px-2.5 py-1 bg-[var(--accent-color-light)] hover:bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-lg text-xs font-semibold flex items-center gap-1"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Sale</span>
@@ -336,7 +336,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => onOpenNewSaleForClient(client)}
-                            className="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded text-[11px] font-semibold flex items-center gap-1 transition-colors"
+                            className="px-2 py-1 bg-[var(--accent-color-light)] hover:bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded text-[11px] font-semibold flex items-center gap-1 transition-colors"
                             title="New Sale for this client"
                           >
                             <Plus className="w-3 h-3" />
@@ -344,7 +344,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                           </button>
                           <button
                             onClick={() => onSelectClientLedger(client)}
-                            className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"
+                            className="p-1.5 text-slate-500 hover:text-[var(--accent-color)] hover:bg-[var(--accent-color-light)] rounded transition-colors"
                             title="View Transaction History / Ledger"
                           >
                             <History className="w-3.5 h-3.5" />

@@ -106,14 +106,14 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between">
           <div>
             <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Collection Ratio</p>
-            <h3 className="text-xl sm:text-2xl font-bold text-indigo-700 mt-1">
+            <h3 className="text-xl sm:text-2xl font-bold text-[var(--accent-color-dark)] mt-1">
               {totalCollected + totalPendingReceivables > 0
                 ? `${Math.round((totalCollected / (totalCollected + totalPendingReceivables)) * 100)}%`
                 : '100%'}
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">Realized Cashflow</p>
           </div>
-          <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-[var(--accent-color-light)] text-[var(--accent-color)] rounded-xl flex items-center justify-center">
             <DollarSign className="w-5 h-5" />
           </div>
         </div>
@@ -125,7 +125,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
           <button
             onClick={() => setActiveSubTab('pending')}
             className={`flex-1 sm:flex-none px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center justify-center gap-1.5 ${
-              activeSubTab === 'pending' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600'
+              activeSubTab === 'pending' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600'
             }`}
           >
             <Clock className="w-3.5 h-3.5" />
@@ -134,7 +134,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
           <button
             onClick={() => setActiveSubTab('history')}
             className={`flex-1 sm:flex-none px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center justify-center gap-1.5 ${
-              activeSubTab === 'history' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600'
+              activeSubTab === 'history' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600'
             }`}
           >
             <CheckCircle2 className="w-3.5 h-3.5" />
@@ -149,7 +149,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
             placeholder="Search invoice or client..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 outline-none transition-all"
+               className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[var(--accent-color)] outline-none transition-all"
           />
         </div>
       </div>
@@ -172,7 +172,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="font-mono text-xs font-bold text-indigo-600 block">{sale.invoiceNumber}</span>
+                      <span className="font-mono text-xs font-bold text-[var(--accent-color)] block">{sale.invoiceNumber}</span>
                       <h4 className="font-semibold text-slate-900 text-sm mt-0.5">{sale.clientName}</h4>
                       <p className="text-[11px] text-slate-400 mt-0.5">
                         {new Date(sale.date).toLocaleDateString()}
@@ -200,13 +200,13 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
                   <div className="flex items-center justify-between pt-1">
                     <button
                       onClick={() => onSelectInvoice(sale)}
-                      className="text-xs text-indigo-600 font-semibold hover:underline"
+                      className="text-xs text-[var(--accent-color)] font-semibold hover:underline"
                     >
                       View Invoice →
                     </button>
                     <button
                       onClick={() => onOpenRecordPayment(sale)}
-                      className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs flex items-center gap-1.5"
+                      className="px-3 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs flex items-center gap-1.5"
                     >
                       <DollarSign className="w-3.5 h-3.5" />
                       <span>Record Payment</span>
@@ -252,7 +252,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
                       const isPartial = sale.paymentStatus === 'PARTIAL';
                       return (
                         <tr key={sale.id} className="hover:bg-slate-50/80 transition-colors">
-                          <td className="px-5 py-3.5 font-mono font-semibold text-indigo-600">
+                          <td className="px-5 py-3.5 font-mono font-semibold text-[var(--accent-color)]">
                             {sale.invoiceNumber}
                           </td>
                           <td className="px-5 py-3.5">
@@ -284,7 +284,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
                           <td className="px-5 py-3.5 text-right">
                             <button
                               onClick={() => onOpenRecordPayment(sale)}
-                              className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors inline-flex items-center gap-1.5"
+                              className="px-3 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors inline-flex items-center gap-1.5"
                             >
                               <DollarSign className="w-3.5 h-3.5" />
                               <span>Record Payment</span>
@@ -326,7 +326,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
                   >
                     <div className="flex items-start justify-between">
                       <div>
-                        <span className="font-mono text-xs font-bold text-indigo-600 block">{log.invoiceNumber}</span>
+                        <span className="font-mono text-xs font-bold text-[var(--accent-color)] block">{log.invoiceNumber}</span>
                         <h4 className="font-semibold text-slate-900 text-sm mt-0.5">{log.clientName}</h4>
                         <p className="text-[11px] text-slate-400">{formattedDate}</p>
                       </div>
@@ -397,7 +397,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({
                           <td className="px-5 py-3.5 text-slate-500 whitespace-nowrap">
                             {formattedDate}
                           </td>
-                          <td className="px-5 py-3.5 font-mono font-semibold text-indigo-600">
+                          <td className="px-5 py-3.5 font-mono font-semibold text-[var(--accent-color)]">
                             {log.invoiceNumber}
                           </td>
                           <td className="px-5 py-3.5 font-medium text-slate-900">

@@ -37,7 +37,7 @@ export const StockMovementLogs: React.FC = () => {
     }
     if (type === 'SALE') {
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-100 text-indigo-800">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--accent-color-light)] text-[var(--accent-color-dark)]">
           <ArrowDownLeft className="w-3 h-3" /> Customer Sale
         </span>
       );
@@ -54,7 +54,7 @@ export const StockMovementLogs: React.FC = () => {
       <div className="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 className="text-base font-bold text-slate-800 flex items-center gap-2">
-            <History className="w-4 h-4 text-indigo-600" />
+            <History className="w-4 h-4 text-[var(--accent-color)]" />
             <span>Stock Movement Audit Log</span>
           </h2>
           <p className="text-xs text-slate-400">
@@ -70,14 +70,14 @@ export const StockMovementLogs: React.FC = () => {
               placeholder="Search by SKU, product, ref..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 outline-none transition-all"
+                className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[var(--accent-color)] outline-none transition-all"
             />
           </div>
 
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value as any)}
-            className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-medium outline-none focus:border-indigo-500"
+            className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-medium outline-none focus:border-[var(--accent-color)]"
           >
             <option value="ALL">All Event Types</option>
             <option value="PURCHASE_RESTOCK">Restock (+)</option>
@@ -133,7 +133,7 @@ export const StockMovementLogs: React.FC = () => {
                 <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
                   {getBadge(log.type)}
                   {log.referenceId && (
-                    <span className="font-mono text-[11px] font-semibold text-indigo-600">
+                    <span className="font-mono text-[11px] font-semibold text-[var(--accent-color)]">
                       {log.referenceId}
                     </span>
                   )}
@@ -204,7 +204,7 @@ export const StockMovementLogs: React.FC = () => {
                       </td>
                       <td className="px-5 py-3.5">
                         {log.referenceId && (
-                          <span className="font-mono text-xs font-semibold text-indigo-600 block">
+                          <span className="font-mono text-xs font-semibold text-[var(--accent-color)] block">
                             {log.referenceId}
                           </span>
                         )}

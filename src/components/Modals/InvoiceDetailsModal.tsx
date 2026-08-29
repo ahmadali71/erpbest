@@ -48,7 +48,7 @@ export const InvoiceDetailsModal: React.FC<InvoiceDetailsModalProps> = ({
         {/* Modal Top Actions */}
         <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70 print:hidden">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100">
+            <span className="font-mono text-xs font-bold text-[var(--accent-color-dark)] bg-[var(--accent-color-light)] px-2.5 py-1 rounded-md border border-[var(--accent-color-light)]">
               {invoice.invoiceNumber}
             </span>
             {isPaid ? (
@@ -115,7 +115,7 @@ export const InvoiceDetailsModal: React.FC<InvoiceDetailsModalProps> = ({
           <div className="flex justify-between items-start border-b border-slate-200 pb-6">
             <div>
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center text-white">
+                <div className="w-7 h-7 bg-[var(--accent-color)] rounded flex items-center justify-center text-white">
                   <div className="w-3 h-3 border-2 border-white rotate-45"></div>
                 </div>
                 <h1 className="text-xl font-black text-slate-900 tracking-tight uppercase">Nexus ERP Corp</h1>
@@ -126,7 +126,7 @@ export const InvoiceDetailsModal: React.FC<InvoiceDetailsModalProps> = ({
 
             <div className="text-right">
               <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Tax Invoice</h2>
-              <p className="font-mono text-xs font-bold text-indigo-600 mt-1">No: {invoice.invoiceNumber}</p>
+              <p className="font-mono text-xs font-bold text-[var(--accent-color)] mt-1">No: {invoice.invoiceNumber}</p>
               <p className="text-xs text-slate-500 mt-0.5">
                 Date: {new Date(invoice.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
@@ -203,7 +203,7 @@ export const InvoiceDetailsModal: React.FC<InvoiceDetailsModalProps> = ({
               )}
               <div className="pt-2 border-t border-slate-200 flex justify-between text-sm font-bold text-slate-900">
                 <span>Grand Total:</span>
-                <span className="font-mono text-indigo-700">{formatCurrency(invoice.grandTotal)}</span>
+                <span className="font-mono text-[var(--accent-color-dark)]">{formatCurrency(invoice.grandTotal)}</span>
               </div>
               <div className="flex justify-between text-xs text-emerald-700 font-semibold">
                 <span>Total Paid:</span>

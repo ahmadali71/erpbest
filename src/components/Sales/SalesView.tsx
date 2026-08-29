@@ -99,8 +99,8 @@ export const SalesView: React.FC<SalesViewProps> = ({
         </div>
 
         <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-xs">
-          <p className="text-[11px] sm:text-xs text-indigo-600 font-bold uppercase tracking-wider">Gross Profit</p>
-          <h3 className="text-lg sm:text-2xl font-bold text-indigo-700 mt-1">{formatCurrency(totalInvoicedProfit)}</h3>
+          <p className="text-[11px] sm:text-xs text-[var(--accent-color)] font-bold uppercase tracking-wider">Gross Profit</p>
+          <h3 className="text-lg sm:text-2xl font-bold text-[var(--accent-color-dark)] mt-1">{formatCurrency(totalInvoicedProfit)}</h3>
           <p className="text-[11px] text-slate-400 mt-0.5">Margin</p>
         </div>
       </div>
@@ -116,7 +116,7 @@ export const SalesView: React.FC<SalesViewProps> = ({
               placeholder="Search invoice # or client..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 outline-none transition-all"
+              className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[var(--accent-color)] outline-none transition-all"
             />
           </div>
 
@@ -124,7 +124,7 @@ export const SalesView: React.FC<SalesViewProps> = ({
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-medium outline-none focus:border-indigo-500"
+            className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-medium outline-none focus:border-[var(--accent-color)]"
           >
             <option value="ALL">All Statuses</option>
             <option value="PAID">Paid</option>
@@ -136,7 +136,7 @@ export const SalesView: React.FC<SalesViewProps> = ({
           <select
             value={methodFilter}
             onChange={(e) => setMethodFilter(e.target.value as any)}
-            className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-medium outline-none focus:border-indigo-500"
+            className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-medium outline-none focus:border-[var(--accent-color)]"
           >
             <option value="ALL">All Methods</option>
             <option value="CASH">Cash</option>
@@ -148,7 +148,7 @@ export const SalesView: React.FC<SalesViewProps> = ({
 
         <button
           onClick={onOpenNewSale}
-          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5 self-stretch sm:self-auto"
+          className="px-4 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5 self-stretch sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Create New Sale</span>
@@ -179,7 +179,7 @@ export const SalesView: React.FC<SalesViewProps> = ({
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <span className="font-mono text-xs font-bold text-indigo-600 block">{sale.invoiceNumber}</span>
+                    <span className="font-mono text-xs font-bold text-[var(--accent-color)] block">{sale.invoiceNumber}</span>
                     <h4 className="font-semibold text-slate-900 text-sm mt-0.5">{sale.clientName}</h4>
                     <p className="text-[11px] text-slate-400 mt-0.5">{formattedDate} • {totalUnits} units</p>
                   </div>
@@ -267,7 +267,7 @@ export const SalesView: React.FC<SalesViewProps> = ({
                       onClick={() => onSelectInvoice(sale)}
                     >
                       {/* Invoice Number */}
-                      <td className="px-5 py-3.5 font-mono font-semibold text-indigo-600">
+                      <td className="px-5 py-3.5 font-mono font-semibold text-[var(--accent-color)]">
                         {sale.invoiceNumber}
                       </td>
 
@@ -323,7 +323,7 @@ export const SalesView: React.FC<SalesViewProps> = ({
                           )}
                           <button
                             onClick={() => onSelectInvoice(sale)}
-                            className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"
+                            className="p-1.5 text-slate-400 hover:text-[var(--accent-color)] hover:bg-[var(--accent-color-light)] rounded transition-colors"
                             title="View Invoice"
                           >
                             <FileText className="w-3.5 h-3.5" />

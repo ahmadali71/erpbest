@@ -89,7 +89,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-lg w-full my-8 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
+            <div className="w-8 h-8 bg-[var(--accent-color)] rounded-lg flex items-center justify-center text-white">
               <UserPlus className="w-4 h-4" />
             </div>
             <div>
@@ -126,7 +126,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
                 placeholder="Full name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium outline-none focus:bg-white focus:border-indigo-500"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium outline-none focus:bg-white focus:border-[var(--accent-color)]"
               />
             </div>
             <div>
@@ -138,7 +138,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
                 placeholder="Company legal entity"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium outline-none focus:bg-white focus:border-indigo-500"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium outline-none focus:bg-white focus:border-[var(--accent-color)]"
               />
             </div>
           </div>
@@ -153,7 +153,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
                 placeholder="client@domain.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:bg-white focus:border-indigo-500"
+                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:bg-white focus:border-[var(--accent-color)]"
               />
             </div>
             <div>
@@ -165,7 +165,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
                 placeholder="+1 (555) 000-0000"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:bg-white focus:border-indigo-500"
+                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:bg-white focus:border-[var(--accent-color)]"
               />
             </div>
           </div>
@@ -221,7 +221,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold shadow-xs transition-colors"
+              className="px-4 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-bold shadow-xs transition-colors"
             >
               {clientToEdit ? 'Update Client Account' : 'Create Client Record'}
             </button>

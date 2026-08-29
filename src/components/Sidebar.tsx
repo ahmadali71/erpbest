@@ -156,15 +156,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Brand Header */}
       <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-gradient-to-tr from-indigo-600 to-indigo-500 rounded-xl flex items-center justify-center shadow-sm text-white font-black text-base">
+          <div className="w-9 h-9 bg-[var(--accent-color)] rounded-xl flex items-center justify-center shadow-sm text-white font-black text-base">
             <span className="tracking-tighter">N</span>
           </div>
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-extrabold text-base tracking-tight text-slate-900">
-                Nexus<span className="text-indigo-600 font-black">ERP</span>
+                Nexus<span className="text-[var(--accent-color)] font-black">ERP</span>
               </span>
-              <span className="px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded-md border border-indigo-100/80">
+              <span className="px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-md border border-[var(--accent-color)]/20">
                 v2.4
               </span>
             </div>
@@ -200,18 +200,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={() => handleNavClick(item.id)}
               className={`group relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 text-left ${
                 isActive
-                  ? 'bg-indigo-50/90 text-indigo-700 font-bold shadow-xs'
+                  ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               {isActive && (
-                <div className="absolute left-0 top-2 bottom-2 w-1 bg-indigo-600 rounded-r-full" />
+                <div className="absolute left-0 top-2 bottom-2 w-1 bg-[var(--accent-color)] rounded-r-full" />
               )}
               <div className="flex items-center gap-3">
                 <div
                   className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
                     isActive
-                      ? 'bg-indigo-600 text-white shadow-xs shadow-indigo-500/30'
+                      ? 'bg-[var(--accent-color)] text-white shadow-xs'
                       : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200/80 group-hover:text-slate-700'
                   }`}
                 >
@@ -242,18 +242,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={() => handleNavClick(item.id)}
               className={`group relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 text-left ${
                 isActive
-                  ? 'bg-indigo-50/90 text-indigo-700 font-bold shadow-xs'
+                  ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               {isActive && (
-                <div className="absolute left-0 top-2 bottom-2 w-1 bg-indigo-600 rounded-r-full" />
+                <div className="absolute left-0 top-2 bottom-2 w-1 bg-[var(--accent-color)] rounded-r-full" />
               )}
               <div className="flex items-center gap-3">
                 <div
                   className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
                     isActive
-                      ? 'bg-indigo-600 text-white shadow-xs shadow-indigo-500/30'
+                      ? 'bg-[var(--accent-color)] text-white shadow-xs'
                       : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200/80 group-hover:text-slate-700'
                   }`}
                 >
@@ -290,13 +290,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
 
         <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-slate-200/80 shadow-2xs">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white font-bold flex items-center justify-center text-xs flex-shrink-0 shadow-xs">
+          <div className="w-8 h-8 rounded-xl bg-[var(--accent-color)] text-white font-bold flex items-center justify-center text-xs flex-shrink-0 shadow-xs">
             AD
           </div>
           <div className="overflow-hidden flex-1">
             <div className="flex items-center gap-1">
               <p className="text-xs font-bold text-slate-900 truncate">Administrator</p>
-              <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 inline" />
+              <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent-color)] inline" />
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span

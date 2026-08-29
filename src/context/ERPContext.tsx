@@ -247,7 +247,31 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [purchaseOrders, setPurchaseOrders] = useState<PurchaseOrder[]>(initialPurchaseOrders);
   const [quotations, setQuotations] = useState<Quotation[]>(initialQuotations);
   const [returns, setReturns] = useState<SaleReturn[]>(initialReturns);
-  const [settings, setSettings] = useState<CompanySettings>(initialSettings);
+  const [settings, setSettings] = useState<CompanySettings>(() => {
+    const saved = localStorage.getItem('erp_settings');
+    return saved ? JSON.parse(saved) : initialSettings;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('erp_settings', JSON.stringify(settings));
+  }, [settings]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const accentMap: Record<string, string> = {
+      indigo: '#4f46e5',
+      emerald: '#10b981',
+      violet: '#8b5cf6',
+      rose: '#f43f5e',
+      amber: '#f59e0b',
+      slate: '#64748b',
+      cyan: '#06b6d4',
+    };
+    const color = accentMap[settings.themeAccent] || accentMap.indigo;
+    root.style.setProperty('--accent-color', color);
+    root.style.setProperty('--accent-color-light', `${color}1a`);
+    root.style.setProperty('--accent-color-dark', `${color}cc`);
+  }, [settings.themeAccent]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [serverStatus, setServerStatus] = useState<'connected' | 'offline'>('connected');
 
@@ -436,7 +460,7 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                   type: 'STOCK_RESTOCKED',
                   title: 'Inventory Restocked',
                   description: payload.message || `${payload.product?.name} restocked`,
-                  badgeColor: 'bg-indigo-500',
+                  badgeColor: 'bg-[var(--accent-color)]',
                   iconType: 'stock',
                 });
                 break;
@@ -464,7 +488,7 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                     type: 'PRODUCT_CREATED',
                     title: 'New Product Added',
                     description: `${payload.product.name} (${payload.product.sku}) added to catalog`,
-                    badgeColor: 'bg-indigo-500',
+                    badgeColor: 'bg-[var(--accent-color)]',
                     iconType: 'product',
                   });
                 }
@@ -544,7 +568,7 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                     type: 'PO_CREATED',
                     title: 'Purchase Order Issued',
                     description: payload.message || `PO #${payload.purchaseOrder.orderNumber}`,
-                    badgeColor: 'bg-indigo-500',
+                    badgeColor: 'bg-[var(--accent-color)]',
                     iconType: 'po',
                   });
                 }

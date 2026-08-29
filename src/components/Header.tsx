@@ -61,13 +61,13 @@ export const Header: React.FC<HeaderProps> = ({
 
           <div className="relative w-full">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search items, clients, invoices, orders..."
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-9 sm:pl-10 pr-8 py-2 bg-slate-100/80 border border-slate-200/60 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 focus:ring-3 focus:ring-indigo-500/15 outline-none transition-all duration-150"
-            />
+             <input
+               type="text"
+               placeholder="Search items, clients, invoices, orders..."
+               value={searchQuery}
+               onChange={e => setSearchQuery(e.target.value)}
+               className="w-full pl-9 sm:pl-10 pr-8 py-2 bg-slate-100/80 border border-slate-200/60 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[var(--accent-color)] focus:ring-3 focus:ring-[var(--accent-color)]/15 outline-none transition-all duration-150"
+             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
@@ -111,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
             {activities.length > 0 && (
-              <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-600 text-[9px] font-extrabold text-white ring-2 ring-white">
+              <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--accent-color)] text-[9px] font-extrabold text-white ring-2 ring-white">
                 {activities.length > 9 ? '9+' : activities.length}
               </span>
             )}
@@ -132,7 +132,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="hidden sm:flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-xl border border-slate-200 text-xs transition-colors"
             title="Refresh database snapshot"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-indigo-600' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-[var(--accent-color)]' : ''}`} />
             <span className="hidden sm:inline text-[11px] font-bold">
               {isLoading ? 'Syncing...' : 'Sync'}
             </span>
@@ -141,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Primary Action Button */}
           <button
             onClick={onOpenNewSale}
-            className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white rounded-xl text-xs font-extrabold shadow-sm hover:shadow-md transition-all cursor-pointer whitespace-nowrap hover:scale-[1.02]"
+            className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] active:bg-[var(--accent-color)] text-white rounded-xl text-xs font-extrabold shadow-sm hover:shadow-md transition-all cursor-pointer whitespace-nowrap hover:scale-[1.02]"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             <span className="hidden xs:inline">New Sale</span>

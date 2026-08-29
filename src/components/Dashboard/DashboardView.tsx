@@ -85,15 +85,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   return (
     <div className="space-y-6 select-none animate-in fade-in duration-300">
       {/* Top Welcome / Command Bar */}
-      <div className="bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 rounded-2xl p-5 sm:p-6 text-white shadow-md relative overflow-hidden">
+      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-5 sm:p-6 text-white shadow-md relative overflow-hidden">
         {/* Abstract background decorative accents */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-radial from-indigo-500/15 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-radial from-[var(--accent-color)]/15 via-transparent to-transparent pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-indigo-200 text-xs font-semibold tracking-wide">
-              <Calendar className="w-3.5 h-3.5 text-indigo-400" />
+            <div className="flex items-center gap-2 text-[var(--accent-color)] text-xs font-semibold tracking-wide">
+              <Calendar className="w-3.5 h-3.5" />
               <span>{currentDate}</span>
-              <span className="text-indigo-400">•</span>
+              <span className="text-[var(--accent-color)]/60">•</span>
               <span className="inline-flex items-center gap-1 text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full text-[11px] font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 Live Sync ({activeTerminals} Terminals)
@@ -102,7 +102,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white mt-1.5">
               Welcome back, Administrator
             </h1>
-            <p className="text-xs sm:text-sm text-indigo-200/80 mt-1 max-w-xl">
+            <p className="text-xs sm:text-sm text-[var(--accent-color)]/80 mt-1 max-w-xl">
               Enterprise operations running smoothly. Real-time sales, inventory valuations, and order conversions are synced across all active registers.
             </p>
           </div>
@@ -119,7 +119,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               onClick={onOpenNewSale}
               className="flex items-center gap-2 px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-xl backdrop-blur-xs border border-white/10 transition-all"
             >
-              <PlusCircle className="w-4 h-4 text-indigo-300" />
+               <PlusCircle className="w-4 h-4 text-[var(--accent-color)]" />
               <span>New Invoice</span>
             </button>
           </div>
@@ -129,13 +129,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* 4 Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Sales */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-indigo-200 transition-all hover:shadow-md group">
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">Total Sales</p>
-            <div className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <DollarSign className="w-4 h-4" />
-            </div>
-          </div>
+         <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-[var(--accent-color)]/30 transition-all hover:shadow-md group">
+           <div className="flex items-center justify-between">
+             <p className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">Total Sales</p>
+             <div className="w-8 h-8 rounded-xl bg-[var(--accent-color-light)] text-[var(--accent-color)] flex items-center justify-center group-hover:scale-110 transition-transform">
+               <DollarSign className="w-4 h-4" />
+             </div>
+           </div>
           <h2 className="text-2xl font-black text-slate-900 mt-2 font-mono tracking-tight">
             {formatCurrency(totalRevenue)}
           </h2>
@@ -159,7 +159,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             {formatCurrency(netProfit)}
           </h2>
           <div className="mt-2.5 flex items-center justify-between text-xs">
-            <span className="text-indigo-600 font-bold">Gross: {formatCurrency(grossProfit)}</span>
+             <span className="text-[var(--accent-color)] font-bold">Gross: {formatCurrency(grossProfit)}</span>
             <span className="text-slate-400 font-medium">Exp: {formatCurrency(totalExpenses)}</span>
           </div>
         </div>
@@ -179,7 +179,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <span className="text-amber-700 font-bold">{pendingInvoicesCount} invoices pending</span>
             <button
               onClick={() => onNavigateTab('payments')}
-              className="text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform"
+               className="text-[var(--accent-color)] hover:text-[var(--accent-color-dark)] font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform"
             >
               Collect <ChevronRight className="w-3.5 h-3.5" />
             </button>
@@ -201,7 +201,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <span className="text-red-600 font-bold">Below reorder minimum</span>
             <button
               onClick={() => onNavigateTab('inventory')}
-              className="text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform"
+               className="text-[var(--accent-color)] hover:text-[var(--accent-color-dark)] font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform"
             >
               Restock <ChevronRight className="w-3.5 h-3.5" />
             </button>
@@ -215,7 +215,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-base font-bold text-slate-900">Financial Performance & Net Profitability</h3>
-              <span className="px-2 py-0.5 text-[10px] font-extrabold bg-indigo-50 text-indigo-700 rounded-md">
+              <span className="px-2 py-0.5 text-[10px] font-extrabold bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-md">
                 ANALYTICS
               </span>
             </div>
@@ -230,7 +230,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 onClick={() => setTimeRange(range)}
                 className={`px-3.5 py-1.5 text-xs font-bold rounded-lg capitalize transition-all ${
                   timeRange === range
-                    ? 'bg-white text-indigo-700 shadow-2xs font-extrabold'
+                    ? 'bg-white text-[var(--accent-color-dark)] shadow-2xs font-extrabold'
                     : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
@@ -288,7 +288,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <button
               onClick={() => onNavigateTab('sales')}
-              className="text-xs text-indigo-600 font-bold hover:text-indigo-800 flex items-center gap-1 hover:underline"
+              className="text-xs text-[var(--accent-color)] font-bold hover:text-[var(--accent-color-dark)] flex items-center gap-1 hover:underline"
             >
               <span>View All</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -334,7 +334,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       className="hover:bg-slate-50/80 transition-colors cursor-pointer group"
                     >
                       <td className="px-5 py-3.5">
-                        <div className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                        <div className="font-bold text-slate-900 group-hover:text-[var(--accent-color)] transition-colors">
                           {sale.clientName}
                         </div>
                         <div className="text-[10px] text-slate-400 font-mono">{sale.invoiceNumber}</div>
@@ -368,7 +368,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <button
               onClick={() => onNavigateTab('inventory')}
-              className="text-xs text-indigo-600 font-bold hover:underline"
+              className="text-xs text-[var(--accent-color)] font-bold hover:underline"
             >
               Manage
             </button>
@@ -398,7 +398,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                         </span>
                         <button
                           onClick={() => onOpenRestockProduct(prod.id)}
-                          className="p-1 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                          className="p-1 text-[var(--accent-color)] hover:bg-[var(--accent-color-light)] rounded-lg transition-colors"
                           title="Restock now"
                         >
                           <PlusCircle className="w-4 h-4" />
@@ -418,10 +418,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
             {/* Inventory Asset Valuation Box */}
             <div className="mt-4 pt-3 border-t border-slate-100">
-              <div className="p-4 bg-gradient-to-br from-indigo-50 to-slate-50 rounded-xl border border-indigo-100/80">
+              <div className="p-4 bg-gradient-to-br from-[var(--accent-color-light)] to-slate-50 rounded-xl border border-[var(--accent-color-light)]">
                 <div className="flex items-center justify-between">
-                  <p className="text-[11px] font-extrabold text-indigo-800 uppercase tracking-wider">Total Inventory Assets</p>
-                  <span className="text-[10px] text-indigo-600 font-bold">Cost vs Retail</span>
+                  <p className="text-[11px] font-extrabold text-[var(--accent-color-dark)] uppercase tracking-wider">Total Inventory Assets</p>
+                  <span className="text-[10px] text-[var(--accent-color)] font-bold">Cost vs Retail</span>
                 </div>
                 <div className="mt-2 flex items-baseline justify-between">
                   <div>

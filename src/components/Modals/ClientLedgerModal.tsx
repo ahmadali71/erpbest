@@ -50,7 +50,7 @@ export const ClientLedgerModal: React.FC<ClientLedgerModalProps> = ({
         {/* Header */}
         <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
+            <div className="w-8 h-8 bg-[var(--accent-color)] rounded-lg flex items-center justify-center text-white">
               <History className="w-4 h-4" />
             </div>
             <div>
@@ -64,7 +64,7 @@ export const ClientLedgerModal: React.FC<ClientLedgerModalProps> = ({
                 onClose();
                 onOpenNewSale(client);
               }}
-              className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs"
+              className="px-3 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs"
             >
               + Create Sale
             </button>
@@ -92,7 +92,7 @@ export const ClientLedgerModal: React.FC<ClientLedgerModalProps> = ({
 
           <div>
             <span className="text-slate-400 font-bold uppercase tracking-wider block">Total Spent</span>
-            <span className="font-mono font-bold text-indigo-700">{formatCurrency(client.totalSpent)}</span>
+                    <span className="font-mono font-bold text-[var(--accent-color-dark)]">{formatCurrency(client.totalSpent)}</span>
           </div>
 
           <div>
@@ -134,7 +134,7 @@ export const ClientLedgerModal: React.FC<ClientLedgerModalProps> = ({
                 ) : (
                   clientSales.map(sale => (
                     <tr key={sale.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="px-4 py-3 font-mono font-semibold text-indigo-600">
+                      <td className="px-4 py-3 font-mono font-semibold text-[var(--accent-color)]">
                         {sale.invoiceNumber}
                       </td>
                       <td className="px-4 py-3 text-slate-500 whitespace-nowrap">
@@ -181,7 +181,7 @@ export const ClientLedgerModal: React.FC<ClientLedgerModalProps> = ({
                               onClose();
                               onSelectInvoice(sale);
                             }}
-                            className="p-1 text-slate-400 hover:text-indigo-600"
+                            className="p-1 text-slate-400 hover:text-[var(--accent-color)]"
                             title="View Invoice"
                           >
                             <FileText className="w-3.5 h-3.5" />

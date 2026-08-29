@@ -180,7 +180,7 @@ export const NewSaleModal: React.FC<NewSaleModalProps> = ({
         {/* Header */}
         <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
+            <div className="w-8 h-8 bg-[var(--accent-color)] rounded-lg flex items-center justify-center text-white">
               <ShoppingCart className="w-4 h-4" />
             </div>
             <div>
@@ -214,7 +214,7 @@ export const NewSaleModal: React.FC<NewSaleModalProps> = ({
                 <select
                   value={selectedClientId}
                   onChange={(e) => setSelectedClientId(e.target.value)}
-                  className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-indigo-500"
+                  className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-[var(--accent-color)]"
                   required
                 >
                   <option value="">Select a client</option>
@@ -227,7 +227,7 @@ export const NewSaleModal: React.FC<NewSaleModalProps> = ({
                 <button
                   type="button"
                   onClick={onOpenAddClient}
-                  className="px-2.5 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-semibold whitespace-nowrap"
+                  className="px-2.5 py-2 bg-[var(--accent-color-light)] hover:bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-lg text-xs font-semibold whitespace-nowrap"
                   title="Add new client"
                 >
                   + Client
@@ -242,7 +242,7 @@ export const NewSaleModal: React.FC<NewSaleModalProps> = ({
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-indigo-500"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-medium outline-none focus:bg-white focus:border-[var(--accent-color)]"
               >
                 <option value="CASH">Cash Payment (Immediate settlement)</option>
                 <option value="CARD">Bank Card / POS</option>
@@ -261,7 +261,7 @@ export const NewSaleModal: React.FC<NewSaleModalProps> = ({
               <button
                 type="button"
                 onClick={handleAddItem}
-                className="text-xs text-indigo-600 font-semibold hover:text-indigo-800 flex items-center gap-1"
+                className="text-xs text-[var(--accent-color)] font-semibold hover:text-[var(--accent-color-dark)] flex items-center gap-1"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Another Line Item</span>
@@ -417,8 +417,8 @@ export const NewSaleModal: React.FC<NewSaleModalProps> = ({
             </div>
 
             {/* Right Column: Calculations Breakdown */}
-            <div className="bg-indigo-50/70 p-4 rounded-xl border border-indigo-100 flex flex-col justify-between space-y-3">
-              <h4 className="text-xs font-bold text-indigo-900 uppercase tracking-wider">Invoice Financial Summary</h4>
+            <div className="bg-[var(--accent-color-light)]/70 p-4 rounded-xl border border-[var(--accent-color-light)] flex flex-col justify-between space-y-3">
+              <h4 className="text-xs font-bold text-[var(--accent-color-dark)] uppercase tracking-wider">Invoice Financial Summary</h4>
 
               <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between text-slate-600">
@@ -441,9 +441,9 @@ export const NewSaleModal: React.FC<NewSaleModalProps> = ({
                   <span>Product Inventory Cost (COGS):</span>
                   <span className="font-mono">{formatCurrency(totalCost)}</span>
                 </div>
-                <div className="pt-2 border-t border-indigo-200 flex justify-between text-base font-bold text-slate-900">
+                <div className="pt-2 border-t border-[var(--accent-color-light)] flex justify-between text-base font-bold text-slate-900">
                   <span>Grand Total:</span>
-                  <span className="font-mono text-indigo-700">{formatCurrency(grandTotal)}</span>
+                  <span className="font-mono text-[var(--accent-color-dark)]">{formatCurrency(grandTotal)}</span>
                 </div>
                 <div className="flex justify-between text-xs font-semibold text-emerald-700">
                   <span>Net Estimated Profit:</span>
@@ -454,7 +454,7 @@ export const NewSaleModal: React.FC<NewSaleModalProps> = ({
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold shadow-xs transition-colors cursor-pointer"
+                  className="w-full py-2.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-bold shadow-xs transition-colors cursor-pointer"
                 >
                   Generate Invoice & Deduct Stock
                 </button>

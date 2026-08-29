@@ -42,7 +42,7 @@ export const CategoriesModal: React.FC<CategoriesModalProps> = ({ isOpen, onClos
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-md w-full my-8 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
+            <div className="w-8 h-8 bg-[var(--accent-color)] rounded-lg flex items-center justify-center text-white">
               <Tag className="w-4 h-4" />
             </div>
             <div>
@@ -76,7 +76,7 @@ export const CategoriesModal: React.FC<CategoriesModalProps> = ({ isOpen, onClos
                 placeholder="Category name (e.g. Peripherals, Office Furniture)"
                 value={newCatName}
                 onChange={(e) => setNewCatName(e.target.value)}
-                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-medium outline-none focus:border-indigo-500"
+                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-medium outline-none focus:border-[var(--accent-color)]"
               />
             </div>
             <div>
@@ -85,12 +85,12 @@ export const CategoriesModal: React.FC<CategoriesModalProps> = ({ isOpen, onClos
                 placeholder="Optional description"
                 value={newCatDesc}
                 onChange={(e) => setNewCatDesc(e.target.value)}
-                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:border-indigo-500"
+                className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:border-[var(--accent-color)]"
               />
             </div>
             <button
               type="submit"
-              className="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5"
+              className="w-full py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Add Category</span>

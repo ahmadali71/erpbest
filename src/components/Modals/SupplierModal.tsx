@@ -68,7 +68,7 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({
         {/* Header */}
         <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-indigo-600" />
+            <Building2 className="w-5 h-5 text-[var(--accent-color)]" />
             <h3 className="font-bold text-slate-800 text-sm sm:text-base">
               {supplier ? 'Edit Vendor / Supplier' : 'Register New Supplier'}
             </h3>
@@ -94,7 +94,7 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({
                 value={name}
                 onChange={e => setName(e.target.value)}
                 placeholder="e.g. Marcus Vance"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)]"
               />
             </div>
 
@@ -105,7 +105,7 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({
                 value={company}
                 onChange={e => setCompany(e.target.value)}
                 placeholder="e.g. Apex Global Logistics"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)]"
               />
             </div>
           </div>
@@ -121,7 +121,7 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="supply@vendor.com"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)]"
               />
             </div>
 
@@ -132,7 +132,7 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
                 placeholder="+1 (555) 019-2834"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)]"
               />
             </div>
           </div>
@@ -143,7 +143,7 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({
               <select
                 value={paymentTerms}
                 onChange={e => setPaymentTerms(e.target.value as Supplier['paymentTerms'])}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)] bg-white"
               >
                 <option value="NET_15">Net 15 Days</option>
                 <option value="NET_30">Net 30 Days</option>
@@ -160,7 +160,7 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({
                 value={address}
                 onChange={e => setAddress(e.target.value)}
                 placeholder="104 Industrial Pkwy, Dallas, TX"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)]"
               />
             </div>
           </div>
@@ -172,7 +172,7 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({
               value={notes}
               onChange={e => setNotes(e.target.value)}
               placeholder="Key supplier for electronics, OLED displays, and microcontrollers."
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)]"
             />
           </div>
 
@@ -186,7 +186,7 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({
             </button>
             <button
               type="submit"
-              className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-xs transition-colors"
+              className="px-5 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg font-semibold shadow-xs transition-colors"
             >
               {supplier ? 'Update Supplier' : 'Save Supplier'}
             </button>

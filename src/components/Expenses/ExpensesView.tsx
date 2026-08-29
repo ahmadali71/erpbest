@@ -85,7 +85,7 @@ export const ExpensesView: React.FC<ExpensesViewProps> = ({ onOpenAddExpense }) 
               {categoryStats[0] ? `${formatCurrency(categoryStats[0].amount)} (${categoryStats[0].pct}%)` : '$0'}
             </p>
           </div>
-          <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-[var(--accent-color-light)] text-[var(--accent-color)] rounded-xl flex items-center justify-center">
             <PieIcon className="w-5 h-5" />
           </div>
         </div>
@@ -98,7 +98,7 @@ export const ExpensesView: React.FC<ExpensesViewProps> = ({ onOpenAddExpense }) 
           </div>
           <button
             onClick={onOpenAddExpense}
-            className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center gap-1"
+            className="px-3 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center gap-1"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add</span>
@@ -116,14 +116,14 @@ export const ExpensesView: React.FC<ExpensesViewProps> = ({ onOpenAddExpense }) 
               placeholder="Search expenses by title or notes..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 outline-none transition-all"
+              className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[var(--accent-color)] outline-none transition-all"
             />
           </div>
 
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-medium outline-none focus:border-indigo-500"
+            className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-medium outline-none focus:border-[var(--accent-color)]"
           >
             <option value="ALL">All Categories</option>
             {categories.map(c => (
@@ -136,7 +136,7 @@ export const ExpensesView: React.FC<ExpensesViewProps> = ({ onOpenAddExpense }) 
 
         <button
           onClick={onOpenAddExpense}
-          className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5 self-stretch sm:self-auto"
+          className="px-3.5 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5 self-stretch sm:self-auto"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>New Expense</span>
@@ -309,7 +309,7 @@ export const ExpensesView: React.FC<ExpensesViewProps> = ({ onOpenAddExpense }) 
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                   <div
-                    className="bg-indigo-600 h-1.5 rounded-full"
+                     className="bg-[var(--accent-color)] h-1.5 rounded-full"
                     style={{ width: `${stat.pct}%` }}
                   ></div>
                 </div>
