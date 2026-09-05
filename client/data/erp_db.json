@@ -1,0 +1,711 @@
+{
+  "products": [
+    {
+      "id": "prod-1",
+      "sku": "EL-XPS15",
+      "name": "Dell XPS 15 Carbon Laptop",
+      "category": "Electronics",
+      "purchasePrice": 1200,
+      "sellingPrice": 1650,
+      "stockQuantity": 4,
+      "minStockThreshold": 5,
+      "unit": "pcs",
+      "description": "15.6\" OLED, Intel i9, 32GB RAM, 1TB SSD",
+      "createdAt": "2026-01-10T08:00:00.000Z",
+      "updatedAt": "2026-08-25T14:30:00.000Z"
+    },
+    {
+      "id": "prod-2",
+      "sku": "AU-LOGI-PRO",
+      "name": "Logic Pro Wireless Studio Controller",
+      "category": "Audio Gear",
+      "purchasePrice": 180,
+      "sellingPrice": 290,
+      "stockQuantity": 16,
+      "minStockThreshold": 6,
+      "unit": "pcs",
+      "description": "High-precision motorized audio controller with OLED dials",
+      "createdAt": "2026-01-12T09:00:00.000Z",
+      "updatedAt": "2026-09-04T16:02:21.722Z"
+    },
+    {
+      "id": "prod-3",
+      "sku": "NET-MX-HUB",
+      "name": "Wireless MX Gigabyte Hub 24-Port",
+      "category": "Networking",
+      "purchasePrice": 210,
+      "sellingPrice": 340,
+      "stockQuantity": 2,
+      "minStockThreshold": 4,
+      "unit": "pcs",
+      "description": "24-port PoE managed switch with Wi-Fi 7 bridge",
+      "createdAt": "2026-01-15T10:00:00.000Z",
+      "updatedAt": "2026-08-24T16:00:00.000Z"
+    },
+    {
+      "id": "prod-4",
+      "sku": "EL-DISP-4K",
+      "name": "UltraSharp 32\" 4K HDR Monitor",
+      "category": "Electronics",
+      "purchasePrice": 420,
+      "sellingPrice": 650,
+      "stockQuantity": 20,
+      "minStockThreshold": 5,
+      "unit": "pcs",
+      "description": "Factory calibrated IPS Black display with 90W USB-C PD",
+      "createdAt": "2026-02-01T12:00:00.000Z",
+      "updatedAt": "2026-09-04T16:01:52.293Z"
+    },
+    {
+      "id": "prod-5",
+      "sku": "FUR-ERGO-CHAIR",
+      "name": "ErgoFlex Pro Executive Mesh Chair",
+      "category": "Office Furniture",
+      "purchasePrice": 240,
+      "sellingPrice": 420,
+      "stockQuantity": 22,
+      "minStockThreshold": 5,
+      "unit": "pcs",
+      "description": "3D lumbar support, breathable Italian mesh, 135° recline",
+      "createdAt": "2026-02-10T14:00:00.000Z",
+      "updatedAt": "2026-09-04T16:02:07.517Z"
+    },
+    {
+      "id": "prod-6",
+      "sku": "FUR-ST-DESK",
+      "name": "Dual-Motor Standing Desk 60x30",
+      "category": "Office Furniture",
+      "purchasePrice": 310,
+      "sellingPrice": 530,
+      "stockQuantity": 15,
+      "minStockThreshold": 4,
+      "unit": "pcs",
+      "description": "Solid walnut top with memory preset height controller",
+      "createdAt": "2026-02-15T15:00:00.000Z",
+      "updatedAt": "2026-09-04T12:45:18.615Z"
+    },
+    {
+      "id": "prod-7",
+      "sku": "AU-PODMIC-PRO",
+      "name": "Studio Condenser Broadcast Mic",
+      "category": "Audio Gear",
+      "purchasePrice": 95,
+      "sellingPrice": 175,
+      "stockQuantity": 23,
+      "minStockThreshold": 8,
+      "unit": "pcs",
+      "description": "Cardioid XLR condenser mic with built-in pop filter",
+      "createdAt": "2026-03-01T11:00:00.000Z",
+      "updatedAt": "2026-09-04T16:02:21.722Z"
+    },
+    {
+      "id": "prod-8",
+      "sku": "NET-WIFI7-AP",
+      "name": "Enterprise Wi-Fi 7 Tri-Band AP",
+      "category": "Networking",
+      "purchasePrice": 140,
+      "sellingPrice": 245,
+      "stockQuantity": 15,
+      "minStockThreshold": 5,
+      "unit": "pcs",
+      "description": "Up to 9.3 Gbps throughput with beamforming antennas",
+      "createdAt": "2026-03-15T10:00:00.000Z",
+      "updatedAt": "2026-08-23T11:15:00.000Z"
+    },
+    {
+      "id": "prod-9",
+      "sku": "STA-LASER-TN",
+      "name": "High-Yield Laser Toner Multi-Pack",
+      "category": "Stationery & Supplies",
+      "purchasePrice": 65,
+      "sellingPrice": 119,
+      "stockQuantity": 35,
+      "minStockThreshold": 10,
+      "unit": "box",
+      "description": "4-color CMYK high capacity toner cartridge set",
+      "createdAt": "2026-04-01T09:00:00.000Z",
+      "updatedAt": "2026-09-04T16:02:07.517Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Electronics",
+      "description": "Laptops, Monitors, and Accessories",
+      "color": "indigo"
+    },
+    {
+      "id": "cat-2",
+      "name": "Office Furniture",
+      "description": "Ergonomic chairs, standing desks, cabinets",
+      "color": "emerald"
+    },
+    {
+      "id": "cat-3",
+      "name": "Audio Gear",
+      "description": "Headphones, microphones, studio monitors",
+      "color": "amber"
+    },
+    {
+      "id": "cat-4",
+      "name": "Networking",
+      "description": "Routers, switches, access points, cables",
+      "color": "blue"
+    },
+    {
+      "id": "cat-5",
+      "name": "Stationery & Supplies",
+      "description": "Paper, toner, pens, organizational tools",
+      "color": "purple"
+    }
+  ],
+  "clients": [
+    {
+      "id": "client-1",
+      "name": "Acme Solutions Ltd",
+      "company": "Acme Enterprises",
+      "email": "purchasing@acmesolutions.com",
+      "phone": "+1 (555) 234-5678",
+      "address": "742 Evergreen Terrace, Tech Park, Suite 400",
+      "taxNumber": "US-TAX-89412",
+      "creditLimit": 15000,
+      "totalSpent": 11165,
+      "outstandingBalance": 0,
+      "createdAt": "2026-01-15T09:00:00.000Z"
+    },
+    {
+      "id": "client-2",
+      "name": "Sarah Miller",
+      "company": "Creative Studios Corp",
+      "email": "sarah.miller@creativestudios.io",
+      "phone": "+1 (555) 876-5432",
+      "address": "1088 Silicon Way, Floor 3, San Francisco, CA",
+      "taxNumber": "US-TAX-33981",
+      "creditLimit": 5000,
+      "totalSpent": 3793.75,
+      "outstandingBalance": 0,
+      "createdAt": "2026-02-01T10:00:00.000Z"
+    },
+    {
+      "id": "client-3",
+      "name": "Global Tech Co.",
+      "company": "Global Technologies Inc.",
+      "email": "procurement@globaltech.org",
+      "phone": "+1 (555) 345-9876",
+      "address": "500 Enterprise Blvd, Austin, TX",
+      "taxNumber": "US-TAX-77410",
+      "creditLimit": 25000,
+      "totalSpent": 28900,
+      "outstandingBalance": 0,
+      "createdAt": "2026-01-20T11:00:00.000Z"
+    },
+    {
+      "id": "client-4",
+      "name": "Pioneer Retail Group",
+      "company": "Pioneer Retailers LLC",
+      "email": "accounts@pioneerretail.com",
+      "phone": "+1 (555) 901-2345",
+      "address": "88 Commerce Square, Chicago, IL",
+      "taxNumber": "US-TAX-55219",
+      "creditLimit": 10000,
+      "totalSpent": 6891,
+      "outstandingBalance": 431,
+      "createdAt": "2026-03-05T14:00:00.000Z"
+    },
+    {
+      "id": "client-5",
+      "name": "Apex Design Collective",
+      "company": "Apex Agency",
+      "email": "hello@apexdesign.co",
+      "phone": "+1 (555) 612-8899",
+      "address": "144 Broadway, New York, NY",
+      "taxNumber": "US-TAX-90214",
+      "creditLimit": 8000,
+      "totalSpent": 5600,
+      "outstandingBalance": 1780,
+      "createdAt": "2026-04-12T16:00:00.000Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "inv-1003",
+      "invoiceNumber": "INV-2026-003",
+      "clientId": "client-3",
+      "clientName": "Global Tech Co.",
+      "clientEmail": "procurement@globaltech.org",
+      "clientPhone": "+1 (555) 345-9876",
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Dell XPS 15 Carbon Laptop",
+          "sku": "EL-XPS15",
+          "quantity": 3,
+          "unitPurchasePrice": 1200,
+          "unitSellingPrice": 1650,
+          "discountPercentage": 2,
+          "total": 4851,
+          "profit": 1251
+        }
+      ],
+      "subtotal": 4950,
+      "discountAmount": 99,
+      "taxRate": 0,
+      "taxAmount": 0,
+      "grandTotal": 4851,
+      "totalCost": 3600,
+      "profit": 1251,
+      "amountPaid": 4851,
+      "amountDue": 0,
+      "paymentStatus": "PAID",
+      "paymentMethod": "CASH",
+      "notes": "Immediate payment cash receipt #CS-4410",
+      "date": "2026-08-24T09:30:00.000Z",
+      "payments": [
+        {
+          "id": "pay-2",
+          "saleId": "inv-1003",
+          "amount": 4851,
+          "method": "CASH",
+          "date": "2026-08-24T09:30:00.000Z",
+          "recordedBy": "Admin",
+          "note": "Cash deposit receipt"
+        }
+      ]
+    },
+    {
+      "id": "inv-1005",
+      "invoiceNumber": "INV-2026-005",
+      "clientId": "client-5",
+      "clientName": "Apex Design Collective",
+      "clientEmail": "hello@apexdesign.co",
+      "clientPhone": "+1 (555) 612-8899",
+      "items": [
+        {
+          "productId": "prod-6",
+          "productName": "Dual-Motor Standing Desk 60x30",
+          "sku": "FUR-ST-DESK",
+          "quantity": 3,
+          "unitPurchasePrice": 310,
+          "unitSellingPrice": 530,
+          "discountPercentage": 5,
+          "total": 1510.5,
+          "profit": 580.5
+        },
+        {
+          "productId": "prod-3",
+          "productName": "Wireless MX Gigabyte Hub 24-Port",
+          "sku": "NET-MX-HUB",
+          "quantity": 1,
+          "unitPurchasePrice": 210,
+          "unitSellingPrice": 340,
+          "discountPercentage": 0,
+          "total": 340,
+          "profit": 130
+        }
+      ],
+      "subtotal": 1930,
+      "discountAmount": 79.5,
+      "taxRate": 0,
+      "taxAmount": 0,
+      "grandTotal": 1850.5,
+      "totalCost": 1140,
+      "profit": 710.5,
+      "amountPaid": 0,
+      "amountDue": 1850.5,
+      "paymentStatus": "PENDING",
+      "paymentMethod": "CREDIT",
+      "notes": "Studio expansion batch order.",
+      "date": "2026-08-26T16:20:00.000Z",
+      "payments": []
+    }
+  ],
+  "expenses": [
+    {
+      "id": "exp-1",
+      "category": "Rent",
+      "title": "Warehouse & Office Lease - August",
+      "amount": 2200,
+      "date": "2026-08-01T09:00:00.000Z",
+      "paymentMethod": "BANK_TRANSFER",
+      "reference": "RENT-AUG-26",
+      "notes": "Monthly facility lease payment"
+    },
+    {
+      "id": "exp-2",
+      "category": "Utilities",
+      "title": "High-speed Fiber & Cloud Datacenter Power",
+      "amount": 380,
+      "date": "2026-08-05T10:00:00.000Z",
+      "paymentMethod": "CARD",
+      "reference": "UTIL-8821",
+      "notes": "Electric, cooling, and internet broadband"
+    },
+    {
+      "id": "exp-3",
+      "category": "Salaries",
+      "title": "Warehouse & Logistics Staff Compensation",
+      "amount": 4500,
+      "date": "2026-08-15T12:00:00.000Z",
+      "paymentMethod": "BANK_TRANSFER",
+      "reference": "PAYROLL-MID-AUG",
+      "notes": "Bi-weekly operations payroll"
+    },
+    {
+      "id": "exp-4",
+      "category": "Logistics",
+      "title": "Freight Shipping & Express Courier Service",
+      "amount": 420,
+      "date": "2026-08-18T14:30:00.000Z",
+      "paymentMethod": "CARD",
+      "reference": "DHL-EXPRESS-99",
+      "notes": "Bulk stock dispatch to regional hubs"
+    },
+    {
+      "id": "exp-5",
+      "category": "Marketing",
+      "title": "B2B Search Advertising & Trade Show",
+      "amount": 650,
+      "date": "2026-08-22T08:45:00.000Z",
+      "paymentMethod": "CARD",
+      "reference": "MKT-AUG-CAMP",
+      "notes": "Targeted enterprise ads"
+    }
+  ],
+  "stockMovements": [
+    {
+      "id": "mov-1788525981491",
+      "productId": "prod-2",
+      "productName": "Logic Pro Wireless Studio Controller",
+      "sku": "AU-LOGI-PRO",
+      "type": "PURCHASE_RESTOCK",
+      "quantity": 10,
+      "previousStock": 5,
+      "newStock": 15,
+      "unitCost": 180,
+      "note": "Restocked +10 units",
+      "date": "2026-09-04T12:46:21.491Z"
+    },
+    {
+      "id": "mov-1788525918616-prod-6",
+      "productId": "prod-6",
+      "productName": "Dual-Motor Standing Desk 60x30",
+      "sku": "FUR-ST-DESK",
+      "type": "PURCHASE_RESTOCK",
+      "quantity": 6,
+      "previousStock": 9,
+      "newStock": 15,
+      "unitCost": 310,
+      "referenceId": "PO-2026-002",
+      "note": "Received from supplier ErgoCraft Manufacturing Ltd",
+      "date": "2026-09-04T12:45:18.615Z"
+    },
+    {
+      "id": "mov-1788525918616-prod-5",
+      "productId": "prod-5",
+      "productName": "ErgoFlex Pro Executive Mesh Chair",
+      "sku": "FUR-ERGO-CHAIR",
+      "type": "PURCHASE_RESTOCK",
+      "quantity": 8,
+      "previousStock": 12,
+      "newStock": 20,
+      "unitCost": 240,
+      "referenceId": "PO-2026-002",
+      "note": "Received from supplier ErgoCraft Manufacturing Ltd",
+      "date": "2026-09-04T12:45:18.615Z"
+    },
+    {
+      "id": "mov-1",
+      "productId": "prod-1",
+      "productName": "Dell XPS 15 Carbon Laptop",
+      "sku": "EL-XPS15",
+      "type": "PURCHASE_RESTOCK",
+      "quantity": 7,
+      "previousStock": 0,
+      "newStock": 7,
+      "unitCost": 1200,
+      "referenceId": "PO-2026-088",
+      "note": "Initial container inventory reception",
+      "date": "2026-08-10T09:00:00.000Z"
+    },
+    {
+      "id": "mov-2",
+      "productId": "prod-1",
+      "productName": "Dell XPS 15 Carbon Laptop",
+      "sku": "EL-XPS15",
+      "type": "SALE",
+      "quantity": -3,
+      "previousStock": 7,
+      "newStock": 4,
+      "referenceId": "INV-2026-003",
+      "note": "Sold to Global Tech Co.",
+      "date": "2026-08-24T09:30:00.000Z"
+    },
+    {
+      "id": "mov-3",
+      "productId": "prod-4",
+      "productName": "UltraSharp 32\" 4K HDR Monitor",
+      "sku": "EL-DISP-4K",
+      "type": "SALE",
+      "quantity": -2,
+      "previousStock": 20,
+      "newStock": 18,
+      "referenceId": "INV-2026-001",
+      "note": "Sold to Acme Solutions Ltd",
+      "date": "2026-08-20T10:15:00.000Z"
+    },
+    {
+      "id": "mov-4",
+      "productId": "prod-2",
+      "productName": "Logic Pro Wireless Studio Controller",
+      "sku": "AU-LOGI-PRO",
+      "type": "SALE",
+      "quantity": -1,
+      "previousStock": 6,
+      "newStock": 5,
+      "referenceId": "INV-2026-002",
+      "note": "Sold to Sarah Miller",
+      "date": "2026-08-22T14:40:00.000Z"
+    },
+    {
+      "id": "mov-5",
+      "productId": "prod-3",
+      "productName": "Wireless MX Gigabyte Hub 24-Port",
+      "sku": "NET-MX-HUB",
+      "type": "SALE",
+      "quantity": -1,
+      "previousStock": 3,
+      "newStock": 2,
+      "referenceId": "INV-2026-005",
+      "note": "Sold to Apex Design Collective",
+      "date": "2026-08-26T16:20:00.000Z"
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "sup-1",
+      "name": "TechDirect Global Wholesale",
+      "contactPerson": "David Vance",
+      "email": "orders@techdirectglobal.com",
+      "phone": "+1 (800) 555-0199",
+      "address": "900 Logistics Blvd, Dock 4B, Dallas, TX",
+      "paymentTerms": "NET_30",
+      "taxNumber": "US-EIN-449120",
+      "totalPurchased": 24500,
+      "createdAt": "2026-01-05T08:00:00.000Z"
+    },
+    {
+      "id": "sup-2",
+      "name": "ErgoCraft Manufacturing Ltd",
+      "contactPerson": "Elena Rostova",
+      "email": "sales@ergocraft.de",
+      "phone": "+49 30 901820",
+      "address": "Industriestrasse 14, 10115 Berlin, Germany",
+      "paymentTerms": "NET_15",
+      "taxNumber": "DE-VAT-992144",
+      "totalPurchased": 16800,
+      "createdAt": "2026-01-12T09:30:00.000Z"
+    },
+    {
+      "id": "sup-3",
+      "name": "Acoustic Labs Audio Inc",
+      "contactPerson": "Marcus Chen",
+      "email": "distribution@acousticlabs.io",
+      "phone": "+1 (415) 555-7821",
+      "address": "420 Soundview Ave, San Jose, CA",
+      "paymentTerms": "DUE_ON_RECEIPT",
+      "taxNumber": "US-EIN-772189",
+      "totalPurchased": 9200,
+      "createdAt": "2026-02-01T10:00:00.000Z"
+    },
+    {
+      "id": "sup-4",
+      "name": "Apex Paper & Consumables",
+      "contactPerson": "Karen Miller",
+      "email": "orders@apexsupplies.net",
+      "phone": "+1 (312) 555-3411",
+      "address": "120 W Industrial Way, Chicago, IL",
+      "paymentTerms": "NET_60",
+      "taxNumber": "US-EIN-881203",
+      "totalPurchased": 4500,
+      "createdAt": "2026-03-01T11:00:00.000Z"
+    }
+  ],
+  "purchaseOrders": [
+    {
+      "id": "po-101",
+      "orderNumber": "PO-2026-001",
+      "supplierId": "sup-1",
+      "supplierName": "TechDirect Global Wholesale",
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Dell XPS 15 Carbon Laptop",
+          "sku": "EL-XPS15",
+          "quantity": 5,
+          "unitCost": 1200,
+          "total": 6000
+        },
+        {
+          "productId": "prod-4",
+          "productName": "UltraSharp 32\" 4K HDR Monitor",
+          "sku": "EL-DISP-4K",
+          "quantity": 10,
+          "unitCost": 420,
+          "total": 4200
+        }
+      ],
+      "subtotal": 10200,
+      "taxAmount": 0,
+      "grandTotal": 10200,
+      "status": "RECEIVED",
+      "date": "2026-08-10T09:00:00.000Z",
+      "expectedDeliveryDate": "2026-08-18T00:00:00.000Z",
+      "receivedDate": "2026-08-17T14:30:00.000Z",
+      "notes": "Q3 IT Hardware Restock. Cleared warehouse dock inspection."
+    }
+  ],
+  "quotations": [
+    {
+      "id": "quot-101",
+      "quotationNumber": "QT-2026-001",
+      "clientId": "client-1",
+      "clientName": "Acme Solutions Ltd",
+      "clientEmail": "purchasing@acmesolutions.com",
+      "clientPhone": "+1 (555) 234-5678",
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Dell XPS 15 Carbon Laptop",
+          "sku": "EL-XPS15",
+          "quantity": 4,
+          "unitPrice": 1650,
+          "discountPercentage": 5,
+          "total": 6270
+        },
+        {
+          "productId": "prod-4",
+          "productName": "UltraSharp 32\" 4K HDR Monitor",
+          "sku": "EL-DISP-4K",
+          "quantity": 4,
+          "unitPrice": 650,
+          "discountPercentage": 5,
+          "total": 2470
+        }
+      ],
+      "subtotal": 9200,
+      "discountAmount": 460,
+      "taxRate": 0,
+      "taxAmount": 0,
+      "grandTotal": 8740,
+      "status": "SENT",
+      "date": "2026-08-25T10:00:00.000Z",
+      "validUntil": "2026-09-25T00:00:00.000Z",
+      "notes": "Volume discount 5% included. Free shipping within 15 business days."
+    },
+    {
+      "id": "quot-102",
+      "quotationNumber": "QT-2026-002",
+      "clientId": "client-5",
+      "clientName": "Apex Design Collective",
+      "clientEmail": "hello@apexdesign.co",
+      "clientPhone": "+1 (555) 612-8899",
+      "items": [
+        {
+          "productId": "prod-5",
+          "productName": "ErgoFlex Pro Executive Mesh Chair",
+          "sku": "FUR-ERGO-CHAIR",
+          "quantity": 6,
+          "unitPrice": 420,
+          "discountPercentage": 10,
+          "total": 2268
+        },
+        {
+          "productId": "prod-6",
+          "productName": "Dual-Motor Standing Desk 60x30",
+          "sku": "FUR-ST-DESK",
+          "quantity": 6,
+          "unitPrice": 530,
+          "discountPercentage": 10,
+          "total": 2862
+        }
+      ],
+      "subtotal": 5700,
+      "discountAmount": 570,
+      "taxRate": 0,
+      "taxAmount": 0,
+      "grandTotal": 5130,
+      "status": "ACCEPTED",
+      "date": "2026-08-26T14:30:00.000Z",
+      "validUntil": "2026-09-26T00:00:00.000Z",
+      "notes": "Office upgrade bundle with 10% corporate partner discount."
+    }
+  ],
+  "returns": [
+    {
+      "id": "ret-101",
+      "returnNumber": "RET-2026-001",
+      "invoiceId": "inv-102",
+      "invoiceNumber": "INV-2026-002",
+      "clientId": "client-2",
+      "clientName": "Global Cloud Systems",
+      "items": [
+        {
+          "productId": "prod-7",
+          "productName": "Mechanical RGB Studio Keyboard",
+          "sku": "ACC-KEY-RGB",
+          "quantity": 1,
+          "unitPrice": 140,
+          "totalRefund": 140,
+          "total": 140,
+          "reason": "CUSTOMER_CHANGE_OF_MIND",
+          "restockItem": true
+        }
+      ],
+      "totalRefundAmount": 140,
+      "restockingFee": 0,
+      "netRefundAmount": 140,
+      "itemsTotal": 140,
+      "refundMethod": "CASH",
+      "notes": "Customer opted for wireless version instead. Item in sealed condition, restocked into inventory.",
+      "date": "2026-08-26T15:20:00.000Z"
+    }
+  ],
+  "settings": {
+    "companyName": "Nexus Enterprise Technologies",
+    "tagline": "Next-Gen Commercial ERP & Logistics",
+    "email": "operations@nexus-erp.corp",
+    "phone": "+1 (800) 555-0199",
+    "address": "742 Innovation Way, Suite 400, Silicon Bay, CA 94025",
+    "taxRegistrationNumber": "US-TAX-88492019",
+    "taxNumber": "US-TAX-88492019",
+    "website": "https://nexus-erp.corp",
+    "currencySymbol": "$",
+    "currencyCode": "USD",
+    "defaultTaxRate": 5,
+    "defaultPaymentTermsDays": 30,
+    "defaultLowStockThreshold": 5,
+    "stockAlertThreshold": 3,
+    "invoicePrefix": "INV-2026-",
+    "quotePrefix": "QT-2026-",
+    "receiptHeader": "Thank you for choosing Nexus Enterprise!",
+    "receiptFooter": "Goods once sold can be returned within 30 days with original invoice.",
+    "receiptHeaderMessage": "Thank you for shopping at Nexus Enterprise!",
+    "receiptFooterMessage": "Returns accepted within 30 days with valid receipt.",
+    "showBarcodeOnReceipt": true,
+    "showTaxBreakdown": true,
+    "autoPrintReceipt": false,
+    "compactMode": false,
+    "themeAccent": "indigo",
+    "enableSoundEffects": true,
+    "enableAutoPrintReceipt": false,
+    "barcodeLabelConfig": {
+      "labelSize": "50x25",
+      "showPrice": true,
+      "showSku": true,
+      "showProductName": true,
+      "showCompanyName": true,
+      "barcodeType": "CODE128"
+    }
+  },
+  "lastUpdated": "2026-09-04T16:02:21.722Z"
+}

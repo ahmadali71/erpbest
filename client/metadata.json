@@ -1,0 +1,6 @@
+{
+  "name": "Nexus ERP Enterprise Suite",
+  "description": "Comprehensive real-time full-stack ERP and POS management system featuring real-time SSE multi-terminal synchronization, POS touch register, inventory control, sales & invoicing, returns & refunds management, purchase orders, quotations, client ledgers, company customization, barcode label generation, and financial analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
