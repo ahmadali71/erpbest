@@ -4,6 +4,9 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "framework": null,
+  "builds": [
+    { "src": "dist/server.cjs", "use": "@vercel/node" }
+  ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/server.cjs" },
     { "source": "/(.*)", "destination": "/index.html" }
