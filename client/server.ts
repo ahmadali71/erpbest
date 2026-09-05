@@ -99,7 +99,7 @@ function broadcastEvent(type: string, payload: any) {
 
 async function startServer() {
   const app = express();
-  const PORT = 5000;
+  const PORT = process.env.PORT || 5000;
 
    // Middleware for parsing JSON requests
    app.use(express.json());
@@ -786,7 +786,7 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
+    const distPath = __dirname;
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
