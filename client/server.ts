@@ -785,13 +785,9 @@ async function startServer() {
       appType: 'spa',
     });
     app.use(vite.middlewares);
-  } else {
-    const distPath = __dirname;
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
   }
+  // In production on Vercel, static assets and SPA fallback are handled by Vercel's CDN + rewrites.
+  // The serverless function only needs to serve API routes.
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`\u{1F680} Nexus ERP Real-Time Server running on http://localhost:${PORT}`);
