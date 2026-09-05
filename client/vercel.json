@@ -1,12 +1,15 @@
 {
-  "version": 2,
+  "version": 3,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "framework": null,
-  "builds": [
-    { "src": "dist/server.cjs", "use": "@vercel/node" }
-  ],
+  "functions": {
+    "dist/server.cjs": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/server.cjs" },
     { "source": "/(.*)", "destination": "/index.html" }
