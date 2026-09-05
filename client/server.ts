@@ -143,6 +143,12 @@ async function startServer() {
       sseClients = sseClients.filter(c => c.id !== clientId);
       broadcastEvent('PRESENCE_UPDATED', { activeConnections: sseClients.length });
     });
+
+    // Vercel serverless timeout: close connection after 50 seconds
+    // to avoid cold hangs before the platform drops the function.
+    setTimeout(() => {
+      try { res.end(); } catch {}
+    }, 50000);
    });
 
   // ==========================================
