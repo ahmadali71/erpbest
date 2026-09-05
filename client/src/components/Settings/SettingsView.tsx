@@ -8,6 +8,7 @@ import {
   Save,
   CheckCircle2,
   RotateCcw,
+  Trash2,
   Download,
   Upload,
   Printer,
@@ -34,6 +35,7 @@ export const SettingsView: React.FC = () => {
     exportBackup,
     restoreDatabase,
     resetToDemoData,
+    resetToEmptyDatabase,
     serverStatus,
     formatCurrency,
   } = useERP();
@@ -825,27 +827,38 @@ export const SettingsView: React.FC = () => {
                 </div>
               )}
 
-               {/* Danger Zone */}
-               <div className="p-5 rounded-3xl ring-1 ring-rose-200/80 bg-rose-50/40 space-y-3">
-                <div className="flex items-center gap-2 text-rose-700">
-                  <AlertCircle className="w-4 h-4" />
-                  <h4 className="text-xs font-bold uppercase tracking-wider">Danger Zone: Reset Demo Data</h4>
-                </div>
-                <p className="text-xs text-slate-600">
-                  Resets the database back to initial demonstration sample data. All newly created invoices and custom products will be replaced.
-                </p>
-                <button
-                  onClick={() => {
-                    if (window.confirm('Are you sure you want to reset all database records back to the default demonstration sample dataset?')) {
-                      resetToDemoData();
-                    }
-                  }}
-                   className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-2xl text-xs font-bold shadow-sm transition-colors inline-flex items-center gap-2"
-                   >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Reset All to Demo Data</span>
-                </button>
-              </div>
+                {/* Danger Zone */}
+                <div className="p-5 rounded-3xl ring-1 ring-rose-200/80 bg-rose-50/40 space-y-3">
+                 <div className="flex items-center gap-2 text-rose-700">
+                   <AlertCircle className="w-4 h-4" />
+                   <h4 className="text-xs font-bold uppercase tracking-wider">Danger Zone: Reset Demo Data</h4>
+                 </div>
+                 <p className="text-xs text-slate-600">
+                   Resets the database back to initial demonstration sample data. All newly created invoices and custom products will be replaced.
+                 </p>
+                 <button
+                   onClick={() => {
+                     if (window.confirm('Are you sure you want to reset all database records back to the default demonstration sample dataset?')) {
+                       resetToDemoData();
+                     }
+                   }}
+                    className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-2xl text-xs font-bold shadow-sm transition-colors inline-flex items-center gap-2"
+                    >
+                   <RotateCcw className="w-3.5 h-3.5" />
+                   <span>Reset All to Demo Data</span>
+                 </button>
+                 <button
+                   onClick={() => {
+                     if (window.confirm('Are you sure you want to clear ALL data? This cannot be undone.')) {
+                       resetToEmptyDatabase();
+                     }
+                   }}
+                    className="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-2xl text-xs font-bold shadow-sm transition-colors inline-flex items-center gap-2"
+                    >
+                   <Trash2 className="w-3.5 h-3.5" />
+                   <span>Reset to Empty Database</span>
+                 </button>
+               </div>
             </div>
           )}
         </div>

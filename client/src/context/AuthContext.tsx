@@ -27,18 +27,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     const initAuth = async () => {
-      const savedToken = localStorage.getItem('erp_token');
-      if (savedToken) {
-        try {
-          const currentUser = await api.getCurrentUser();
-          setUser(currentUser);
-          setToken(savedToken);
-        } catch (err) {
-          localStorage.removeItem('erp_token');
-          setToken(null);
-          setUser(null);
-        }
-      }
+      localStorage.removeItem('erp_token');
+      setToken(null);
+      setUser(null);
       setIsLoading(false);
     };
     initAuth();

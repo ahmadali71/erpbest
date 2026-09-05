@@ -142,6 +142,25 @@ export const db = {
     return inMemoryDb;
   },
 
+  clear: () => {
+    inMemoryDb = {
+      products: [],
+      categories: [],
+      clients: [],
+      sales: [],
+      expenses: [],
+      stockMovements: [],
+      suppliers: [],
+      purchaseOrders: [],
+      quotations: [],
+      returns: [],
+      settings: JSON.parse(JSON.stringify(initialSettings)),
+      lastUpdated: new Date().toISOString(),
+    };
+    saveDatabase(inMemoryDb);
+    return inMemoryDb;
+  },
+
   restore: (backup: Partial<ERPDatabaseSchema>) => {
     inMemoryDb = {
       products: Array.isArray(backup.products) ? backup.products : inMemoryDb.products,

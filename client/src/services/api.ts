@@ -81,6 +81,16 @@ export const api = {
     return json.data;
   },
 
+  async resetToEmptyDatabase(): Promise<BootstrapResponse> {
+    const res = await fetch('/api/reset-empty', {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to clear database');
+    const json = await res.json();
+    return json.data;
+  },
+
   async restoreDatabase(backupData: any): Promise<BootstrapResponse> {
     const res = await fetch('/api/restore', {
       method: 'POST',

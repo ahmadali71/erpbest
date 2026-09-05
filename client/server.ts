@@ -252,6 +252,17 @@ async function startServer() {
     });
   });
 
+  // Reset database to empty state
+  app.post('/api/reset-empty', (req: Request, res: Response) => {
+    const data = db.clear();
+    broadcastEvent('DB_RESET', { message: 'Database cleared', data });
+    res.json({
+      success: true,
+      message: 'Database cleared successfully',
+      data,
+    });
+  });
+
   // Metrics
   app.get('/api/metrics', (req: Request, res: Response) => {
     const metrics = db.getMetrics();

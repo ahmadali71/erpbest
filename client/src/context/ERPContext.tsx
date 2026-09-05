@@ -149,6 +149,7 @@ interface ERPContextType {
   // Backup & Restore
   restoreDatabase: (backupData: any) => Promise<void>;
   exportBackup: () => void;
+  resetToEmptyDatabase: () => Promise<void>;
 
   // Financial & Inventory computed metrics
   totalRevenue: number;
@@ -1475,6 +1476,28 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
+  const resetToEmptyDatabase = async () => {
+    try {
+      const data = await api.resetToEmptyDatabase();
+      if (data) {
+        setProducts(data.products || []);
+        setCategories(data.categories || []);
+        setClients(data.clients || []);
+        setSales(data.sales || []);
+        setExpenses(data.expenses || []);
+        setStockMovements(data.stockMovements || []);
+        setSuppliers(data.suppliers || []);
+        setPurchaseOrders(data.purchaseOrders || []);
+        setQuotations(data.quotations || []);
+        if (data.returns) setReturns(data.returns);
+        if (data.settings) setSettings(data.settings);
+      }
+    } catch (err) {
+      console.error('Error clearing database:', err);
+      throw err;
+    }
+  };
+
   const exportBackup = () => {
     const fullBackup = {
       products,
@@ -1794,6 +1817,7 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         orderedPOCount,
         getFinancialPerformanceData,
         resetToDemoData,
+        resetToEmptyDatabase,
         refreshData,
       }}
     >
