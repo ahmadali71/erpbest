@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { ERPProvider, useERP } from './context/ERPContext';
 import { useAuth } from './context/AuthContext';
 import { Sidebar, NavTab } from './components/Sidebar';
@@ -33,6 +33,7 @@ import { ExpenseModal } from './components/Modals/ExpenseModal';
 import { CategoriesModal } from './components/Modals/CategoriesModal';
 
 import { Client, Product, SaleInvoice } from './types/erp';
+import { TAB_PERMISSIONS } from './config/permissions';
 
 const ThemeApplier: React.FC = () => {
   const { settings } = useERP();
@@ -56,11 +57,23 @@ const ThemeApplier: React.FC = () => {
 };
 
 const MainAppContent: React.FC = () => {
-  const { user, logout, isLoading: authLoading } = useAuth();
+  const { user, logout, hasPermission, isLoading: authLoading } = useAuth();
   const { sales } = useERP();
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Auto-switch to first permitted tab if activeTab is not permitted for current user
+  useEffect(() => {
+    if (user) {
+      const requiredPerm = TAB_PERMISSIONS[activeTab];
+      if (requiredPerm && !hasPermission(requiredPerm) && user.role !== 'admin') {
+        const fallbackTabs: NavTab[] = ['inventory', 'sales', 'clients', 'pos', 'dashboard'];
+        const allowedTab = fallbackTabs.find(t => hasPermission(TAB_PERMISSIONS[t])) || 'inventory';
+        setActiveTab(allowedTab);
+      }
+    }
+  }, [user, activeTab, hasPermission]);
 
   // Modals state
   const [isNewSaleOpen, setIsNewSaleOpen] = useState(false);
@@ -166,7 +179,7 @@ const MainAppContent: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[var(--accent-color)] border-t-transparent mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-(--accent-color) border-t-transparent mb-4"></div>
           <p className="text-slate-600">Loading...</p>
         </div>
       </div>

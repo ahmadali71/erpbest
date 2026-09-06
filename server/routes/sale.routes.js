@@ -6,42 +6,57 @@ import StockMovement from '../db/models/StockMovement.js';
 
 const router = express.Router();
 
+// Helper to check permissions from req.user
+const hasAnyPermission = (req, ...required) => {
+  if (req.user?.role === 'admin') return true;
+  const perms = req.user?.effectivePermissions || [];
+  return required.some(p => perms.includes(p));
+};
+
 // Get all sales
 router.get('/', async (req, res) => {
   try {
-    const sales = await Sale.find().lean().sort({ date: -1 });
+    const isAdmin = req.user?.role === 'admin';
+    const filter = isAdmin ? {} : { isDeleted: { $ne: true } };
+    const sales = await Sale.find(filter).lean().sort({ date: -1 });
     res.json({ success: true, data: sales });
   } catch (err) {
-    res.status(500).json({ success: false, error});
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
 // Get single sale
 router.get('/:id', async (req, res) => {
   try {
-    const sale = await Sale.findOne({ id: req.params.id }).lean();
+    const isAdmin = req.user?.role === 'admin';
+    const filter = isAdmin ? { id: req.params.id } : { id: req.params.id, isDeleted: { $ne: true } };
+    const sale = await Sale.findOne(filter).lean();
     if (!sale) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Sale not found' });
     }
     res.json({ success: true, data: sale });
   } catch (err) {
-    res.status(500).json({ success: false, error});
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
 // Create sale
 router.post('/', async (req, res) => {
   try {
+    if (!hasAnyPermission(req, 'sales.create')) {
+      return res.status(403).json({ success: false, error: 'Access denied. Create sale permission required.' });
+    }
+
     const { clientId, items, taxRate, paymentMethod, initialAmountPaid, notes, dueDate } = req.body;
 
     if (!clientId || !items || items.length === 0) {
-      return res.status(400).json({ success: false, error});
+      return res.status(400).json({ success: false, error: 'Client ID and at least one item are required' });
     }
 
     // Find client
-    const client = await Client.findOne({ id: clientId });
+    const client = await Client.findOne({ id: clientId, isDeleted: { $ne: true } });
     if (!client) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Client not found or is inactive' });
     }
 
     // Calculate sale
@@ -53,7 +68,7 @@ router.post('/', async (req, res) => {
     const productsToUpdate = [];
 
     for (const item of items) {
-      const product = await Product.findOne({ id: item.productId });
+      const product = await Product.findOne({ id: item.productId, isDeleted: { $ne: true } });
       if (!product) continue;
 
       const qty = Math.max(1, item.quantity);
@@ -92,7 +107,7 @@ router.post('/', async (req, res) => {
         productId: product.id,
         productName: product.name,
         sku: product.sku,
-        type,
+        type: 'SALE',
         quantity: -qty,
         previousStock,
         newStock,
@@ -103,7 +118,7 @@ router.post('/', async (req, res) => {
     }
 
     if (saleItems.length === 0) {
-      return res.status(400).json({ success: false, error});
+      return res.status(400).json({ success: false, error: 'No valid products found in sale items' });
     }
 
     // Save all products with updated stock
@@ -139,14 +154,14 @@ router.post('/', async (req, res) => {
         amount: initialPayment,
         method: paymentMethod,
         date: new Date(),
-        recordedBy,
+        recordedBy: req.user?.username || req.user?.name || 'cashier',
         note: `Initial payment via ${paymentMethod.replace('_', ' ')}`,
       });
     }
 
     const newSale = {
       id: saleId,
-      invoiceNumber: `INV-${new Date().getFullYear()}-001`,
+      invoiceNumber: `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-4)}`,
       clientId,
       clientName: client.name,
       clientEmail: client.email,
@@ -167,6 +182,7 @@ router.post('/', async (req, res) => {
       dueDate,
       date: new Date(),
       payments: paymentsList,
+      isDeleted: false,
     };
 
     // Save stock movements
@@ -187,33 +203,105 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Delete sale
+// Delete sale (Soft delete by administration/others, visible to admin only)
 router.delete('/:id', async (req, res) => {
   try {
-    const sale = await Sale.findOneAndDelete({ id: req.params.id });
-    if (!sale) {
-      return res.status(404).json({ success: false, error});
+    if (!hasAnyPermission(req, 'sales.delete')) {
+      return res.status(403).json({ success: false, error: 'Access denied. Delete sale permission required.' });
     }
 
-    // Restore stock
+    const sale = await Sale.findOne({ id: req.params.id });
+    if (!sale) {
+      return res.status(404).json({ success: false, error: 'Sale not found' });
+    }
+
+    const isAdmin = req.user?.role === 'admin';
+    const isPermanent = req.query.permanent === 'true';
+
+    // If already deleted and admin deletes again or specifies permanent=true
+    if (isAdmin && (isPermanent || sale.isDeleted)) {
+      await Sale.findOneAndDelete({ id: req.params.id });
+      return res.json({ success: true, data: {}, message: 'Sale permanently deleted' });
+    }
+
+    // Soft delete: revert stock and client balance for cancellation
+    if (!sale.isDeleted) {
+      // Restore stock
+      for (const item of sale.items) {
+        const product = await Product.findOne({ id: item.productId });
+        if (product) {
+          product.stockQuantity += item.quantity;
+          product.updatedAt = new Date();
+          await product.save();
+        }
+      }
+
+      // Revert client balances
+      const client = await Client.findOne({ id: sale.clientId });
+      if (client) {
+        client.totalSpent = Math.max(0, Math.round((client.totalSpent - sale.grandTotal) * 100) / 100);
+        client.outstandingBalance = Math.max(0, Math.round((client.outstandingBalance - sale.amountDue) * 100) / 100);
+        await client.save();
+      }
+    }
+
+    sale.isDeleted = true;
+    sale.deletedAt = new Date();
+    sale.deletedBy = req.user?.username || req.user?.name || req.user?.id || 'administration';
+    sale.deletedByRole = req.user?.role || 'administration';
+    await sale.save();
+
+    res.json({
+      success: true,
+      data: sale,
+      message: `Sale deleted by ${sale.deletedByRole} (visible to admin only)`,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Restore sale (admin only)
+router.post('/:id/restore', async (req, res) => {
+  try {
+    if (req.user?.role !== 'admin') {
+      return res.status(403).json({ success: false, error: 'Admin access required to restore sales' });
+    }
+
+    const sale = await Sale.findOne({ id: req.params.id });
+    if (!sale) {
+      return res.status(404).json({ success: false, error: 'Sale not found' });
+    }
+
+    if (!sale.isDeleted) {
+      return res.json({ success: true, data: sale, message: 'Sale is already active' });
+    }
+
+    // Re-deduct stock
     for (const item of sale.items) {
       const product = await Product.findOne({ id: item.productId });
       if (product) {
-        product.stockQuantity += item.quantity;
+        product.stockQuantity = Math.max(0, product.stockQuantity - item.quantity);
         product.updatedAt = new Date();
         await product.save();
       }
     }
 
-    // Revert client balances
+    // Re-apply client balances
     const client = await Client.findOne({ id: sale.clientId });
     if (client) {
-      client.totalSpent = Math.max(0, Math.round((client.totalSpent - sale.grandTotal) * 100) / 100);
-      client.outstandingBalance = Math.max(0, Math.round((client.outstandingBalance - sale.amountDue) * 100) / 100);
+      client.totalSpent = Math.round((client.totalSpent + sale.grandTotal) * 100) / 100;
+      client.outstandingBalance = Math.round((client.outstandingBalance + sale.amountDue) * 100) / 100;
       await client.save();
     }
 
-    res.json({ success: true, data: {} });
+    sale.isDeleted = false;
+    sale.deletedAt = null;
+    sale.deletedBy = null;
+    sale.deletedByRole = null;
+    await sale.save();
+
+    res.json({ success: true, data: sale, message: 'Sale restored successfully' });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -223,13 +311,13 @@ router.delete('/:id', async (req, res) => {
 router.post('/:id/payments', async (req, res) => {
   try {
     const { amount, method, note } = req.body;
-    const sale = await Sale.findOne({ id: req.params.id });
+    const sale = await Sale.findOne({ id: req.params.id, isDeleted: { $ne: true } });
     if (!sale) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Sale not found or is deleted' });
     }
 
     if (!amount || Number(amount) <= 0) {
-      return res.status(400).json({ success: false, error});
+      return res.status(400).json({ success: false, error: 'Valid payment amount is required' });
     }
 
     const effectivePayment = Math.min(amount, sale.amountDue);
@@ -247,7 +335,7 @@ router.post('/:id/payments', async (req, res) => {
       amount: effectivePayment,
       method,
       date: new Date(),
-      recordedBy,
+      recordedBy: req.user?.username || req.user?.name || 'cashier',
       note: note || `Payment of $${effectivePayment.toFixed(2)} recorded`,
     };
 
@@ -272,5 +360,3 @@ router.post('/:id/payments', async (req, res) => {
 });
 
 export default router;
-
-

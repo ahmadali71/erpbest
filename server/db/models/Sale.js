@@ -30,6 +30,10 @@ const SaleSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    isDeleted: { type: Boolean, default: false, index: true },
+    deletedAt: { type: Date },
+    deletedBy: { type: String },
+    deletedByRole: { type: String },
   },
   { timestamps: true }
 );

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import {
   Plus,
   Package,
@@ -11,10 +11,12 @@ import {
   History,
   Tag,
   DollarSign,
-  Boxes,
   TrendingUp,
+  RotateCcw,
+  ShieldAlert,
 } from 'lucide-react';
 import { useERP } from '../../context/ERPContext';
+import { useAuth } from '../../context/AuthContext';
 import { Product } from '../../types/erp';
 
 interface InventoryViewProps {
@@ -38,20 +40,39 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
     products,
     categories,
     deleteProduct,
+    restoreProduct,
     lowStockProducts,
     inventoryCostValue,
     inventoryRetailValue,
   } = useERP();
 
+  const { user, hasPermission } = useAuth();
+  const isAdmin = user?.role === 'admin';
+  const canCreate = hasPermission('inventory.create') || hasPermission('inventory.edit') || isAdmin;
+  const canEdit = hasPermission('inventory.edit') || isAdmin;
+  const canDelete = hasPermission('inventory.delete') || hasPermission('inventory.edit') || isAdmin;
+
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [showLowStockOnly, setShowLowStockOnly] = useState<boolean>(false);
+  const [adminViewFilter, setAdminViewFilter] = useState<'all' | 'active' | 'deleted'>('active');
   const [sortBy, setSortBy] = useState<'name' | 'stock' | 'margin' | 'price'>('name');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+  const deletedProductsCount = useMemo(() => products.filter(p => p.isDeleted).length, [products]);
+  const activeProductsCount = useMemo(() => products.filter(p => !p.isDeleted).length, [products]);
 
   const filteredProducts = useMemo(() => {
     return products
       .filter(p => {
+        // Role & deletion filtering
+        if (isAdmin) {
+          if (adminViewFilter === 'active' && p.isDeleted) return false;
+          if (adminViewFilter === 'deleted' && !p.isDeleted) return false;
+        } else {
+          if (p.isDeleted) return false;
+        }
+
         const matchCat = selectedCategory === 'ALL' || p.category === selectedCategory;
         const matchSearch =
           p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -79,7 +100,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
         if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
         return 0;
       });
-  }, [products, selectedCategory, searchTerm, showLowStockOnly, sortBy, sortOrder]);
+  }, [products, selectedCategory, searchTerm, showLowStockOnly, adminViewFilter, isAdmin, sortBy, sortOrder]);
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -98,25 +119,36 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-4 sm:space-y-6 select-none">
       {/* Top Banner Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-        <div className="bg-white p-5 sm:p-6 rounded-3xl ring-1 ring-slate-200/80 shadow-sm flex items-center justify-between">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-white p-5 sm:p-6 rounded-3xl ring-1 ring-slate-200/80 shadow-sm flex items-center justify-between transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
           <div>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Products</p>
-            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">{products.length} SKUs</h3>
-            <p className="text-xs text-slate-500 mt-0.5">{categories.length} Active Categories</p>
+            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Catalog</p>
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">{activeProductsCount} Items</h3>
+            <p className="text-xs text-slate-500 mt-0.5">{categories.length} Categories</p>
           </div>
-          <div className="w-10 h-10 bg-[var(--accent-color-light)] text-[var(--accent-color)] rounded-xl flex items-center justify-center">
-            <Boxes className="w-5 h-5" />
+          <div className="w-10 h-10 bg-(--accent-color-light) text-(--accent-color) rounded-xl flex items-center justify-center">
+            <Package className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="bg-white p-5 sm:p-6 rounded-3xl ring-1 ring-slate-200/80 shadow-sm flex items-center justify-between">
+        <div className="bg-white p-5 sm:p-6 rounded-3xl ring-1 ring-slate-200/80 shadow-sm flex items-center justify-between transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
           <div>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Stock Valuation (Cost)</p>
+            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Inventory Valuation</p>
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">{formatCurrency(inventoryCostValue)}</h3>
-            <p className="text-xs text-emerald-600 font-medium mt-0.5">Retail: {formatCurrency(inventoryRetailValue)}</p>
+            <p className="text-xs text-slate-500 mt-0.5">At purchase cost</p>
+          </div>
+          <div className="w-10 h-10 bg-(--accent-color-light) text-(--accent-color) rounded-xl flex items-center justify-center">
+            <DollarSign className="w-5 h-5" />
+          </div>
+        </div>
+
+        <div className="bg-white p-5 sm:p-6 rounded-3xl ring-1 ring-slate-200/80 shadow-sm flex items-center justify-between transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div>
+            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Potential Retail</p>
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">{formatCurrency(inventoryRetailValue)}</h3>
+            <p className="text-xs text-slate-500 mt-0.5">Est. sales value</p>
           </div>
           <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
             <DollarSign className="w-5 h-5" />
@@ -135,13 +167,15 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
             <h3 className="text-xl sm:text-2xl font-bold text-amber-900 mt-1">{lowStockProducts.length} Items</h3>
             <p className="text-xs text-amber-700 mt-0.5">Below alert threshold</p>
           </div>
+          {canEdit && (
             <button
               onClick={() => onOpenRestock()}
               className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-2xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1"
             >
-            <PlusCircle className="w-3.5 h-3.5" />
-            <span>Restock</span>
-          </button>
+              <PlusCircle className="w-3.5 h-3.5" />
+              <span>Restock</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -150,14 +184,14 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             {/* Search Input */}
-            <div className="relative flex-1 sm:w-64 md:w-80 min-w-[200px]">
+            <div className="relative flex-1 sm:w-64 md:w-80 min-w-50">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search by SKU, product name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[var(--accent-color)] outline-none transition-all"
+                className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-(--accent-color) outline-none transition-all"
               />
             </div>
 
@@ -173,6 +207,44 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
               <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
               <span>Low Stock ({lowStockProducts.length})</span>
             </button>
+
+            {/* Admin-only deletion filter toggle */}
+            {isAdmin && (
+              <div className="flex items-center bg-slate-100 p-0.5 rounded-2xl text-xs">
+                <button
+                  onClick={() => setAdminViewFilter('active')}
+                  className={`px-3 py-1 rounded-xl font-medium transition-all ${
+                    adminViewFilter === 'active'
+                      ? 'bg-white text-slate-900 shadow-xs font-bold'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Active ({activeProductsCount})
+                </button>
+                <button
+                  onClick={() => setAdminViewFilter('deleted')}
+                  className={`px-3 py-1 rounded-xl font-medium transition-all flex items-center gap-1 ${
+                    adminViewFilter === 'deleted'
+                      ? 'bg-rose-500 text-white shadow-xs font-bold'
+                      : 'text-slate-600 hover:text-rose-600'
+                  }`}
+                  title="Products deleted by administration role"
+                >
+                  <ShieldAlert className="w-3.5 h-3.5" />
+                  <span>Deleted ({deletedProductsCount})</span>
+                </button>
+                <button
+                  onClick={() => setAdminViewFilter('all')}
+                  className={`px-3 py-1 rounded-xl font-medium transition-all ${
+                    adminViewFilter === 'all'
+                      ? 'bg-white text-slate-900 shadow-xs font-bold'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  All ({products.length})
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-wrap items-center gap-2 justify-end">
@@ -187,13 +259,15 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
               </button>
             )}
 
-            <button
-              onClick={onOpenManageCategories}
-              className="px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-2xl transition-colors flex items-center gap-1.5"
-            >
-              <Tag className="w-3.5 h-3.5 text-slate-500" />
-              <span>Categories</span>
-            </button>
+            {canEdit && (
+              <button
+                onClick={onOpenManageCategories}
+                className="px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-2xl transition-colors flex items-center gap-1.5"
+              >
+                <Tag className="w-3.5 h-3.5 text-slate-500" />
+                <span>Categories</span>
+              </button>
+            )}
 
             <button
               onClick={() => onNavigateTab('stock_logs')}
@@ -203,13 +277,15 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
               <span>Movement Log</span>
             </button>
 
-            <button
-              onClick={onOpenAddProduct}
-              className="px-3.5 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-2xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span>Add Product</span>
-            </button>
+            {canCreate && (
+              <button
+                onClick={onOpenAddProduct}
+                className="px-3.5 py-1.5 bg-(--accent-color) hover:bg-(--accent-color-dark) text-white rounded-2xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Add Product</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -219,7 +295,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
             onClick={() => setSelectedCategory('ALL')}
             className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
               selectedCategory === 'ALL'
-                ? 'bg-[var(--accent-color)] text-white'
+                ? 'bg-(--accent-color) text-white'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -232,23 +308,30 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.name)}
-                className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
+                className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                   isSelected
-                    ? 'bg-[var(--accent-color)] text-white'
+                    ? 'bg-(--accent-color) text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
-                {cat.name} ({count})
+                <span>{cat.name}</span>
+                <span
+                  className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                    isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-500'
+                  }`}
+                >
+                  {count}
+                </span>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Mobile Card View (< md) */}
-      <div className="md:hidden space-y-3">
+      {/* Mobile Product Cards (hidden on md and up) */}
+      <div className="grid grid-cols-1 gap-3 md:hidden">
         {filteredProducts.length === 0 ? (
-          <div className="bg-white p-8 text-center rounded-3xl ring-1 ring-slate-200/80 text-slate-400 text-xs">
+          <div className="bg-white rounded-3xl p-8 text-center text-slate-400">
             <Package className="w-8 h-8 mx-auto text-slate-300 mb-2" />
             No products found matching your criteria.
           </div>
@@ -263,19 +346,30 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
             return (
               <div
                 key={product.id}
-                className="bg-white p-5 sm:p-6 rounded-3xl ring-1 ring-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all space-y-3"
+                className={`p-4 rounded-3xl ring-1 shadow-sm space-y-3 ${
+                  product.isDeleted
+                    ? 'bg-rose-50/60 ring-rose-200 border-l-4 border-l-rose-500'
+                    : 'bg-white ring-slate-200/80'
+                }`}
               >
-                <div className="flex items-start justify-between gap-2">
+                <div className="flex items-start justify-between">
                   <div>
-                    <h4 className="font-bold text-slate-900 text-sm">{product.name}</h4>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5 flex items-center gap-1.5">
-                      <span>SKU: {product.sku}</span>
-                      <span>•</span>
-                      <span className="text-slate-600 font-medium">{product.category}</span>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <h4 className={`font-bold ${product.isDeleted ? 'line-through text-slate-500' : 'text-slate-900'}`}>
+                        {product.name}
+                      </h4>
+                      {product.isDeleted && (
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 ring-1 ring-rose-300">
+                          Deleted by @{product.deletedBy || 'administration'}
+                        </span>
+                      )}
                     </div>
+                    <p className="text-[11px] text-slate-400 font-mono">
+                      SKU: {product.sku} • {product.category}
+                    </p>
                   </div>
                   <span
-                    className={`px-2.5 py-1 rounded-full text-xs font-bold whitespace-nowrap ring-1 ${
+                    className={`px-2.5 py-1 rounded-full text-xs font-bold ring-1 ${
                       isOutOfStock
                         ? 'bg-red-100 text-red-700 ring-red-300/60'
                         : isLowStock
@@ -287,14 +381,18 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                   </span>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 py-2 border-y border-slate-100 text-xs">
+                <div className="grid grid-cols-3 gap-2 py-2 border-y border-slate-100 text-center">
                   <div>
-                    <p className="text-[10px] text-slate-400 font-medium">Cost Price</p>
-                    <p className="font-mono font-semibold text-slate-700">{formatCurrency(product.purchasePrice)}</p>
+                    <p className="text-[10px] text-slate-400 font-medium">Cost</p>
+                    <p className="font-mono text-xs font-semibold text-slate-600">
+                      {formatCurrency(product.purchasePrice)}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 font-medium">Selling Price</p>
-                    <p className="font-mono font-bold text-[var(--accent-color-dark)]">{formatCurrency(product.sellingPrice)}</p>
+                    <p className="text-[10px] text-slate-400 font-medium">Price</p>
+                    <p className="font-mono text-xs font-bold text-slate-900">
+                      {formatCurrency(product.sellingPrice)}
+                    </p>
                   </div>
                   <div>
                     <p className="text-[10px] text-slate-400 font-medium">Margin</p>
@@ -313,40 +411,72 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    {onOpenProductProfitGraph && (
-                      <button
-                        onClick={() => onOpenProductProfitGraph(product.id)}
-                        className="p-1.5 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-2xl"
-                        title="Profit Graph"
-                      >
-                        <TrendingUp className="w-3.5 h-3.5" />
-                      </button>
+                    {product.isDeleted && isAdmin ? (
+                      <>
+                        <button
+                          onClick={() => restoreProduct(product.id)}
+                          className="px-2.5 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-2xl text-xs font-bold flex items-center gap-1"
+                          title="Restore product"
+                        >
+                          <RotateCcw className="w-3.5 h-3.5" />
+                          <span>Restore</span>
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (window.confirm(`Permanently delete "${product.name}" from database?`)) {
+                              deleteProduct(product.id, true);
+                            }
+                          }}
+                          className="p-1.5 text-rose-600 hover:bg-rose-100 rounded-2xl"
+                          title="Permanently delete"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        {onOpenProductProfitGraph && (
+                          <button
+                            onClick={() => onOpenProductProfitGraph(product.id)}
+                            className="p-1.5 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-2xl"
+                            title="Profit Graph"
+                          >
+                            <TrendingUp className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                        {canEdit && (
+                          <button
+                            onClick={() => onOpenRestock(product.id)}
+                            className="px-2.5 py-1 bg-(--accent-color-light) hover:bg-(--accent-color-light) text-(--accent-color-dark) rounded-2xl text-xs font-semibold flex items-center gap-1"
+                          >
+                            <PlusCircle className="w-3.5 h-3.5" />
+                            <span>Restock</span>
+                          </button>
+                        )}
+                        {canEdit && (
+                          <button
+                            onClick={() => onOpenEditProduct(product)}
+                            className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-2xl"
+                            title="Edit"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                        )}
+                        {canDelete && (
+                          <button
+                            onClick={() => {
+                              if (window.confirm(`Delete product "${product.name}"?`)) {
+                                deleteProduct(product.id);
+                              }
+                            }}
+                            className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-2xl"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        )}
+                      </>
                     )}
-                    <button
-                      onClick={() => onOpenRestock(product.id)}
-                      className="px-2.5 py-1 bg-[var(--accent-color-light)] hover:bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-2xl text-xs font-semibold flex items-center gap-1"
-                    >
-                      <PlusCircle className="w-3.5 h-3.5" />
-                      <span>Restock</span>
-                    </button>
-                    <button
-                      onClick={() => onOpenEditProduct(product)}
-                      className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-2xl"
-                      title="Edit"
-                    >
-                      <Edit2 className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (window.confirm(`Delete product "${product.name}"?`)) {
-                          deleteProduct(product.id);
-                        }
-                      }}
-                      className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-2xl"
-                      title="Delete"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
                   </div>
                 </div>
               </div>
@@ -407,23 +537,45 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                   const isOutOfStock = product.stockQuantity === 0;
 
                   return (
-                    <tr key={product.id} className="hover:bg-[var(--accent-color-light)] transition-colors">
+                    <tr
+                      key={product.id}
+                      className={`transition-colors ${
+                        product.isDeleted
+                          ? 'bg-rose-50/50 hover:bg-rose-100/50'
+                          : 'hover:bg-(--accent-color-light)'
+                      }`}
+                    >
                       {/* Product Name & SKU */}
                       <td className="px-5 py-3.5">
-                        <div className="font-semibold text-slate-900">{product.name}</div>
+                        <div className="flex items-center gap-2">
+                          <span className={`font-semibold ${product.isDeleted ? 'line-through text-slate-500' : 'text-slate-900'}`}>
+                            {product.name}
+                          </span>
+                          {product.isDeleted && (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 ring-1 ring-rose-300">
+                              Deleted by @{product.deletedBy || 'administration'}
+                            </span>
+                          )}
+                        </div>
                         <div className="text-[10px] text-slate-400 font-mono flex items-center gap-2">
                           <span>SKU: {product.sku}</span>
                           <span>•</span>
                           <span>Unit: {product.unit}</span>
+                          {product.isDeleted && product.deletedAt && (
+                            <>
+                              <span>•</span>
+                              <span className="text-rose-600">On {new Date(product.deletedAt).toLocaleDateString()}</span>
+                            </>
+                          )}
                         </div>
                       </td>
 
-                       {/* Category */}
-                       <td className="px-5 py-3.5">
-                         <span className="px-2.5 py-0.5 bg-slate-100 text-slate-700 rounded-full text-[11px] font-medium ring-1 ring-slate-300/60">
-                           {product.category}
-                         </span>
-                       </td>
+                      {/* Category */}
+                      <td className="px-5 py-3.5">
+                        <span className="px-2.5 py-0.5 bg-slate-100 text-slate-700 rounded-full text-[11px] font-medium ring-1 ring-slate-300/60">
+                          {product.category}
+                        </span>
+                      </td>
 
                       {/* Cost Price */}
                       <td className="px-5 py-3.5 font-mono text-slate-600">
@@ -450,15 +602,15 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                       {/* Stock Level */}
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-2">
-                           <span
-                             className={`px-2 py-0.5 rounded-full text-[11px] font-bold ring-1 ${
-                               isOutOfStock
-                                 ? 'bg-red-100 text-red-700 ring-red-300/60'
-                                 : isLowStock
-                                 ? 'bg-amber-100 text-amber-700 ring-amber-300/60'
-                                 : 'bg-slate-100 text-slate-800 ring-slate-300/60'
-                             }`}
-                           >
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[11px] font-bold ring-1 ${
+                              isOutOfStock
+                                ? 'bg-red-100 text-red-700 ring-red-300/60'
+                                : isLowStock
+                                ? 'bg-amber-100 text-amber-700 ring-amber-300/60'
+                                : 'bg-slate-100 text-slate-800 ring-slate-300/60'
+                            }`}
+                          >
                             {product.stockQuantity} {product.unit}
                           </span>
                           {isLowStock && (
@@ -472,43 +624,75 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
 
                       {/* Action buttons */}
                       <td className="px-5 py-3.5 text-right">
-                         <div className="flex items-center justify-end gap-1.5">
-                            {onOpenProductProfitGraph && (
+                        <div className="flex items-center justify-end gap-1.5">
+                          {product.isDeleted && isAdmin ? (
+                            <>
                               <button
-                                onClick={() => onOpenProductProfitGraph(product.id)}
-                                className="p-1.5 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-2xl transition-colors"
-                                title="View Profit Graph for this product"
+                                onClick={() => restoreProduct(product.id)}
+                                className="px-2.5 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-2xl text-[11px] font-bold flex items-center gap-1 transition-colors"
+                                title="Restore product to active catalog"
                               >
-                                <TrendingUp className="w-3.5 h-3.5" />
+                                <RotateCcw className="w-3 h-3" />
+                                <span>Restore</span>
                               </button>
-                            )}
-                            <button
-                              onClick={() => onOpenRestock(product.id)}
-                             className="px-2 py-1 bg-[var(--accent-color-light)] hover:bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-2xl text-[11px] font-semibold flex items-center gap-1 transition-colors"
-                             title="Restock this product"
-                           >
-                             <PlusCircle className="w-3 h-3" />
-                             <span>Restock</span>
-                           </button>
-                           <button
-                             onClick={() => onOpenEditProduct(product)}
-                             className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-2xl transition-colors"
-                             title="Edit product"
-                           >
-                             <Edit2 className="w-3.5 h-3.5" />
-                           </button>
-                           <button
-                             onClick={() => {
-                               if (window.confirm(`Are you sure you want to delete "${product.name}"?`)) {
-                                 deleteProduct(product.id);
-                               }
-                             }}
-                             className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-2xl transition-colors"
-                             title="Delete product"
-                           >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                           </div>
+                              <button
+                                onClick={() => {
+                                  if (window.confirm(`Permanently delete "${product.name}"? This cannot be undone.`)) {
+                                    deleteProduct(product.id, true);
+                                  }
+                                }}
+                                className="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-2xl transition-colors"
+                                title="Permanently delete product"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              {onOpenProductProfitGraph && (
+                                <button
+                                  onClick={() => onOpenProductProfitGraph(product.id)}
+                                  className="p-1.5 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-2xl transition-colors"
+                                  title="View Profit Graph for this product"
+                                >
+                                  <TrendingUp className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                              {canEdit && (
+                                <button
+                                  onClick={() => onOpenRestock(product.id)}
+                                  className="px-2 py-1 bg-(--accent-color-light) hover:bg-(--accent-color-light) text-(--accent-color-dark) rounded-2xl text-[11px] font-semibold flex items-center gap-1 transition-colors"
+                                  title="Restock this product"
+                                >
+                                  <PlusCircle className="w-3 h-3" />
+                                  <span>Restock</span>
+                                </button>
+                              )}
+                              {canEdit && (
+                                <button
+                                  onClick={() => onOpenEditProduct(product)}
+                                  className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-2xl transition-colors"
+                                  title="Edit product"
+                                >
+                                  <Edit2 className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                              {canDelete && (
+                                <button
+                                  onClick={() => {
+                                    if (window.confirm(`Are you sure you want to delete "${product.name}"?`)) {
+                                      deleteProduct(product.id);
+                                    }
+                                  }}
+                                  className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-2xl transition-colors"
+                                  title="Delete product"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );

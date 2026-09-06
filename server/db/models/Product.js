@@ -15,6 +15,10 @@ const ProductSchema = new mongoose.Schema(
     description: { type: String },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
+    isDeleted: { type: Boolean, default: false, index: true },
+    deletedAt: { type: Date },
+    deletedBy: { type: String },
+    deletedByRole: { type: String },
   },
   { timestamps: true }
 );

@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     const returns = await Return.find().lean().sort({ date: -1 });
     res.json({ success: true, data: returns });
   } catch (err) {
-    res.status(500).json({ success: false, error});
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
@@ -20,13 +20,13 @@ router.post('/', async (req, res) => {
   try {
     const { invoiceId, items, restockingFee, refundMethod, notes } = req.body;
     if (!invoiceId || !items || items.length === 0) {
-      return res.status(400).json({ success: false, error});
+      return res.status(400).json({ success: false, error: 'Invoice ID and items are required' });
     }
 
     // Find invoice
     const invoice = await Sale.findOne({ id: invoiceId });
     if (!invoice) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Invoice not found' });
     }
 
     let totalRefund = 0;
@@ -55,7 +55,6 @@ router.post('/', async (req, res) => {
 
       // If restocking is enabled, increase product stock
       if (retItem.restockItem) {
-        const prevStock = product.stockQuantity;
         product.stockQuantity += retItem.quantity;
         product.updatedAt = new Date();
         await product.save();
@@ -65,7 +64,8 @@ router.post('/', async (req, res) => {
     const restockingFeeVal = restockingFee || 0;
     const netRefundAmount = Math.max(0, Math.round((totalRefund - restockingFeeVal) * 100) / 100);
 
-    const returnNumber = `RET-2026-${String(await Return.countDocuments({}) + 1).padStart(3, '0')}`;
+    const count = (await Return.countDocuments({})) + 1;
+    const returnNumber = `RET-${new Date().getFullYear()}-${String(count).padStart(3, '0')}`;
 
     const newReturn = {
       returnNumber,
@@ -78,7 +78,7 @@ router.post('/', async (req, res) => {
       restockingFee: restockingFeeVal,
       netRefundAmount,
       itemsTotal: totalRefund,
-      refundMethod,
+      refundMethod: refundMethod || 'CASH',
       notes,
       date: new Date(),
     };
@@ -93,5 +93,3 @@ router.post('/', async (req, res) => {
 });
 
 export default router;
-
-

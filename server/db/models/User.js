@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 
-const VALID_ROLES = ['admin', 'manager', 'invoice', 'cashier', 'viewer'];
+const VALID_ROLES = ['admin', 'administration', 'manager', 'invoice', 'cashier', 'viewer'];
 
 const VALID_PERMISSIONS = [
   'dashboard.view',
   'pos.access',
-  'inventory.view', 'inventory.edit',
+  'inventory.view', 'inventory.create', 'inventory.edit', 'inventory.delete',
   'sales.view', 'sales.create', 'sales.delete',
   'returns.view', 'returns.create',
   'quotations.view', 'quotations.create',
-  'clients.view', 'clients.edit',
+  'clients.view', 'clients.create', 'clients.edit', 'clients.delete',
   'suppliers.view', 'suppliers.edit',
   'payments.view', 'payments.record',
   'expenses.view', 'expenses.create',

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
 import {
   Building2,
   Receipt,
@@ -155,7 +155,7 @@ export const SettingsView: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <Sliders className="w-6 h-6 text-[var(--accent-color)]" />
+            <Sliders className="w-6 h-6 text-(--accent-color)" />
             <span>Company Settings & Preferences</span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
@@ -166,7 +166,7 @@ export const SettingsView: React.FC = () => {
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="px-5 py-2.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-2xl text-xs sm:text-sm font-bold shadow-sm transition-colors flex items-center justify-center gap-2"
+          className="px-5 py-2.5 bg-(--accent-color) hover:bg-(--accent-color-dark) text-white rounded-2xl text-xs sm:text-sm font-bold shadow-sm transition-colors flex items-center justify-center gap-2"
         >
           {saveSuccess ? (
             <>
@@ -185,7 +185,7 @@ export const SettingsView: React.FC = () => {
       {saveSuccess && (
         <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-emerald-800 text-xs font-semibold animate-in fade-in duration-200">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>Settings saved and synchronized in real-time across all connected terminals.</span>
           </div>
         </div>
@@ -199,11 +199,11 @@ export const SettingsView: React.FC = () => {
             onClick={() => setActiveSubTab('profile')}
             className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all text-left ${
               activeSubTab === 'profile'
-                ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
+                ? 'bg-(--accent-color-light) text-(--accent-color-dark) font-bold shadow-xs'
                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
-            <Building2 className="w-4 h-4 flex-shrink-0" />
+            <Building2 className="w-4 h-4 shrink-0" />
             <span>Company Profile</span>
           </button>
 
@@ -211,11 +211,11 @@ export const SettingsView: React.FC = () => {
             onClick={() => setActiveSubTab('tax_stock')}
             className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all text-left ${
               activeSubTab === 'tax_stock'
-                ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
+                ? 'bg-(--accent-color-light) text-(--accent-color-dark) font-bold shadow-xs'
                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
-            <Percent className="w-4 h-4 flex-shrink-0" />
+            <Percent className="w-4 h-4 shrink-0" />
             <span>Tax & Stock Defaults</span>
           </button>
 
@@ -223,11 +223,11 @@ export const SettingsView: React.FC = () => {
             onClick={() => setActiveSubTab('receipt')}
             className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all text-left ${
               activeSubTab === 'receipt'
-                ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
+                ? 'bg-(--accent-color-light) text-(--accent-color-dark) font-bold shadow-xs'
                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
-            <Receipt className="w-4 h-4 flex-shrink-0" />
+            <Receipt className="w-4 h-4 shrink-0" />
             <span>POS & Receipts</span>
           </button>
 
@@ -235,11 +235,11 @@ export const SettingsView: React.FC = () => {
             onClick={() => setActiveSubTab('barcode')}
             className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all text-left ${
               activeSubTab === 'barcode'
-                ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
+                ? 'bg-(--accent-color-light) text-(--accent-color-dark) font-bold shadow-xs'
                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
-            <Barcode className="w-4 h-4 flex-shrink-0" />
+            <Barcode className="w-4 h-4 shrink-0" />
             <span>Barcode Label Printer</span>
           </button>
 
@@ -247,11 +247,11 @@ export const SettingsView: React.FC = () => {
             onClick={() => setActiveSubTab('theme')}
             className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all text-left ${
               activeSubTab === 'theme'
-                ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
+                ? 'bg-(--accent-color-light) text-(--accent-color-dark) font-bold shadow-xs'
                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
-            <Palette className="w-4 h-4 flex-shrink-0" />
+            <Palette className="w-4 h-4 shrink-0" />
             <span>Theme & Accent</span>
           </button>
 
@@ -259,11 +259,11 @@ export const SettingsView: React.FC = () => {
             onClick={() => setActiveSubTab('backup')}
             className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all text-left ${
               activeSubTab === 'backup'
-                ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
+                ? 'bg-(--accent-color-light) text-(--accent-color-dark) font-bold shadow-xs'
                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
-            <Database className="w-4 h-4 flex-shrink-0" />
+            <Database className="w-4 h-4 shrink-0" />
             <span>Data Backup & Reset</span>
           </button>
 
@@ -279,7 +279,7 @@ export const SettingsView: React.FC = () => {
                     : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                 }`}
               >
-                <UsersIcon className="w-4 h-4 flex-shrink-0" />
+                <UsersIcon className="w-4 h-4 shrink-0" />
                 <span>User Management</span>
               </button>
             </>
@@ -307,7 +307,7 @@ export const SettingsView: React.FC = () => {
                     type="text"
                     value={formData.companyName}
                     onChange={e => handleInputChange('companyName', e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                 </div>
 
@@ -319,7 +319,7 @@ export const SettingsView: React.FC = () => {
                     type="text"
                     value={formData.taxNumber}
                     onChange={e => handleInputChange('taxNumber', e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                 </div>
 
@@ -331,7 +331,7 @@ export const SettingsView: React.FC = () => {
                     type="email"
                     value={formData.email}
                     onChange={e => handleInputChange('email', e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                 </div>
 
@@ -343,7 +343,7 @@ export const SettingsView: React.FC = () => {
                     type="text"
                     value={formData.phone}
                     onChange={e => handleInputChange('phone', e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                 </div>
 
@@ -355,7 +355,7 @@ export const SettingsView: React.FC = () => {
                     type="text"
                     value={formData.address}
                     onChange={e => handleInputChange('address', e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                 </div>
 
@@ -367,7 +367,7 @@ export const SettingsView: React.FC = () => {
                     type="text"
                     value={formData.website}
                     onChange={e => handleInputChange('website', e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                 </div>
 
@@ -380,7 +380,7 @@ export const SettingsView: React.FC = () => {
                       type="text"
                       value={formData.currencySymbol}
                       onChange={e => handleInputChange('currencySymbol', e.target.value)}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-center focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-center focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                     />
                   </div>
 
@@ -391,7 +391,7 @@ export const SettingsView: React.FC = () => {
                     <select
                       value={formData.currencyCode}
                       onChange={e => handleInputChange('currencyCode', e.target.value)}
-                      className="w-full px-3 py-2 text-xs font-mono font-bold bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                      className="w-full px-3 py-2 text-xs font-mono font-bold bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                     >
                       <option value="USD">USD ($)</option>
                       <option value="EUR">EUR (€)</option>
@@ -431,7 +431,7 @@ export const SettingsView: React.FC = () => {
                       step="0.1"
                       value={formData.defaultTaxRate}
                       onChange={e => handleInputChange('defaultTaxRate', parseFloat(e.target.value) || 0)}
-                      className="w-full pl-3 pr-8 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                      className="w-full pl-3 pr-8 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                     />
                     <Percent className="w-3.5 h-3.5 text-slate-400 absolute right-3 top-2.5" />
                   </div>
@@ -450,7 +450,7 @@ export const SettingsView: React.FC = () => {
                     max="180"
                     value={formData.defaultPaymentTermsDays}
                     onChange={e => handleInputChange('defaultPaymentTermsDays', parseInt(e.target.value) || 0)}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                   <span className="text-[11px] text-slate-400 mt-1 block">
                     Number of days added to sale date for invoice due date
@@ -466,7 +466,7 @@ export const SettingsView: React.FC = () => {
                     min="1"
                     value={formData.defaultLowStockThreshold}
                     onChange={e => handleInputChange('defaultLowStockThreshold', parseInt(e.target.value) || 1)}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                   <span className="text-[11px] text-slate-400 mt-1 block">
                     Items below this trigger dashboard low-stock warning indicators
@@ -482,7 +482,7 @@ export const SettingsView: React.FC = () => {
                     min="1"
                     value={formData.stockAlertThreshold}
                     onChange={e => handleInputChange('stockAlertThreshold', parseInt(e.target.value) || 1)}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                   <span className="text-[11px] text-slate-400 mt-1 block">
                     Critical stock level for red sidebar counter badge
@@ -511,7 +511,7 @@ export const SettingsView: React.FC = () => {
                     type="text"
                     value={formData.receiptHeaderMessage}
                     onChange={e => handleInputChange('receiptHeaderMessage', e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                 </div>
 
@@ -523,7 +523,7 @@ export const SettingsView: React.FC = () => {
                     rows={2}
                     value={formData.receiptFooterMessage}
                     onChange={e => handleInputChange('receiptFooterMessage', e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                   />
                 </div>
 
@@ -533,7 +533,7 @@ export const SettingsView: React.FC = () => {
                       type="checkbox"
                       checked={formData.showBarcodeOnReceipt}
                       onChange={e => handleInputChange('showBarcodeOnReceipt', e.target.checked)}
-                      className="w-4 h-4 text-[var(--accent-color)] rounded border-slate-300 focus:ring-[var(--accent-color)]"
+                      className="w-4 h-4 text-(--accent-color) rounded border-slate-300 focus:ring-(--accent-color)"
                     />
                     <span className="text-xs font-bold text-slate-800">Print Barcode on Receipt</span>
                   </label>
@@ -543,7 +543,7 @@ export const SettingsView: React.FC = () => {
                       type="checkbox"
                       checked={formData.showTaxBreakdown}
                       onChange={e => handleInputChange('showTaxBreakdown', e.target.checked)}
-                      className="w-4 h-4 text-[var(--accent-color)] rounded border-slate-300 focus:ring-[var(--accent-color)]"
+                      className="w-4 h-4 text-(--accent-color) rounded border-slate-300 focus:ring-(--accent-color)"
                     />
                     <span className="text-xs font-bold text-slate-800">Print Tax Breakdown</span>
                   </label>
@@ -553,7 +553,7 @@ export const SettingsView: React.FC = () => {
                       type="checkbox"
                       checked={formData.autoPrintReceipt}
                       onChange={e => handleInputChange('autoPrintReceipt', e.target.checked)}
-                      className="w-4 h-4 text-[var(--accent-color)] rounded border-slate-300 focus:ring-[var(--accent-color)]"
+                      className="w-4 h-4 text-(--accent-color) rounded border-slate-300 focus:ring-(--accent-color)"
                     />
                     <span className="text-xs font-bold text-slate-800">Auto Prompt Print on Sale</span>
                   </label>
@@ -582,7 +582,7 @@ export const SettingsView: React.FC = () => {
                     <select
                       value={formData.barcodeLabelConfig.labelSize}
                       onChange={e => handleBarcodeConfigChange('labelSize', e.target.value as any)}
-                       className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                       className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                     >
                       <option value="50x25">50mm × 25mm (Standard Retail Sticker)</option>
                       <option value="38x25">38mm × 25mm (Compact Jewelry / Small Item)</option>
@@ -597,7 +597,7 @@ export const SettingsView: React.FC = () => {
                     <select
                       value={previewProductId}
                       onChange={e => setPreviewProductId(e.target.value)}
-                       className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color-light)] focus:border-[var(--accent-color)]"
+                       className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-color-light) focus:border-(--accent-color)"
                     >
                       {products.map(p => (
                         <option key={p.id} value={p.id}>
@@ -613,7 +613,7 @@ export const SettingsView: React.FC = () => {
                         type="checkbox"
                         checked={formData.barcodeLabelConfig.showPrice}
                         onChange={e => handleBarcodeConfigChange('showPrice', e.target.checked)}
-                        className="w-4 h-4 text-[var(--accent-color)] rounded border-slate-300 focus:ring-[var(--accent-color)]"
+                        className="w-4 h-4 text-(--accent-color) rounded border-slate-300 focus:ring-(--accent-color)"
                       />
                       <span>Show Retail Selling Price</span>
                     </label>
@@ -623,7 +623,7 @@ export const SettingsView: React.FC = () => {
                         type="checkbox"
                         checked={formData.barcodeLabelConfig.showSku}
                         onChange={e => handleBarcodeConfigChange('showSku', e.target.checked)}
-                        className="w-4 h-4 text-[var(--accent-color)] rounded border-slate-300 focus:ring-[var(--accent-color)]"
+                        className="w-4 h-4 text-(--accent-color) rounded border-slate-300 focus:ring-(--accent-color)"
                       />
                       <span>Show SKU Code</span>
                     </label>
@@ -633,7 +633,7 @@ export const SettingsView: React.FC = () => {
                         type="checkbox"
                         checked={formData.barcodeLabelConfig.showProductName}
                         onChange={e => handleBarcodeConfigChange('showProductName', e.target.checked)}
-                        className="w-4 h-4 text-[var(--accent-color)] rounded border-slate-300 focus:ring-[var(--accent-color)]"
+                        className="w-4 h-4 text-(--accent-color) rounded border-slate-300 focus:ring-(--accent-color)"
                       />
                       <span>Show Product Name</span>
                     </label>
@@ -643,7 +643,7 @@ export const SettingsView: React.FC = () => {
                         type="checkbox"
                         checked={formData.barcodeLabelConfig.showCompanyName}
                         onChange={e => handleBarcodeConfigChange('showCompanyName', e.target.checked)}
-                        className="w-4 h-4 text-[var(--accent-color)] rounded border-slate-300 focus:ring-[var(--accent-color)]"
+                        className="w-4 h-4 text-(--accent-color) rounded border-slate-300 focus:ring-(--accent-color)"
                       />
                       <span>Show Company Brand Header</span>
                     </label>
@@ -710,7 +710,7 @@ export const SettingsView: React.FC = () => {
                           <span className="font-mono font-bold text-slate-500">{selectedProduct.sku}</span>
                         )}
                         {formData.barcodeLabelConfig.showPrice && (
-                          <span className="font-mono font-black text-[var(--accent-color-dark)] ml-auto">
+                          <span className="font-mono font-black text-(--accent-color-dark) ml-auto">
                             {formatCurrency(selectedProduct.sellingPrice)}
                           </span>
                         )}
@@ -767,7 +767,7 @@ export const SettingsView: React.FC = () => {
                     type="checkbox"
                     checked={formData.compactMode}
                     onChange={e => handleInputChange('compactMode', e.target.checked)}
-                      className="w-4 h-4 text-[var(--accent-color)] rounded border-slate-300 focus:ring-[var(--accent-color)]"
+                      className="w-4 h-4 text-(--accent-color) rounded border-slate-300 focus:ring-(--accent-color)"
                   />
                   <div>
                     <span className="text-xs font-bold text-slate-800">Compact Density Table Rows</span>
@@ -794,7 +794,7 @@ export const SettingsView: React.FC = () => {
                 {/* Export Card */}
                 <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/60 flex flex-col justify-between space-y-4">
                   <div>
-                     <div className="w-10 h-10 rounded-xl bg-[var(--accent-color-light)] border border-[var(--accent-color-light)] flex items-center justify-center text-[var(--accent-color)] mb-3">
+                     <div className="w-10 h-10 rounded-xl bg-(--accent-color-light) border border-(--accent-color-light) flex items-center justify-center text-(--accent-color) mb-3">
                       <Download className="w-5 h-5" />
                     </div>
                     <h4 className="text-sm font-bold text-slate-900">Export Full JSON Database Backup</h4>
@@ -805,7 +805,7 @@ export const SettingsView: React.FC = () => {
 
                    <button
                      onClick={exportBackup}
-                      className="w-full px-4 py-2.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-2xl text-xs font-bold shadow-sm transition-colors flex items-center justify-center gap-2"
+                      className="w-full px-4 py-2.5 bg-(--accent-color) hover:bg-(--accent-color-dark) text-white rounded-2xl text-xs font-bold shadow-sm transition-colors flex items-center justify-center gap-2"
                    >
                     <Download className="w-4 h-4" />
                     <span>Download JSON Backup</span>
@@ -844,7 +844,7 @@ export const SettingsView: React.FC = () => {
 
               {restoreError && (
                 <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-rose-700 text-xs font-semibold">
-                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{restoreError}</span>
                 </div>
               )}

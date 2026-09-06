@@ -23,6 +23,10 @@ export interface Product {
   description?: string;
   createdAt: string;
   updatedAt: string;
+  isDeleted?: boolean;
+  deletedAt?: string;
+  deletedBy?: string;
+  deletedByRole?: string;
 }
 
 export interface Client {
@@ -37,6 +41,10 @@ export interface Client {
   totalSpent: number;
   outstandingBalance: number;
   createdAt: string;
+  isDeleted?: boolean;
+  deletedAt?: string;
+  deletedBy?: string;
+  deletedByRole?: string;
 }
 
 export interface SaleItem {
@@ -84,6 +92,10 @@ export interface SaleInvoice {
   date: string; // ISO string
   payments: PaymentTransaction[];
   dueDate?: string;
+  isDeleted?: boolean;
+  deletedAt?: string;
+  deletedBy?: string;
+  deletedByRole?: string;
 }
 
 export interface Expense {

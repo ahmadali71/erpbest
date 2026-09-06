@@ -175,12 +175,22 @@ export const api = {
     return json.data;
   },
 
-  async deleteProduct(id: string): Promise<boolean> {
-    const res = await fetch(`${API_BASE_URL}/api/products/${id}`, {
+  async deleteProduct(id: string, permanent: boolean = false): Promise<boolean> {
+    const res = await fetch(`${API_BASE_URL}/api/products/${id}${permanent ? '?permanent=true' : ''}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
     return res.ok;
+  },
+
+  async restoreProduct(id: string): Promise<Product> {
+    const res = await fetch(`${API_BASE_URL}/api/products/${id}/restore`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to restore product');
+    const json = await res.json();
+    return json.data;
   },
 
   async restockProduct(
@@ -300,12 +310,22 @@ export const api = {
     return json.data;
   },
 
-  async deleteClient(id: string): Promise<boolean> {
-    const res = await fetch(`${API_BASE_URL}/api/clients/${id}`, {
+  async deleteClient(id: string, permanent: boolean = false): Promise<boolean> {
+    const res = await fetch(`${API_BASE_URL}/api/clients/${id}${permanent ? '?permanent=true' : ''}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
     return res.ok;
+  },
+
+  async restoreClient(id: string): Promise<Client> {
+    const res = await fetch(`${API_BASE_URL}/api/clients/${id}/restore`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to restore client');
+    const json = await res.json();
+    return json.data;
   },
 
   async getSales(): Promise<SaleInvoice[]> {
@@ -366,12 +386,22 @@ export const api = {
     return json.data;
   },
 
-  async deleteSale(saleId: string): Promise<boolean> {
-    const res = await fetch(`${API_BASE_URL}/api/sales/${saleId}`, {
+  async deleteSale(saleId: string, permanent: boolean = false): Promise<boolean> {
+    const res = await fetch(`${API_BASE_URL}/api/sales/${saleId}${permanent ? '?permanent=true' : ''}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
     return res.ok;
+  },
+
+  async restoreSale(saleId: string): Promise<SaleInvoice> {
+    const res = await fetch(`${API_BASE_URL}/api/sales/${saleId}/restore`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to restore sale');
+    const json = await res.json();
+    return json.data;
   },
 
   async getExpenses(): Promise<Expense[]> {

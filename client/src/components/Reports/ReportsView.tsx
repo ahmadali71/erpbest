@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import {
   TrendingUp,
   BarChart3,
@@ -167,7 +167,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
       <div className="bg-white p-5 sm:p-6 rounded-3xl ring-1 ring-slate-200/80 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <h2 className="text-base font-bold text-slate-800 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-[var(--accent-color)]" />
+            <TrendingUp className="w-5 h-5 text-(--accent-color)" />
             <span>Business Intelligence & Financial Reports</span>
           </h2>
           <p className="text-xs text-slate-400">
@@ -184,7 +184,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
                 onClick={() => setTimeRange(range)}
                 className={`px-3 py-1 text-xs font-semibold rounded-md capitalize transition-all ${
                   timeRange === range
-                    ? 'bg-white text-[var(--accent-color-dark)] shadow-xs'
+                    ? 'bg-white text-(--accent-color-dark) shadow-xs'
                     : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
@@ -203,7 +203,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
 
           <button
             onClick={() => window.print()}
-            className="px-3 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-2xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5"
+            className="px-3 py-1.5 bg-(--accent-color) hover:bg-(--accent-color-dark) text-white rounded-2xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5"
           >
             <Printer className="w-3.5 h-3.5" />
             <span>Print Report</span>
@@ -282,7 +282,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           <button
             onClick={() => setReportTab('pnl')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              reportTab === 'pnl' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
+              reportTab === 'pnl' ? 'bg-white text-(--accent-color-dark) shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Profit & Loss Statement
@@ -312,7 +312,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           <button
             onClick={() => setReportTab('products')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              reportTab === 'products' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              reportTab === 'products' ? 'bg-white text-(--accent-color-dark) shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Product Sales Velocity ({productPerformance.length})
@@ -320,7 +320,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           <button
             onClick={() => setReportTab('clients')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              reportTab === 'clients' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              reportTab === 'clients' ? 'bg-white text-(--accent-color-dark) shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Top Customer Accounts ({topClients.length})
@@ -328,7 +328,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           <button
             onClick={() => setReportTab('payment_methods')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              reportTab === 'payment_methods' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              reportTab === 'payment_methods' ? 'bg-white text-(--accent-color-dark) shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Payment Channels & Settlement
@@ -354,7 +354,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
                   <span>Less: Cost of Goods Sold (COGS)</span>
                   <span className="text-red-600">-{formatCurrency(totalCostOfGoodsSold)}</span>
                 </div>
-                <div className="flex justify-between text-xs font-bold text-[var(--accent-color-dark)] pt-2 border-t border-slate-200">
+                <div className="flex justify-between text-xs font-bold text-(--accent-color-dark) pt-2 border-t border-slate-200">
                   <span>Gross Profit</span>
                   <span>{formatCurrency(grossProfit)} ({grossMarginPct}%)</span>
                 </div>
@@ -421,7 +421,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
                 {productPerformance.map(p => {
                   const marginPct = p.revenue > 0 ? Math.round((p.profit / p.revenue) * 100) : 0;
                   return (
-                    <tr key={p.sku} className="hover:bg-[var(--accent-color-light)] transition-colors">
+                    <tr key={p.sku} className="hover:bg-(--accent-color-light) transition-colors">
                       <td className="px-5 py-3.5">
                         <div className="font-semibold text-slate-900">{p.name}</div>
                         <div className="text-[10px] text-slate-400 font-mono">SKU: {p.sku}</div>
@@ -460,7 +460,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {topClients.map(c => (
-                  <tr key={c.id} className="hover:bg-[var(--accent-color-light)] transition-colors">
+                  <tr key={c.id} className="hover:bg-(--accent-color-light) transition-colors">
                     <td className="px-5 py-3.5 font-semibold text-slate-900">
                       {c.name} {c.company && <span className="text-slate-400 font-normal">({c.company})</span>}
                     </td>

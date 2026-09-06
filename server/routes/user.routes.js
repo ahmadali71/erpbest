@@ -1,6 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 import User from '../db/models/User.js';
 import { authenticateToken, requireAdmin, requirePermission } from '../middleware/auth.js';
 
@@ -42,7 +42,7 @@ router.post('/', requireAdmin, async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
-      id: uuidv4(),
+      id: randomUUID(),
       username,
       password: hashedPassword,
       role,

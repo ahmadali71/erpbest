@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import {
   History,
   FileText,
@@ -424,7 +424,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
         <div>
           <span className="text-slate-400 font-bold uppercase tracking-wider block text-[10px]">Lifetime Volumes</span>
           <div className="mt-1">
-            <span className="font-mono font-bold text-[var(--accent-color-dark)] text-sm">
+            <span className="font-mono font-bold text-(--accent-color-dark) text-sm">
               {formatCurrency(totalInvoiced)}
             </span>
             <span className="text-slate-400 block text-[11px]">Total Lifetime Purchases</span>
@@ -441,7 +441,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
             {onOpenNewSale && (
               <button
                 onClick={() => onOpenNewSale(client)}
-                className="px-3 py-1.5 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-xl text-xs font-semibold shadow-xs flex items-center gap-1 transition-all"
+                className="px-3 py-1.5 bg-(--accent-color) hover:bg-(--accent-color-dark) text-white rounded-xl text-xs font-semibold shadow-xs flex items-center gap-1 transition-all"
               >
                 + New Sale
               </button>
@@ -561,7 +561,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
               onClick={() => setActiveTab('statement')}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
                 activeTab === 'statement'
-                  ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold'
+                  ? 'bg-white text-(--accent-color-dark) shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -573,7 +573,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
               onClick={() => setActiveTab('invoices')}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
                 activeTab === 'invoices'
-                  ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold'
+                  ? 'bg-white text-(--accent-color-dark) shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -585,7 +585,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
               onClick={() => setActiveTab('payments')}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
                 activeTab === 'payments'
-                  ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold'
+                  ? 'bg-white text-(--accent-color-dark) shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -597,7 +597,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
               onClick={() => setActiveTab('products')}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
                 activeTab === 'products'
-                  ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold'
+                  ? 'bg-white text-(--accent-color-dark) shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -609,7 +609,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
               onClick={() => setActiveTab('quotations')}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
                 activeTab === 'quotations'
-                  ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold'
+                  ? 'bg-white text-(--accent-color-dark) shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -621,7 +621,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
               onClick={() => setActiveTab('returns')}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
                 activeTab === 'returns'
-                  ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold'
+                  ? 'bg-white text-(--accent-color-dark) shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -743,7 +743,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
                           {event.invoiceObj && onSelectInvoice && (
                             <button
                               onClick={() => onSelectInvoice(event.invoiceObj!)}
-                              className="p-1 text-slate-400 hover:text-[var(--accent-color)] rounded"
+                              className="p-1 text-slate-400 hover:text-(--accent-color) rounded"
                               title="View Invoice Details"
                             >
                               <FileText className="w-3.5 h-3.5" />
@@ -786,7 +786,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
                   ) : (
                     filteredSales.map(sale => (
                       <tr key={sale.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="px-4 py-3 font-mono font-semibold text-[var(--accent-color)]">
+                        <td className="px-4 py-3 font-mono font-semibold text-(--accent-color)">
                           {sale.invoiceNumber}
                         </td>
                         <td className="px-4 py-3 text-slate-500 whitespace-nowrap">
@@ -831,7 +831,7 @@ export const CustomerHistoryDetails: React.FC<CustomerHistoryDetailsProps> = ({
                             {onSelectInvoice && (
                               <button
                                 onClick={() => onSelectInvoice(sale)}
-                                className="p-1 text-slate-400 hover:text-[var(--accent-color)]"
+                                className="p-1 text-slate-400 hover:text-(--accent-color)"
                                 title="View Details"
                               >
                                 <FileText className="w-3.5 h-3.5" />

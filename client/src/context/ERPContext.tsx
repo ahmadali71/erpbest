@@ -90,7 +90,8 @@ interface ERPContextType {
   // Product actions
   addProduct: (product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   updateProduct: (id: string, updates: Partial<Product>) => Promise<void>;
-  deleteProduct: (id: string) => Promise<void>;
+  deleteProduct: (id: string, permanent?: boolean) => Promise<void>;
+  restoreProduct: (id: string) => Promise<void>;
   restockProduct: (productId: string, quantity: number, unitCost?: number, notes?: string, supplierName?: string) => Promise<void>;
   adjustStock: (productId: string, newStock: number, reason: string) => Promise<void>;
   
@@ -101,12 +102,14 @@ interface ERPContextType {
   // Client actions
   addClient: (client: Omit<Client, 'id' | 'totalSpent' | 'outstandingBalance' | 'createdAt'>) => Promise<Client>;
   updateClient: (id: string, updates: Partial<Client>) => Promise<void>;
-  deleteClient: (id: string) => Promise<void>;
+  deleteClient: (id: string, permanent?: boolean) => Promise<void>;
+  restoreClient: (id: string) => Promise<void>;
 
   // Sales actions
   createSale: (input: SaleCreationInput) => Promise<SaleInvoice | null>;
   recordPayment: (saleId: string, amount: number, method: PaymentMethod, note?: string) => Promise<void>;
-  deleteSale: (saleId: string) => Promise<void>;
+  deleteSale: (saleId: string, permanent?: boolean) => Promise<void>;
+  restoreSale: (saleId: string) => Promise<void>;
 
   // Returns & Refunds
   processReturn: (data: {
@@ -831,12 +834,21 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
-  const deleteProduct = async (id: string) => {
-    setProducts(prev => prev.filter(p => p.id !== id));
+  const deleteProduct = async (id: string, permanent: boolean = false) => {
     try {
-      await api.deleteProduct(id);
+      await api.deleteProduct(id, permanent);
+      await refreshData();
     } catch (err) {
       console.error('Error deleting product:', err);
+    }
+  };
+
+  const restoreProduct = async (id: string) => {
+    try {
+      await api.restoreProduct(id);
+      await refreshData();
+    } catch (err) {
+      console.error('Error restoring product:', err);
     }
   };
 
@@ -1000,12 +1012,21 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
-  const deleteClient = async (id: string) => {
-    setClients(prev => prev.filter(c => c.id !== id));
+  const deleteClient = async (id: string, permanent: boolean = false) => {
     try {
-      await api.deleteClient(id);
+      await api.deleteClient(id, permanent);
+      await refreshData();
     } catch (err) {
       console.error('Error deleting client:', err);
+    }
+  };
+
+  const restoreClient = async (id: string) => {
+    try {
+      await api.restoreClient(id);
+      await refreshData();
+    } catch (err) {
+      console.error('Error restoring client:', err);
     }
   };
 
@@ -1231,9 +1252,9 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     );
   };
 
-  const deleteSale = async (saleId: string) => {
+  const deleteSale = async (saleId: string, permanent: boolean = false) => {
     try {
-      await api.deleteSale(saleId);
+      await api.deleteSale(saleId, permanent);
       await refreshData();
       return;
     } catch (err) {
@@ -1266,6 +1287,15 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     );
 
     setSales(prev => prev.filter(s => s.id !== saleId));
+  };
+
+  const restoreSale = async (saleId: string) => {
+    try {
+      await api.restoreSale(saleId);
+      await refreshData();
+    } catch (err) {
+      console.error('Error restoring sale:', err);
+    }
   };
 
   // Expenses
@@ -1546,18 +1576,22 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     URL.revokeObjectURL(url);
   };
 
+  // Active (non-deleted) items for accurate financial & stock calculations
+  const activeSales = useMemo(() => sales.filter(s => !s.isDeleted), [sales]);
+  const activeProducts = useMemo(() => products.filter(p => !p.isDeleted), [products]);
+
   // Computed Financial Metrics
   const totalRevenue = useMemo(() => {
-    return Math.round(sales.reduce((acc, s) => acc + s.grandTotal, 0) * 100) / 100;
-  }, [sales]);
+    return Math.round(activeSales.reduce((acc, s) => acc + s.grandTotal, 0) * 100) / 100;
+  }, [activeSales]);
 
   const totalCollected = useMemo(() => {
-    return Math.round(sales.reduce((acc, s) => acc + s.amountPaid, 0) * 100) / 100;
-  }, [sales]);
+    return Math.round(activeSales.reduce((acc, s) => acc + s.amountPaid, 0) * 100) / 100;
+  }, [activeSales]);
 
   const totalCostOfGoodsSold = useMemo(() => {
-    return Math.round(sales.reduce((acc, s) => acc + s.totalCost, 0) * 100) / 100;
-  }, [sales]);
+    return Math.round(activeSales.reduce((acc, s) => acc + s.totalCost, 0) * 100) / 100;
+  }, [activeSales]);
 
   const grossProfit = useMemo(() => {
     return Math.round((totalRevenue - totalCostOfGoodsSold) * 100) / 100;
@@ -1572,8 +1606,8 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   }, [grossProfit, totalExpenses]);
 
   const totalPendingReceivables = useMemo(() => {
-    return Math.round(sales.reduce((acc, s) => acc + s.amountDue, 0) * 100) / 100;
-  }, [sales]);
+    return Math.round(activeSales.reduce((acc, s) => acc + s.amountDue, 0) * 100) / 100;
+  }, [activeSales]);
 
   const totalAccountsPayable = useMemo(() => {
     const pendingPOs = purchaseOrders.filter(po => po.status === 'ORDERED' || po.status === 'DRAFT');
@@ -1581,16 +1615,16 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   }, [purchaseOrders]);
 
   const inventoryCostValue = useMemo(() => {
-    return Math.round(products.reduce((acc, p) => acc + p.purchasePrice * p.stockQuantity, 0) * 100) / 100;
-  }, [products]);
+    return Math.round(activeProducts.reduce((acc, p) => acc + p.purchasePrice * p.stockQuantity, 0) * 100) / 100;
+  }, [activeProducts]);
 
   const inventoryRetailValue = useMemo(() => {
-    return Math.round(products.reduce((acc, p) => acc + p.sellingPrice * p.stockQuantity, 0) * 100) / 100;
-  }, [products]);
+    return Math.round(activeProducts.reduce((acc, p) => acc + p.sellingPrice * p.stockQuantity, 0) * 100) / 100;
+  }, [activeProducts]);
 
   const lowStockProducts = useMemo(() => {
-    return products.filter(p => p.stockQuantity <= p.minStockThreshold);
-  }, [products]);
+    return activeProducts.filter(p => p.stockQuantity <= p.minStockThreshold);
+  }, [activeProducts]);
 
   const lowStockCount = lowStockProducts.length;
 
@@ -1794,6 +1828,7 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         addProduct,
         updateProduct,
         deleteProduct,
+        restoreProduct,
         restockProduct,
         adjustStock,
         addCategory,
@@ -1801,9 +1836,11 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         addClient,
         updateClient,
         deleteClient,
+        restoreClient,
         createSale,
         recordPayment,
         deleteSale,
+        restoreSale,
         processReturn,
         updateSettings,
         formatCurrency,

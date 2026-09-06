@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+﻿import React, { useState, useMemo, useEffect } from 'react';
 import {
   TrendingUp,
   Package,
@@ -493,7 +493,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
                 onClick={() => setInterval(val)}
                 className={`px-3 py-1.5 text-xs font-semibold rounded-lg capitalize transition-all ${
                   interval === val
-                    ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold'
+                    ? 'bg-white text-(--accent-color-dark) shadow-xs font-bold'
                     : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
@@ -508,7 +508,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
               <select
                 value={selectedYear}
                 onChange={e => setSelectedYear(Number(e.target.value))}
-                className="px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-[var(--accent-color)]"
+                className="px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-(--accent-color)"
               >
                 {availableYears.map(yr => (
                   <option key={yr} value={yr}>
@@ -549,7 +549,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
               onClick={() => setChartStyle('line')}
               className={`p-1.5 rounded-lg transition-all ${
                 chartStyle === 'line'
-                  ? 'bg-white text-[var(--accent-color)] shadow-xs'
+                  ? 'bg-white text-(--accent-color) shadow-xs'
                   : 'text-slate-400 hover:text-slate-700'
               }`}
               title="Multi-Line Chart"
@@ -560,7 +560,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
               onClick={() => setChartStyle('grouped_bar')}
               className={`p-1.5 rounded-lg transition-all ${
                 chartStyle === 'grouped_bar'
-                  ? 'bg-white text-[var(--accent-color)] shadow-xs'
+                  ? 'bg-white text-(--accent-color) shadow-xs'
                   : 'text-slate-400 hover:text-slate-700'
               }`}
               title="Grouped Bar Chart"
@@ -571,7 +571,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
               onClick={() => setChartStyle('area')}
               className={`p-1.5 rounded-lg transition-all ${
                 chartStyle === 'area'
-                  ? 'bg-white text-[var(--accent-color)] shadow-xs'
+                  ? 'bg-white text-(--accent-color) shadow-xs'
                   : 'text-slate-400 hover:text-slate-700'
               }`}
               title="Smooth Area Chart"
@@ -628,7 +628,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
             </button>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="px-3 py-1 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-lg text-xs font-semibold shadow-xs flex items-center gap-1"
+              className="px-3 py-1 bg-(--accent-color) hover:bg-(--accent-color-dark) text-white rounded-lg text-xs font-semibold shadow-xs flex items-center gap-1"
             >
               <span>{isDropdownOpen ? 'Done Selecting' : '+ Pick Products'}</span>
               <ChevronDown
@@ -639,7 +639,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
         </div>
 
         {/* Selected Products Badges */}
-        <div className="flex flex-wrap items-center gap-2 min-h-[38px] p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
+        <div className="flex flex-wrap items-center gap-2 min-h-9.5 p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
           {selectedProductIds.length === 0 ? (
             <div className="flex items-center gap-2 text-xs text-amber-600 font-medium py-1 px-2">
               <Info className="w-4 h-4 text-amber-500" />
@@ -689,7 +689,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
                 placeholder="Search products by name, SKU, or category to select..."
                 value={searchFilter}
                 onChange={e => setSearchFilter(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]"
+                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-(--accent-color)"
               />
             </div>
 
@@ -704,13 +704,13 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
                     onClick={() => handleToggleProduct(prod.id)}
                     className={`p-2.5 rounded-xl border text-left text-xs transition-all flex items-start gap-2.5 ${
                       isSelected
-                        ? 'bg-white border-[var(--accent-color)] shadow-xs ring-1 ring-[var(--accent-color)]'
+                        ? 'bg-white border-(--accent-color) shadow-xs ring-1 ring-(--accent-color)'
                         : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700'
                     }`}
                   >
                     <div className="pt-0.5">
                       {isSelected ? (
-                        <CheckSquare className="w-4 h-4 text-[var(--accent-color)]" />
+                        <CheckSquare className="w-4 h-4 text-(--accent-color)" />
                       ) : (
                         <Square className="w-4 h-4 text-slate-300" />
                       )}
@@ -763,7 +763,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
             <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">
               Average Profit Margin
             </p>
-            <h3 className="text-2xl font-bold text-[var(--accent-color-dark)] mt-1">
+            <h3 className="text-2xl font-bold text-(--accent-color-dark) mt-1">
               {summaryStats.averageMargin}%
             </h3>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -1043,7 +1043,7 @@ export const ProductProfitGraphs: React.FC<ProductProfitGraphsProps> = ({ initia
                             className="w-2 h-2 rounded-full"
                             style={{ backgroundColor: color }}
                           />
-                          <span className="text-slate-900 font-bold truncate max-w-[140px]">
+                          <span className="text-slate-900 font-bold truncate max-w-35">
                             {prod.name}
                           </span>
                         </div>

@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     const suppliers = await Supplier.find().lean().sort({ createdAt: -1 });
     res.json({ success: true, data: suppliers });
   } catch (err) {
-    res.status(500).json({ success: false, error});
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
@@ -18,11 +18,11 @@ router.get('/:id', async (req, res) => {
   try {
     const supplier = await Supplier.findOne({ id: req.params.id }).lean();
     if (!supplier) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Supplier not found' });
     }
     res.json({ success: true, data: supplier });
   } catch (err) {
-    res.status(500).json({ success: false, error});
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
   try {
     const { name, contactPerson, email, phone, address, paymentTerms, taxNumber } = req.body;
     if (!name || !email || !phone) {
-      return res.status(400).json({ success: false, error});
+      return res.status(400).json({ success: false, error: 'Name, email, and phone are required' });
     }
     const supplier = new Supplier({
       name,
@@ -54,7 +54,7 @@ router.put('/:id', async (req, res) => {
   try {
     const supplier = await Supplier.findOneAndUpdate({ id: req.params.id }, req.body, { new: true }).lean();
     if (!supplier) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Supplier not found' });
     }
     res.json({ success: true, data: supplier });
   } catch (err) {
@@ -67,7 +67,7 @@ router.delete('/:id', async (req, res) => {
   try {
     const supplier = await Supplier.findOneAndDelete({ id: req.params.id });
     if (!supplier) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Supplier not found' });
     }
     res.json({ success: true, data: {} });
   } catch (err) {
@@ -76,5 +76,3 @@ router.delete('/:id', async (req, res) => {
 });
 
 export default router;
-
-

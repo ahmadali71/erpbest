@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import {
   Users,
   Search,
@@ -256,7 +256,7 @@ export const CustomerHistoryReports: React.FC<CustomerHistoryReportsProps> = ({
               onClick={() => setActiveReportSubView('statement')}
               className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 activeReportSubView === 'statement'
-                  ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold'
+                  ? 'bg-white text-(--accent-color-dark) shadow-xs font-bold'
                   : 'text-slate-500 hover:text-slate-900'
               }`}
             >
@@ -328,12 +328,12 @@ export const CustomerHistoryReports: React.FC<CustomerHistoryReportsProps> = ({
                 placeholder="Search clients..."
                 value={clientSearch}
                 onChange={e => setClientSearch(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]"
+                className="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-(--accent-color)"
               />
             </div>
 
             {/* List */}
-            <div className="space-y-1 max-h-[500px] overflow-y-auto pr-1">
+            <div className="space-y-1 max-h-125 overflow-y-auto pr-1">
               {filteredClients.length === 0 ? (
                 <div className="p-4 text-center text-slate-400 text-xs">
                   No clients match search.
@@ -348,7 +348,7 @@ export const CustomerHistoryReports: React.FC<CustomerHistoryReportsProps> = ({
                       onClick={() => setSelectedClientId(c.id)}
                       className={`w-full p-2.5 rounded-2xl text-left text-xs transition-all flex items-center justify-between ${
                         isSelected
-                          ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] ring-1 ring-[var(--accent-color)] shadow-2xs font-semibold'
+                          ? 'bg-(--accent-color-light) text-(--accent-color-dark) ring-1 ring-(--accent-color) shadow-2xs font-semibold'
                           : 'hover:bg-slate-50 text-slate-700'
                       }`}
                     >

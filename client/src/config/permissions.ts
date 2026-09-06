@@ -11,7 +11,7 @@
  * PERMISSIONS: each is a dot-separated string: "<module>.<action>"
  */
 
-export type UserRole = 'admin' | 'manager' | 'invoice' | 'cashier' | 'viewer';
+export type UserRole = 'admin' | 'administration' | 'manager' | 'invoice' | 'cashier' | 'viewer';
 
 export type Permission =
   // Dashboard
@@ -20,7 +20,9 @@ export type Permission =
   | 'pos.access'
   // Inventory
   | 'inventory.view'
-  | 'inventory.edit'        // add/edit/delete products, restock, categories
+  | 'inventory.create'      // add new products
+  | 'inventory.edit'        // edit products, restock, categories
+  | 'inventory.delete'      // delete products
   // Sales & Invoices
   | 'sales.view'
   | 'sales.create'
@@ -33,7 +35,9 @@ export type Permission =
   | 'quotations.create'
   // Clients
   | 'clients.view'
-  | 'clients.edit'          // add/edit/delete clients
+  | 'clients.create'        // add new clients
+  | 'clients.edit'          // edit clients
+  | 'clients.delete'        // delete clients
   // Suppliers & Purchase Orders
   | 'suppliers.view'
   | 'suppliers.edit'
@@ -59,11 +63,11 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
   admin: [
     'dashboard.view',
     'pos.access',
-    'inventory.view', 'inventory.edit',
+    'inventory.view', 'inventory.create', 'inventory.edit', 'inventory.delete',
     'sales.view', 'sales.create', 'sales.delete',
     'returns.view', 'returns.create',
     'quotations.view', 'quotations.create',
-    'clients.view', 'clients.edit',
+    'clients.view', 'clients.create', 'clients.edit', 'clients.delete',
     'suppliers.view', 'suppliers.edit',
     'payments.view', 'payments.record',
     'expenses.view', 'expenses.create',
@@ -73,14 +77,20 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'users.view', 'users.edit',
   ],
 
+  administration: [
+    'inventory.view', 'inventory.create', 'inventory.delete',
+    'clients.view', 'clients.create', 'clients.delete',
+    'sales.view', 'sales.create', 'sales.delete',
+  ],
+
   manager: [
     'dashboard.view',
     'pos.access',
-    'inventory.view', 'inventory.edit',
+    'inventory.view', 'inventory.create', 'inventory.edit', 'inventory.delete',
     'sales.view', 'sales.create', 'sales.delete',
     'returns.view', 'returns.create',
     'quotations.view', 'quotations.create',
-    'clients.view', 'clients.edit',
+    'clients.view', 'clients.create', 'clients.edit', 'clients.delete',
     'suppliers.view', 'suppliers.edit',
     'payments.view', 'payments.record',
     'expenses.view', 'expenses.create',
@@ -119,6 +129,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
 /** Human-readable role labels */
 export const ROLE_LABELS: Record<UserRole, string> = {
   admin: 'Administrator',
+  administration: 'Administration',
   manager: 'Manager',
   invoice: 'Invoice / Sales Agent',
   cashier: 'Cashier',
@@ -128,6 +139,7 @@ export const ROLE_LABELS: Record<UserRole, string> = {
 /** Role badge colors for UI */
 export const ROLE_COLORS: Record<UserRole, { bg: string; text: string; ring: string }> = {
   admin: { bg: 'bg-indigo-100', text: 'text-indigo-800', ring: 'ring-indigo-300/60' },
+  administration: { bg: 'bg-rose-100', text: 'text-rose-800', ring: 'ring-rose-300/60' },
   manager: { bg: 'bg-violet-100', text: 'text-violet-800', ring: 'ring-violet-300/60' },
   invoice: { bg: 'bg-emerald-100', text: 'text-emerald-800', ring: 'ring-emerald-300/60' },
   cashier: { bg: 'bg-amber-100', text: 'text-amber-800', ring: 'ring-amber-300/60' },
@@ -137,6 +149,7 @@ export const ROLE_COLORS: Record<UserRole, { bg: string; text: string; ring: str
 /** Description of each role for admin UI */
 export const ROLE_DESCRIPTIONS: Record<UserRole, string> = {
   admin: 'Full system access including Settings, User Management, and Database controls.',
+  administration: 'Create and delete products, customers, and invoices only. All deletions visible to Admin only.',
   manager: 'Full operational access to all modules. Cannot change system settings or manage users.',
   invoice: 'Access to POS, Sales, Quotations, Clients (view-only), and Payments. No inventory or reports.',
   cashier: 'POS terminal access and viewing sales. Minimal permissions.',

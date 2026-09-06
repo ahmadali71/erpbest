@@ -15,8 +15,11 @@ import Settings from '../db/models/Settings.js';
 const router = express.Router();
 
 // Bootstrap - get all data
-router.get('/bootstrap', async (_req, res) => {
+router.get('/bootstrap', async (req, res) => {
   try {
+    const isAdmin = req.user?.role === 'admin';
+    const activeFilter = isAdmin ? {} : { isDeleted: { $ne: true } };
+
     const [
       products,
       categories,
@@ -30,10 +33,10 @@ router.get('/bootstrap', async (_req, res) => {
       returns,
       settings,
     ] = await Promise.all([
-      Product.find().lean(),
+      Product.find(activeFilter).lean(),
       Category.find().lean(),
-      Client.find().lean(),
-      Sale.find().lean().sort({ date: -1 }),
+      Client.find(activeFilter).lean(),
+      Sale.find(activeFilter).lean().sort({ date: -1 }),
       Expense.find().lean().sort({ date: -1 }),
       StockMovement.find().lean().sort({ date: -1 }),
       Supplier.find().lean().sort({ createdAt: -1 }),

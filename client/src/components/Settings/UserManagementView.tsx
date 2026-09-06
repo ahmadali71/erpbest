@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import {
   Users,
   Plus,
@@ -56,7 +56,7 @@ const PasswordInput: React.FC<{
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        className="w-full px-3 py-2 pr-10 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]/30 focus:border-[var(--accent-color)]"
+        className="w-full px-3 py-2 pr-10 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-(--accent-color)/30 focus:border-(--accent-color)"
       />
       <button
         type="button"
@@ -86,11 +86,11 @@ const RoleBadge: React.FC<{ role: UserRole }> = ({ role }) => {
 const ALL_PERMISSIONS: { group: string; perms: Permission[] }[] = [
   { group: 'Dashboard', perms: ['dashboard.view'] },
   { group: 'POS', perms: ['pos.access'] },
-  { group: 'Inventory', perms: ['inventory.view', 'inventory.edit'] },
+  { group: 'Inventory', perms: ['inventory.view', 'inventory.create', 'inventory.edit', 'inventory.delete'] },
   { group: 'Sales', perms: ['sales.view', 'sales.create', 'sales.delete'] },
   { group: 'Returns', perms: ['returns.view', 'returns.create'] },
   { group: 'Quotations', perms: ['quotations.view', 'quotations.create'] },
-  { group: 'Clients', perms: ['clients.view', 'clients.edit'] },
+  { group: 'Clients', perms: ['clients.view', 'clients.create', 'clients.edit', 'clients.delete'] },
   { group: 'Suppliers', perms: ['suppliers.view', 'suppliers.edit'] },
   { group: 'Payments', perms: ['payments.view', 'payments.record'] },
   { group: 'Expenses', perms: ['expenses.view', 'expenses.create'] },
@@ -174,7 +174,7 @@ const UserFormModal: React.FC<UserFormProps> = ({ existing, onClose, onSaved }) 
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[var(--accent-color)] text-white flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-(--accent-color) text-white flex items-center justify-center">
               {isEdit ? <Edit2 className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
             </div>
             <div>
@@ -191,7 +191,7 @@ const UserFormModal: React.FC<UserFormProps> = ({ existing, onClose, onSaved }) 
         <div className="flex-1 overflow-y-auto p-5 space-y-5">
           {error && (
             <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
-              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              <AlertCircle className="w-4 h-4 shrink-0" />
               {error}
             </div>
           )}
@@ -206,7 +206,7 @@ const UserFormModal: React.FC<UserFormProps> = ({ existing, onClose, onSaved }) 
                 onChange={e => setForm(f => ({ ...f, username: e.target.value }))}
                 placeholder="john_doe"
                 autoComplete="off"
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]/30 focus:border-[var(--accent-color)]"
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-(--accent-color)/30 focus:border-(--accent-color)"
               />
             </div>
             <div>
@@ -216,7 +216,7 @@ const UserFormModal: React.FC<UserFormProps> = ({ existing, onClose, onSaved }) 
                 value={form.name}
                 onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                 placeholder="John Doe"
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]/30 focus:border-[var(--accent-color)]"
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-(--accent-color)/30 focus:border-(--accent-color)"
               />
             </div>
             <div>
@@ -226,7 +226,7 @@ const UserFormModal: React.FC<UserFormProps> = ({ existing, onClose, onSaved }) 
                 value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                 placeholder="john@company.com"
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]/30 focus:border-[var(--accent-color)]"
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-(--accent-color)/30 focus:border-(--accent-color)"
               />
             </div>
             <div>
@@ -248,7 +248,7 @@ const UserFormModal: React.FC<UserFormProps> = ({ existing, onClose, onSaved }) 
                   onClick={() => setForm(f => ({ ...f, role: r, customPermissions: [] }))}
                   className={`flex flex-col items-start p-3 rounded-xl border-2 text-left transition-all ${
                     form.role === r
-                      ? 'border-[var(--accent-color)] bg-[var(--accent-color-light)]'
+                      ? 'border-(--accent-color) bg-(--accent-color-light)'
                       : 'border-slate-200 hover:border-slate-300 bg-white'
                   }`}
                 >
@@ -295,7 +295,7 @@ const UserFormModal: React.FC<UserFormProps> = ({ existing, onClose, onSaved }) 
                             checked={isGranted}
                             disabled={isDefault} // Role defaults can't be removed
                             onChange={() => toggleCustomPerm(p)}
-                            className="w-3.5 h-3.5 accent-[var(--accent-color)] cursor-pointer"
+                            className="w-3.5 h-3.5 accent-(--accent-color) cursor-pointer"
                           />
                           <span className={`text-xs ${isGranted ? 'text-slate-700' : 'text-slate-400'}`}>
                             {p}
@@ -324,7 +324,7 @@ const UserFormModal: React.FC<UserFormProps> = ({ existing, onClose, onSaved }) 
                 onChange={e => setForm(f => ({ ...f, isActive: e.target.checked }))}
                 className="sr-only peer"
               />
-              <div className="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:bg-[var(--accent-color)] after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+              <div className="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:bg-(--accent-color) after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
             </label>
             <span className="text-sm font-medium text-slate-700">
               Account is {form.isActive ? 'Active' : 'Deactivated'}
@@ -340,7 +340,7 @@ const UserFormModal: React.FC<UserFormProps> = ({ existing, onClose, onSaved }) 
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="flex items-center gap-2 px-5 py-2 bg-[var(--accent-color)] text-white text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="flex items-center gap-2 px-5 py-2 bg-(--accent-color) text-white text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
           >
             {loading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             {isEdit ? 'Save Changes' : 'Create User'}
@@ -402,7 +402,7 @@ const ChangePasswordModal: React.FC<{ user: UserRecord; onClose: () => void }> =
             <>
               {error && (
                 <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
-                  <AlertCircle className="w-4 h-4 flex-shrink-0" /> {error}
+                  <AlertCircle className="w-4 h-4 shrink-0" /> {error}
                 </div>
               )}
               {!isAdmin && (
@@ -490,7 +490,7 @@ export const UserManagementView: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <Users className="w-5 h-5 text-[var(--accent-color)]" />
+            <Users className="w-5 h-5 text-(--accent-color)" />
             User Management
           </h2>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -500,7 +500,7 @@ export const UserManagementView: React.FC = () => {
         {isAdmin && (
           <button
             onClick={() => { setEditingUser(null); setShowForm(true); }}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--accent-color)] text-white text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-(--accent-color) text-white text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-sm"
           >
             <Plus className="w-4 h-4" />
             Add User
@@ -511,7 +511,7 @@ export const UserManagementView: React.FC = () => {
       {/* Error */}
       {error && (
         <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
-          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          <AlertCircle className="w-4 h-4 shrink-0" />
           {error}
         </div>
       )}
@@ -524,7 +524,7 @@ export const UserManagementView: React.FC = () => {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search users by name, username or email…"
-          className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]/30 focus:border-[var(--accent-color)] bg-slate-50"
+          className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-(--accent-color)/30 focus:border-(--accent-color) bg-slate-50"
         />
       </div>
 
@@ -574,14 +574,14 @@ export const UserManagementView: React.FC = () => {
                       {/* User info */}
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-[var(--accent-color)] text-white font-bold flex items-center justify-center text-sm flex-shrink-0">
+                          <div className="w-9 h-9 rounded-xl bg-(--accent-color) text-white font-bold flex items-center justify-center text-sm shrink-0">
                             {(u.name || u.username).charAt(0).toUpperCase()}
                           </div>
                           <div>
                             <p className="font-semibold text-slate-900 flex items-center gap-1.5">
                               {u.name || u.username}
                               {isSelf && (
-                                <span className="text-[10px] font-bold text-[var(--accent-color)] bg-[var(--accent-color-light)] px-1.5 py-0.5 rounded-full">YOU</span>
+                                <span className="text-[10px] font-bold text-(--accent-color) bg-(--accent-color-light) px-1.5 py-0.5 rounded-full">YOU</span>
                               )}
                             </p>
                             <p className="text-xs text-slate-400">@{u.username}{u.email ? ` · ${u.email}` : ''}</p>
@@ -630,7 +630,7 @@ export const UserManagementView: React.FC = () => {
                             <>
                               <button
                                 onClick={() => { setEditingUser(u); setShowForm(true); }}
-                                className="p-2 rounded-lg hover:bg-[var(--accent-color-light)] text-slate-400 hover:text-[var(--accent-color-dark)] transition-colors"
+                                className="p-2 rounded-lg hover:bg-(--accent-color-light) text-slate-400 hover:text-(--accent-color-dark) transition-colors"
                                 title="Edit user"
                               >
                                 <Edit2 className="w-3.5 h-3.5" />

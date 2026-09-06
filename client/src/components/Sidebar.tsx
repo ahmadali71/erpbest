@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import {
   LayoutDashboard,
   Package,
@@ -171,15 +171,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Brand Header */}
       <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-[var(--accent-color)] rounded-xl flex items-center justify-center shadow-sm text-white font-black text-base">
+          <div className="w-9 h-9 bg-(--accent-color) rounded-xl flex items-center justify-center shadow-sm text-white font-black text-base">
             <span className="tracking-tighter">N</span>
           </div>
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-extrabold text-base tracking-tight text-slate-900">
-                Nexus<span className="text-[var(--accent-color)] font-black">ERP</span>
+                Nexus<span className="text-(--accent-color) font-black">ERP</span>
               </span>
-              <span className="px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-md border border-[var(--accent-color)]/20">
+              <span className="px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-(--accent-color-light) text-(--accent-color-dark) rounded-md border border-(--accent-color)/20">
                 v2.4
               </span>
             </div>
@@ -215,18 +215,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={() => handleNavClick(item.id)}
               className={`group relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 text-left ${
                 isActive
-                  ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
+                  ? 'bg-(--accent-color-light) text-(--accent-color-dark) font-bold shadow-xs'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               {isActive && (
-                <div className="absolute left-0 top-2 bottom-2 w-1 bg-[var(--accent-color)] rounded-r-full" />
+                <div className="absolute left-0 top-2 bottom-2 w-1 bg-(--accent-color) rounded-r-full" />
               )}
               <div className="flex items-center gap-3">
                 <div
                   className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
                     isActive
-                      ? 'bg-[var(--accent-color)] text-white shadow-xs'
+                      ? 'bg-(--accent-color) text-white shadow-xs'
                       : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200/80 group-hover:text-slate-700'
                   }`}
                 >
@@ -257,18 +257,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={() => handleNavClick(item.id)}
               className={`group relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 text-left ${
                 isActive
-                  ? 'bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] font-bold shadow-xs'
+                  ? 'bg-(--accent-color-light) text-(--accent-color-dark) font-bold shadow-xs'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               {isActive && (
-                <div className="absolute left-0 top-2 bottom-2 w-1 bg-[var(--accent-color)] rounded-r-full" />
+                <div className="absolute left-0 top-2 bottom-2 w-1 bg-(--accent-color) rounded-r-full" />
               )}
               <div className="flex items-center gap-3">
                 <div
                   className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
                     isActive
-                      ? 'bg-[var(--accent-color)] text-white shadow-xs'
+                      ? 'bg-(--accent-color) text-white shadow-xs'
                       : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200/80 group-hover:text-slate-700'
                   }`}
                 >
@@ -307,14 +307,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
 
         <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-slate-200/80 shadow-2xs">
-          <div className="w-8 h-8 rounded-xl bg-[var(--accent-color)] text-white font-bold flex items-center justify-center text-xs flex-shrink-0 shadow-xs">
+          <div className="w-8 h-8 rounded-xl bg-(--accent-color) text-white font-bold flex items-center justify-center text-xs shrink-0 shadow-xs">
             {user?.name?.charAt(0) || user?.username?.charAt(0) || 'A'}
           </div>
           <div className="overflow-hidden flex-1">
             <div className="flex items-center gap-1">
               <p className="text-xs font-bold text-slate-900 truncate">{user?.name || user?.username || 'Administrator'}</p>
               {user?.role === 'admin' && (
-                <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent-color)] inline" />
+                <ShieldCheck className="w-3.5 h-3.5 text-(--accent-color) inline" />
               )}
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
@@ -336,7 +336,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       {/* Desktop Sidebar (hidden on mobile/tablet) */}
-      <aside className="hidden lg:flex w-64 bg-white border-r border-slate-200 flex-col flex-shrink-0 h-screen select-none">
+      <aside className="hidden lg:flex w-64 bg-white border-r border-slate-200 flex-col shrink-0 h-screen select-none">
         {sidebarContent}
       </aside>
 

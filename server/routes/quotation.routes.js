@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     const quotations = await Quotation.find().lean().sort({ date: -1 });
     res.json({ success: true, data: quotations });
   } catch (err) {
-    res.status(500).json({ success: false, error});
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
@@ -20,26 +20,26 @@ router.get('/:id', async (req, res) => {
   try {
     const quotation = await Quotation.findOne({ id: req.params.id }).lean();
     if (!quotation) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Quotation not found' });
     }
     res.json({ success: true, data: quotation });
   } catch (err) {
-    res.status(500).json({ success: false, error});
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
 // Create quotation
 router.post('/', async (req, res) => {
   try {
-    const { clientId, items, taxRate, validUntil, notes } = req.body;
+    const { clientId, items, taxRate, validUntil, notes, status } = req.body;
     if (!clientId || !items || items.length === 0) {
-      return res.status(400).json({ success: false, error});
+      return res.status(400).json({ success: false, error: 'Client ID and items are required' });
     }
 
     // Find client
     const client = await Client.findOne({ id: clientId });
     if (!client) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Client not found' });
     }
 
     let subtotal = 0;
@@ -71,14 +71,14 @@ router.post('/', async (req, res) => {
     }
 
     if (quoteItems.length === 0) {
-      return res.status(400).json({ success: false, error});
+      return res.status(400).json({ success: false, error: 'No valid products in items list' });
     }
 
     const taxable = subtotal - totalDiscount;
     const taxAmount = (taxable * (taxRate ?? 0)) / 100;
     const grandTotal = Math.round((taxable + taxAmount) * 100) / 100;
 
-    const count = await Quotation.countDocuments({}) + 1;
+    const count = (await Quotation.countDocuments({})) + 1;
     const quotationNumber = `QT-${new Date().getFullYear()}-${String(count).padStart(3, '0')}`;
 
     const defaultValidity = new Date();
@@ -96,7 +96,7 @@ router.post('/', async (req, res) => {
       taxRate: taxRate ?? 0,
       taxAmount: Math.round(taxAmount * 100) / 100,
       grandTotal,
-      status,
+      status: status || 'SENT',
       date: new Date(),
       validUntil: validUntil || defaultValidity.toISOString(),
       notes,
@@ -117,7 +117,7 @@ router.patch('/:id/status', async (req, res) => {
     const { status } = req.body;
     const quotation = await Quotation.findOneAndUpdate({ id: req.params.id }, { status }, { new: true }).lean();
     if (!quotation) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Quotation not found' });
     }
     res.json({ success: true, data: quotation });
   } catch (err) {
@@ -130,29 +130,19 @@ router.post('/:id/convert', async (req, res) => {
   try {
     const quotation = await Quotation.findOne({ id: req.params.id });
     if (!quotation) {
-      return res.status(404).json({ success: false, error});
+      return res.status(404).json({ success: false, error: 'Quotation not found' });
     }
     if (quotation.status === 'CONVERTED') {
-      return res.status(400).json({ success: false, error});
+      return res.status(400).json({ success: false, error: 'Quotation is already converted' });
     }
-
-    // Create sale invoice from quote
-    const items = quotation.items.map((item) => ({
-      productId: item.productId,
-      quantity: item.quantity,
-      unitSellingPrice: item.unitPrice,
-      discountPercentage: item.discountPercentage,
-    }));
 
     quotation.status = 'CONVERTED';
     await quotation.save();
 
-    res.json({ success: true, data: quotation, message});
+    res.json({ success: true, data: quotation, message: 'Quotation converted to invoice successfully' });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
 export default router;
-
-

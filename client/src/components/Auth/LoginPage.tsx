@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 
 export const LoginPage: React.FC = () => {
@@ -25,11 +25,11 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 via-white to-slate-100 p-4">
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[var(--accent-color)] text-white mb-4 accent-shadow">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-(--accent-color) text-white mb-4 accent-shadow">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -56,7 +56,7 @@ export const LoginPage: React.FC = () => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[var(--accent-color)] focus:ring-2 focus:ring-[var(--accent-color-light)] outline-none transition-all text-slate-900 placeholder-slate-400"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-(--accent-color) focus:ring-2 focus:ring-(--accent-color-light) outline-none transition-all text-slate-900 placeholder-slate-400"
                 placeholder="Enter your username"
                 required
               />
@@ -71,7 +71,7 @@ export const LoginPage: React.FC = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[var(--accent-color)] focus:ring-2 focus:ring-[var(--accent-color-light)] outline-none transition-all text-slate-900 placeholder-slate-400"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-(--accent-color) focus:ring-2 focus:ring-(--accent-color-light) outline-none transition-all text-slate-900 placeholder-slate-400"
                 placeholder="Enter your password"
                 required
               />
@@ -80,7 +80,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg accent-shadow hover:accent-shadow disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+              className="w-full bg-(--accent-color) hover:bg-(--accent-color-dark) text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg accent-shadow hover:accent-shadow disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">
