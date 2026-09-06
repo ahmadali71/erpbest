@@ -15,6 +15,7 @@ import settingsRoutes from './routes/settings.routes.js';
 import bootstrapRoutes from './routes/bootstrap.routes.js';
 import eventsRoutes from './routes/events.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import userRoutes from './routes/user.routes.js';
 import { authenticateToken } from './middleware/auth.js';
 
 const app = express();
@@ -173,6 +174,7 @@ app.use('/api/purchase-orders', authenticateToken, purchaseOrderRoutes);
 app.use('/api/quotations', authenticateToken, quotationRoutes);
 app.use('/api/returns', authenticateToken, returnRoutes);
 app.use('/api/settings', authenticateToken, settingsRoutes);
+app.use('/api/users', userRoutes);
 
 // API 404 fallback
 app.use('/api', (_req, res) => {

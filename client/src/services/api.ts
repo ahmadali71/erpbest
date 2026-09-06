@@ -649,4 +649,83 @@ export const api = {
     const json = await res.json();
     return json.data;
   },
+
+  // ─── User Management ─────────────────────────────────────
+  async getUsers(): Promise<any[]> {
+    const res = await fetch(`${API_BASE_URL}/api/users`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      checkAuthError(res);
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to fetch users');
+    }
+    const json = await res.json();
+    return json.data;
+  },
+
+  async createUser(data: {
+    username: string;
+    password: string;
+    role: string;
+    name?: string;
+    email?: string;
+    customPermissions?: string[];
+  }): Promise<any> {
+    const res = await fetch(`${API_BASE_URL}/api/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to create user');
+    }
+    return (await res.json()).data;
+  },
+
+  async updateUser(id: string, data: Partial<{
+    username: string;
+    password: string;
+    role: string;
+    name: string;
+    email: string;
+    customPermissions: string[];
+    isActive: boolean;
+  }>): Promise<any> {
+    const res = await fetch(`${API_BASE_URL}/api/users/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to update user');
+    }
+    return (await res.json()).data;
+  },
+
+  async deleteUser(id: string): Promise<void> {
+    const res = await fetch(`${API_BASE_URL}/api/users/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to delete user');
+    }
+  },
+
+  async changePassword(id: string, currentPassword: string, newPassword: string): Promise<void> {
+    const res = await fetch(`${API_BASE_URL}/api/users/${id}/password`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+      body: JSON.stringify({ currentPassword, newPassword }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to change password');
+    }
+  },
 };
+

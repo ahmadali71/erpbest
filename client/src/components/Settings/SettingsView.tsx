@@ -23,9 +23,12 @@ import {
   Sparkles,
   AlertCircle,
   Eye,
+  Users as UsersIcon,
 } from 'lucide-react';
 import { useERP } from '../../context/ERPContext';
+import { useAuth } from '../../context/AuthContext';
 import { CompanySettings, ThemeAccent } from '../../types/erp';
+import { UserManagementView } from './UserManagementView';
 
 export const SettingsView: React.FC = () => {
   const {
@@ -41,8 +44,9 @@ export const SettingsView: React.FC = () => {
   } = useERP();
 
   const [activeSubTab, setActiveSubTab] = useState<
-    'profile' | 'tax_stock' | 'receipt' | 'barcode' | 'theme' | 'backup'
+    'profile' | 'tax_stock' | 'receipt' | 'barcode' | 'theme' | 'backup' | 'users'
   >('profile');
+  const { isAdmin } = useAuth();
 
   // Form State
   const [formData, setFormData] = useState<CompanySettings>(settings);
@@ -262,6 +266,24 @@ export const SettingsView: React.FC = () => {
             <Database className="w-4 h-4 flex-shrink-0" />
             <span>Data Backup & Reset</span>
           </button>
+
+          {/* User Management — admin only */}
+          {isAdmin && (
+            <>
+              <div className="my-1 border-t border-slate-100" />
+              <button
+                onClick={() => setActiveSubTab('users')}
+                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all text-left ${
+                  activeSubTab === 'users'
+                    ? 'bg-indigo-50 text-indigo-800 font-bold shadow-xs'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                }`}
+              >
+                <UsersIcon className="w-4 h-4 flex-shrink-0" />
+                <span>User Management</span>
+              </button>
+            </>
+          )}
         </div>
 
          {/* Content Pane */}
@@ -861,8 +883,14 @@ export const SettingsView: React.FC = () => {
                </div>
             </div>
           )}
+
+          {/* TAB 7: USER MANAGEMENT */}
+          {activeSubTab === 'users' && (
+            <UserManagementView />
+          )}
         </div>
       </div>
     </div>
   );
 };
+

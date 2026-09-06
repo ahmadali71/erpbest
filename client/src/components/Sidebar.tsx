@@ -20,6 +20,8 @@ import {
   Sliders,
 } from 'lucide-react';
 import { useERP } from '../context/ERPContext';
+import { useAuth } from '../context/AuthContext';
+import { TAB_PERMISSIONS } from '../config/permissions';
 
 export type NavTab =
   | 'dashboard'
@@ -63,6 +65,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
     resetToDemoData,
     serverStatus,
   } = useERP();
+
+  const { hasPermission } = useAuth();
 
   const navItems = [
     {
@@ -147,6 +151,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
   ];
 
+  // Filter both lists by the current user's permissions
+  const visibleNavItems = navItems.filter(
+    item => hasPermission(TAB_PERMISSIONS[item.id])
+  );
+  const visibleFinancialItems = financialItems.filter(
+    item => hasPermission(TAB_PERMISSIONS[item.id])
+  );
 
   const handleNavClick = (tab: NavTab) => {
     setActiveTab(tab);
@@ -195,7 +206,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest px-3 mt-1.5 mb-1.5">
           Core Operations
         </div>
-        {navItems.map(item => {
+        {visibleNavItems.map(item => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
           return (
@@ -237,7 +248,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="mt-5 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest px-3 mb-1.5">
           Financials & Logs
         </div>
-        {financialItems.map(item => {
+        {visibleFinancialItems.map(item => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
           return (
