@@ -76,14 +76,22 @@ app.use((err, req, res, next) => {
 });
 
 mongoose.set('strictQuery', false);
+
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nexus_erp')
   .then(() => {
     console.log('✅ MongoDB connected');
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-    });
   })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err.message);
-    process.exit(1);
   });
+
+// Export the app for Vercel Serverless Functions
+export default app;
+
+// Only start the server if not running on Vercel (local dev or Render)
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
+}
