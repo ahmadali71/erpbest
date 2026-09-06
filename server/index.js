@@ -60,6 +60,14 @@ app.use('/api/returns', authenticateToken, returnRoutes);
 app.use('/api/settings', authenticateToken, settingsRoutes);
 app.use('/api', authenticateToken, eventsRoutes);
 
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Welcome to Nexus ERP API Backend! 🚀',
+    status: 'Running'
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'Nexus ERP Backend' });
 });
