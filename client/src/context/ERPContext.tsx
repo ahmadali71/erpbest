@@ -20,7 +20,7 @@ import {
   ThemeAccent,
   TimeRange,
 } from '../types/erp';
-import { api } from '../services/api';
+import { api, API_BASE_URL } from '../services/api';
 
 interface SaleCreationInput {
   clientId: string;
@@ -416,7 +416,7 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
     const connectSSE = () => {
       try {
-        eventSource = new EventSource('/api/events');
+        eventSource = new EventSource(`${API_BASE_URL}/api/events`);
 
         eventSource.addEventListener('connected', (e: MessageEvent) => {
           try {

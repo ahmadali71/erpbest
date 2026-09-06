@@ -13,6 +13,11 @@ import {
   Supplier,
 } from '../types/erp';
 
+// Dynamic API base URL:
+// - Development: empty string (Vite dev proxy handles /api/* → localhost:4000)
+// - Production: reads from VITE_API_URL env var (e.g. https://your-erp-backend.onrender.com)
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+
 export interface BootstrapResponse {
   products: Product[];
   categories: Category[];
@@ -40,7 +45,7 @@ const getAuthHeaders = (): HeadersInit => {
 
 export const api = {
   async login(username: string, password: string): Promise<{ token: string; user: any }> {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -54,7 +59,7 @@ export const api = {
   },
 
   async getCurrentUser(): Promise<any> {
-    const res = await fetch('/api/auth/me', {
+    const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch user');
@@ -63,7 +68,7 @@ export const api = {
   },
 
   async getBootstrapData(): Promise<BootstrapResponse> {
-    const res = await fetch('/api/bootstrap', {
+    const res = await fetch(`${API_BASE_URL}/api/bootstrap`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch bootstrap data');
@@ -72,7 +77,7 @@ export const api = {
   },
 
   async resetDatabase(): Promise<BootstrapResponse> {
-    const res = await fetch('/api/reset', {
+    const res = await fetch(`${API_BASE_URL}/api/reset`, {
       method: 'POST',
       headers: getAuthHeaders(),
     });
@@ -82,7 +87,7 @@ export const api = {
   },
 
   async resetToEmptyDatabase(): Promise<BootstrapResponse> {
-    const res = await fetch('/api/reset-empty', {
+    const res = await fetch(`${API_BASE_URL}/api/reset-empty`, {
       method: 'POST',
       headers: getAuthHeaders(),
     });
@@ -92,7 +97,7 @@ export const api = {
   },
 
   async restoreDatabase(backupData: any): Promise<BootstrapResponse> {
-    const res = await fetch('/api/restore', {
+    const res = await fetch(`${API_BASE_URL}/api/restore`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -109,7 +114,7 @@ export const api = {
   },
 
   async getProducts(): Promise<Product[]> {
-    const res = await fetch('/api/products', {
+    const res = await fetch(`${API_BASE_URL}/api/products`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch products');
@@ -118,7 +123,7 @@ export const api = {
   },
 
   async getProduct(id: string): Promise<Product> {
-    const res = await fetch(`/api/products/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/products/${id}`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch product');
@@ -127,7 +132,7 @@ export const api = {
   },
 
   async addProduct(data: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>): Promise<Product> {
-    const res = await fetch('/api/products', {
+    const res = await fetch(`${API_BASE_URL}/api/products`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -141,7 +146,7 @@ export const api = {
   },
 
   async updateProduct(id: string, updates: Partial<Product>): Promise<Product> {
-    const res = await fetch(`/api/products/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/products/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -155,7 +160,7 @@ export const api = {
   },
 
   async deleteProduct(id: string): Promise<boolean> {
-    const res = await fetch(`/api/products/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/products/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -169,7 +174,7 @@ export const api = {
     notes?: string,
     supplierName?: string
   ): Promise<{ product: Product; movement: StockMovement }> {
-    const res = await fetch(`/api/products/${productId}/restock`, {
+    const res = await fetch(`${API_BASE_URL}/api/products/${productId}/restock`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -187,7 +192,7 @@ export const api = {
     newStock: number,
     reason: string
   ): Promise<{ product: Product; movement: StockMovement }> {
-    const res = await fetch(`/api/products/${productId}/adjust`, {
+    const res = await fetch(`${API_BASE_URL}/api/products/${productId}/adjust`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -201,7 +206,7 @@ export const api = {
   },
 
   async getCategories(): Promise<Category[]> {
-    const res = await fetch('/api/categories', {
+    const res = await fetch(`${API_BASE_URL}/api/categories`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch categories');
@@ -210,7 +215,7 @@ export const api = {
   },
 
   async addCategory(data: Omit<Category, 'id'>): Promise<Category> {
-    const res = await fetch('/api/categories', {
+    const res = await fetch(`${API_BASE_URL}/api/categories`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -224,7 +229,7 @@ export const api = {
   },
 
   async deleteCategory(id: string): Promise<boolean> {
-    const res = await fetch(`/api/categories/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/categories/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -232,7 +237,7 @@ export const api = {
   },
 
   async getClients(): Promise<Client[]> {
-    const res = await fetch('/api/clients', {
+    const res = await fetch(`${API_BASE_URL}/api/clients`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch clients');
@@ -241,7 +246,7 @@ export const api = {
   },
 
   async getClient(id: string): Promise<Client> {
-    const res = await fetch(`/api/clients/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/clients/${id}`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch client');
@@ -252,7 +257,7 @@ export const api = {
   async addClient(
     data: Omit<Client, 'id' | 'totalSpent' | 'outstandingBalance' | 'createdAt'>
   ): Promise<Client> {
-    const res = await fetch('/api/clients', {
+    const res = await fetch(`${API_BASE_URL}/api/clients`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -266,7 +271,7 @@ export const api = {
   },
 
   async updateClient(id: string, updates: Partial<Client>): Promise<Client> {
-    const res = await fetch(`/api/clients/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/clients/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -280,7 +285,7 @@ export const api = {
   },
 
   async deleteClient(id: string): Promise<boolean> {
-    const res = await fetch(`/api/clients/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/clients/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -288,7 +293,7 @@ export const api = {
   },
 
   async getSales(): Promise<SaleInvoice[]> {
-    const res = await fetch('/api/sales', {
+    const res = await fetch(`${API_BASE_URL}/api/sales`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch sales');
@@ -310,7 +315,7 @@ export const api = {
     notes?: string;
     dueDate?: string;
   }): Promise<SaleInvoice> {
-    const res = await fetch('/api/sales', {
+    const res = await fetch(`${API_BASE_URL}/api/sales`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -332,7 +337,7 @@ export const api = {
     method: PaymentMethod,
     note?: string
   ): Promise<any> {
-    const res = await fetch(`/api/sales/${saleId}/payments`, {
+    const res = await fetch(`${API_BASE_URL}/api/sales/${saleId}/payments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -346,7 +351,7 @@ export const api = {
   },
 
   async deleteSale(saleId: string): Promise<boolean> {
-    const res = await fetch(`/api/sales/${saleId}`, {
+    const res = await fetch(`${API_BASE_URL}/api/sales/${saleId}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -354,7 +359,7 @@ export const api = {
   },
 
   async getExpenses(): Promise<Expense[]> {
-    const res = await fetch('/api/expenses', {
+    const res = await fetch(`${API_BASE_URL}/api/expenses`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch expenses');
@@ -363,7 +368,7 @@ export const api = {
   },
 
   async addExpense(data: Omit<Expense, 'id'>): Promise<Expense> {
-    const res = await fetch('/api/expenses', {
+    const res = await fetch(`${API_BASE_URL}/api/expenses`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -377,7 +382,7 @@ export const api = {
   },
 
   async deleteExpense(id: string): Promise<boolean> {
-    const res = await fetch(`/api/expenses/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/expenses/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -385,7 +390,7 @@ export const api = {
   },
 
   async getSuppliers(): Promise<Supplier[]> {
-    const res = await fetch('/api/suppliers', {
+    const res = await fetch(`${API_BASE_URL}/api/suppliers`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch suppliers');
@@ -394,7 +399,7 @@ export const api = {
   },
 
   async addSupplier(data: Omit<Supplier, 'id' | 'totalPurchased' | 'createdAt'>): Promise<Supplier> {
-    const res = await fetch('/api/suppliers', {
+    const res = await fetch(`${API_BASE_URL}/api/suppliers`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -408,7 +413,7 @@ export const api = {
   },
 
   async updateSupplier(id: string, updates: Partial<Supplier>): Promise<Supplier> {
-    const res = await fetch(`/api/suppliers/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/suppliers/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -422,7 +427,7 @@ export const api = {
   },
 
   async deleteSupplier(id: string): Promise<boolean> {
-    const res = await fetch(`/api/suppliers/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/suppliers/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -430,7 +435,7 @@ export const api = {
   },
 
   async getPurchaseOrders(): Promise<PurchaseOrder[]> {
-    const res = await fetch('/api/purchase-orders', {
+    const res = await fetch(`${API_BASE_URL}/api/purchase-orders`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch purchase orders');
@@ -444,7 +449,7 @@ export const api = {
     expectedDeliveryDate?: string;
     notes?: string;
   }): Promise<PurchaseOrder> {
-    const res = await fetch('/api/purchase-orders', {
+    const res = await fetch(`${API_BASE_URL}/api/purchase-orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -464,7 +469,7 @@ export const api = {
     id: string,
     status: 'DRAFT' | 'ORDERED' | 'RECEIVED' | 'CANCELLED'
   ): Promise<PurchaseOrder> {
-    const res = await fetch(`/api/purchase-orders/${id}/status`, {
+    const res = await fetch(`${API_BASE_URL}/api/purchase-orders/${id}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -478,7 +483,7 @@ export const api = {
   },
 
   async receivePurchaseOrder(id: string): Promise<{ data: PurchaseOrder; message: string }> {
-    const res = await fetch(`/api/purchase-orders/${id}/receive`, {
+    const res = await fetch(`${API_BASE_URL}/api/purchase-orders/${id}/receive`, {
       method: 'POST',
       headers: getAuthHeaders(),
     });
@@ -490,7 +495,7 @@ export const api = {
   },
 
   async deletePurchaseOrder(id: string): Promise<boolean> {
-    const res = await fetch(`/api/purchase-orders/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/purchase-orders/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -498,7 +503,7 @@ export const api = {
   },
 
   async getQuotations(): Promise<Quotation[]> {
-    const res = await fetch('/api/quotations', {
+    const res = await fetch(`${API_BASE_URL}/api/quotations`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch quotations');
@@ -513,7 +518,7 @@ export const api = {
     validUntil?: string;
     notes?: string;
   }): Promise<Quotation> {
-    const res = await fetch('/api/quotations', {
+    const res = await fetch(`${API_BASE_URL}/api/quotations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -533,7 +538,7 @@ export const api = {
     id: string,
     status: 'DRAFT' | 'SENT' | 'ACCEPTED' | 'REJECTED' | 'CONVERTED'
   ): Promise<Quotation> {
-    const res = await fetch(`/api/quotations/${id}/status`, {
+    const res = await fetch(`${API_BASE_URL}/api/quotations/${id}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -547,7 +552,7 @@ export const api = {
   },
 
   async convertQuotationToInvoice(id: string): Promise<{ data: { quotation: Quotation; invoice: SaleInvoice }; message: string }> {
-    const res = await fetch(`/api/quotations/${id}/convert`, {
+    const res = await fetch(`${API_BASE_URL}/api/quotations/${id}/convert`, {
       method: 'POST',
       headers: getAuthHeaders(),
     });
@@ -559,7 +564,7 @@ export const api = {
   },
 
   async deleteQuotation(id: string): Promise<boolean> {
-    const res = await fetch(`/api/quotations/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/quotations/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -567,7 +572,7 @@ export const api = {
   },
 
   async getReturns(): Promise<SaleReturn[]> {
-    const res = await fetch('/api/returns', {
+    const res = await fetch(`${API_BASE_URL}/api/returns`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch returns');
@@ -587,7 +592,7 @@ export const api = {
     refundMethod: 'CASH' | 'CARD' | 'STORE_CREDIT' | 'BANK_TRANSFER';
     notes?: string;
   }): Promise<SaleReturn> {
-    const res = await fetch('/api/returns', {
+    const res = await fetch(`${API_BASE_URL}/api/returns`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -604,7 +609,7 @@ export const api = {
   },
 
   async getSettings(): Promise<CompanySettings> {
-    const res = await fetch('/api/settings', {
+    const res = await fetch(`${API_BASE_URL}/api/settings`, {
       headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Failed to fetch settings');
@@ -613,7 +618,7 @@ export const api = {
   },
 
   async updateSettings(settings: Partial<CompanySettings>): Promise<CompanySettings> {
-    const res = await fetch('/api/settings', {
+    const res = await fetch(`${API_BASE_URL}/api/settings`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

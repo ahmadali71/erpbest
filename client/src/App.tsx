@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ERPProvider, useERP } from './context/ERPContext';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { useAuth } from './context/AuthContext';
 import { Sidebar, NavTab } from './components/Sidebar';
 import { Header } from './components/Header';
 import { MobileBottomNav } from './components/MobileBottomNav';
@@ -349,9 +349,7 @@ const MainAppContent: React.FC = () => {
   const App: React.FC = () => {
   return (
     <ERPProvider>
-      <AuthProvider>
-        <MainAppContent />
-      </AuthProvider>
+      <MainAppContent />
     </ERPProvider>
   );
 };

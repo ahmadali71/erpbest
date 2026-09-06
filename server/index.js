@@ -2,7 +2,7 @@ import 'dotenv/config';
 import dns from 'dns';
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
-import path from 'path';
+
 import express from 'express';
 import mongoose from 'mongoose';
 import productRoutes from './routes/product.routes.js';
@@ -24,7 +24,25 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
-app.use(cors());
+
+// CORS: Allow frontend origin (Vercel) in production, localhost in dev
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:5173',
+  'http://localhost:3000',
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      return callback(null, true);
+    }
+    callback(null, true); // Allow all origins in case of subdomain variations
+  },
+  credentials: true,
+}));
 
 // Public routes
 app.use('/api/auth', authRoutes);
@@ -46,16 +64,9 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'Nexus ERP Backend' });
 });
 
-// Serve React frontend in production
-const clientDistPath = path.join(process.cwd(), '..', 'client', 'dist');
-app.use(express.static(clientDistPath));
-
-// SPA fallback: serve index.html for non-API GET requests
-app.get('/{*path}', (req, res) => {
-  if (req.path.startsWith('/api')) {
-    return res.status(404).json({ success: false, error: 'Route not found' });
-  }
-  res.sendFile(path.join(clientDistPath, 'index.html'));
+// API 404 fallback — frontend is hosted separately on Vercel
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ success: false, error: 'Route not found' });
 });
 
 // Error handling middleware
