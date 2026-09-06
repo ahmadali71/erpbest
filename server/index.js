@@ -65,7 +65,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // API 404 fallback — frontend is hosted separately on Vercel
-app.use('/api/*', (req, res) => {
+app.use('/api', (req, res) => {
   res.status(404).json({ success: false, error: 'Route not found' });
 });
 
