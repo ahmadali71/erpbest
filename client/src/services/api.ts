@@ -15,8 +15,11 @@ import {
 
 // Dynamic API base URL:
 // - Development: empty string (Vite dev proxy handles /api/* → localhost:4000)
-// - Production: reads from VITE_API_URL env var (e.g. https://your-erp-backend.onrender.com)
-export const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+// - Production: reads from VITE_API_URL or defaults to the deployed backend https://erpbestapi.vercel.app
+export const API_BASE_URL = (
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? '' : 'https://erpbestapi.vercel.app')
+).replace(/\/+$/, '');
 
 export interface BootstrapResponse {
   products: Product[];
