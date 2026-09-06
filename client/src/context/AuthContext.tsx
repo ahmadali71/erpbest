@@ -27,12 +27,41 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     const initAuth = async () => {
+      const savedToken = localStorage.getItem('erp_token');
+      if (!savedToken) {
+        // No token saved — user needs to login
+        setToken(null);
+        setUser(null);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        // Validate the saved token by calling /api/auth/me
+        const userData = await api.getCurrentUser();
+        setUser(userData);
+        setToken(savedToken);
+      } catch (err) {
+        // Token is expired or invalid — clear it and force re-login
+        console.warn('Saved token is invalid, clearing session:', err);
+        localStorage.removeItem('erp_token');
+        setToken(null);
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    initAuth();
+  }, []);
+
+  useEffect(() => {
+    const handleAuthExpired = () => {
       localStorage.removeItem('erp_token');
       setToken(null);
       setUser(null);
-      setIsLoading(false);
     };
-    initAuth();
+    window.addEventListener('auth:expired', handleAuthExpired);
+    return () => window.removeEventListener('auth:expired', handleAuthExpired);
   }, []);
 
   const login = useCallback(async (username: string, password: string) => {
@@ -62,3 +91,4 @@ export const useAuth = (): AuthContextType => {
   }
   return context;
 };
+

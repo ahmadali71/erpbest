@@ -190,6 +190,65 @@ router.post('/reset', async (_req, res) => {
   }
 });
 
+// Reset to empty database (clear all data, no demo seed)
+router.post('/reset-empty', async (_req, res) => {
+  try {
+    await Product.deleteMany({});
+    await Category.deleteMany({});
+    await Client.deleteMany({});
+    await Sale.deleteMany({});
+    await Expense.deleteMany({});
+    await StockMovement.deleteMany({});
+    await Supplier.deleteMany({});
+    await PurchaseOrder.deleteMany({});
+    await Quotation.deleteMany({});
+    await Return.deleteMany({});
+    await Settings.deleteMany({});
+
+    // Create default settings
+    const defaultSettings = await Settings.create({
+      id: 'settings-main',
+      companyName: '',
+      tagline: '',
+      email: '',
+      phone: '',
+      address: '',
+      currencySymbol: '$',
+      currencyCode: 'USD',
+      defaultTaxRate: 5.0,
+      defaultPaymentTermsDays: 30,
+      defaultLowStockThreshold: 5,
+      stockAlertThreshold: 3,
+      invoicePrefix: 'INV-',
+      quotePrefix: 'QT-',
+    });
+
+    res.json({
+      success: true,
+      message: 'Database cleared to empty state',
+      data: {
+        products: [],
+        categories: [],
+        clients: [],
+        sales: [],
+        expenses: [],
+        stockMovements: [],
+        suppliers: [],
+        purchaseOrders: [],
+        quotations: [],
+        returns: [],
+        settings: defaultSettings,
+        metrics: {},
+        lastUpdated: new Date().toISOString(),
+        activeTerminals: 1,
+      },
+    });
+  } catch (err) {
+    console.error('Reset-empty error:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // Restore database
 router.post('/restore', async (req, res) => {
   try {

@@ -43,6 +43,13 @@ const getAuthHeaders = (): HeadersInit => {
   return {};
 };
 
+const checkAuthError = (res: Response) => {
+  if (res.status === 401 || res.status === 403) {
+    localStorage.removeItem('erp_token');
+    window.dispatchEvent(new CustomEvent('auth:expired'));
+  }
+};
+
 export const api = {
   async login(username: string, password: string): Promise<{ token: string; user: any }> {
     const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
@@ -62,7 +69,10 @@ export const api = {
     const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
       headers: getAuthHeaders(),
     });
-    if (!res.ok) throw new Error('Failed to fetch user');
+    if (!res.ok) {
+      checkAuthError(res);
+      throw new Error('Failed to fetch user');
+    }
     const json = await res.json();
     return json.data;
   },
@@ -71,7 +81,10 @@ export const api = {
     const res = await fetch(`${API_BASE_URL}/api/bootstrap`, {
       headers: getAuthHeaders(),
     });
-    if (!res.ok) throw new Error('Failed to fetch bootstrap data');
+    if (!res.ok) {
+      checkAuthError(res);
+      throw new Error('Failed to fetch bootstrap data');
+    }
     const json = await res.json();
     return json.data;
   },

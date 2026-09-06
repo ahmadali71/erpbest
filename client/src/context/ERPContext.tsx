@@ -21,6 +21,7 @@ import {
   TimeRange,
 } from '../types/erp';
 import { api, API_BASE_URL } from '../services/api';
+import { useAuth } from './AuthContext';
 
 interface SaleCreationInput {
   clientId: string;
@@ -225,6 +226,7 @@ function playLiveChime(type: 'success' | 'alert' | 'info') {
 }
 
 export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { isAuthenticated, token } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
@@ -364,8 +366,16 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   }, [soundEnabled]);
 
-  // Load from backend on mount
+  // Load from backend on mount or when authenticated
   const refreshData = useCallback(async () => {
+    // Only fetch data if user is authenticated (has token)
+    const currentToken = token || localStorage.getItem('erp_token');
+    if (!currentToken) {
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(true);
+
     try {
       const data = await api.getBootstrapData();
       if (data) {
@@ -386,37 +396,48 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setServerStatus('connected');
         setLastSynced(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
       }
-      const serverSettings = await api.getSettings();
-      if (serverSettings) {
-        setSettings(serverSettings);
+      try {
+        const serverSettings = await api.getSettings();
+        if (serverSettings) {
+          setSettings(serverSettings);
+        }
+      } catch {
+        // Settings fetch is optional — bootstrap already provides them
       }
     } catch (err) {
       console.warn('Backend offline or initializing, using local cache:', err);
       setServerStatus('offline');
-      if (err instanceof Error && err.message.includes('401')) {
-        localStorage.removeItem('erp_token');
-        window.location.href = '/';
-      }
+      // Don't force redirect on 401 here — let AuthContext handle session expiry
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [token]);
 
-  // Initial load
+  // Dynamic load when authenticated or when auth token becomes available
   useEffect(() => {
-    refreshData();
-  }, [refreshData]);
+    if (isAuthenticated || token || localStorage.getItem('erp_token')) {
+      refreshData();
+    }
+  }, [isAuthenticated, token, refreshData]);
 
   // ==========================================
   // REAL-TIME EVENT STREAM (SERVER-SENT EVENTS)
   // ==========================================
   useEffect(() => {
+    const activeToken = token || localStorage.getItem('erp_token');
+    if (!isAuthenticated && !activeToken) return;
+
     let eventSource: EventSource | null = null;
     let reconnectTimeout: any = null;
 
     const connectSSE = () => {
+      // Only connect SSE when user is authenticated
+      const sseToken = token || localStorage.getItem('erp_token');
+      if (!sseToken) return;
+
       try {
-        eventSource = new EventSource(`${API_BASE_URL}/api/events`);
+        // Pass token via query param since EventSource API cannot send custom headers
+        eventSource = new EventSource(`${API_BASE_URL}/api/events?token=${encodeURIComponent(sseToken)}`);
 
         eventSource.addEventListener('connected', (e: MessageEvent) => {
           try {
@@ -756,7 +777,7 @@ export const ERPProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       if (eventSource) eventSource.close();
       if (reconnectTimeout) clearTimeout(reconnectTimeout);
     };
-  }, [pushActivity, refreshData]);
+  }, [isAuthenticated, token, pushActivity, refreshData]);
 
 
   // Product operations

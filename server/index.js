@@ -23,11 +23,13 @@ import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(express.json());
+// Increase JSON body limit for large restore payloads
+app.use(express.json({ limit: '10mb' }));
 
 // CORS: Allow frontend origin (Vercel) in production, localhost in dev
 const allowedOrigins = [
   process.env.FRONTEND_URL,
+  'https://erpbest.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000',
 ].filter(Boolean);
@@ -36,29 +38,28 @@ app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+    // Allow exact match or Vercel preview URLs
+    if (
+      allowedOrigins.some(allowed => origin.startsWith(allowed)) ||
+      origin.endsWith('.vercel.app')
+    ) {
       return callback(null, true);
     }
-    callback(null, true); // Allow all origins in case of subdomain variations
+    // In development, allow all
+    if (process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    callback(null, true); // Allow all origins as fallback
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// Public routes
+// ========================================
+// PUBLIC ROUTES (no auth required)
+// ========================================
 app.use('/api/auth', authRoutes);
-
-// Protected routes
-app.use('/api', authenticateToken, bootstrapRoutes);
-app.use('/api/products', authenticateToken, productRoutes);
-app.use('/api/clients', authenticateToken, clientRoutes);
-app.use('/api/sales', authenticateToken, saleRoutes);
-app.use('/api/expenses', authenticateToken, expenseRoutes);
-app.use('/api/suppliers', authenticateToken, supplierRoutes);
-app.use('/api/purchase-orders', authenticateToken, purchaseOrderRoutes);
-app.use('/api/quotations', authenticateToken, quotationRoutes);
-app.use('/api/returns', authenticateToken, returnRoutes);
-app.use('/api/settings', authenticateToken, settingsRoutes);
-app.use('/api', authenticateToken, eventsRoutes);
 
 app.get('/', (req, res) => {
   res.json({
@@ -69,8 +70,33 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', service: 'Nexus ERP Backend' });
+  const dbState = mongoose.connection.readyState;
+  const dbStateMap = { 0: 'disconnected', 1: 'connected', 2: 'connecting', 3: 'disconnecting' };
+  res.json({
+    status: 'ok',
+    service: 'Nexus ERP Backend',
+    database: dbStateMap[dbState] || 'unknown',
+    timestamp: new Date().toISOString()
+  });
 });
+
+// SSE Events — public route (EventSource API cannot send auth headers)
+// Auth is handled via query parameter token
+app.use('/api', eventsRoutes);
+
+// ========================================
+// PROTECTED ROUTES (auth required)
+// ========================================
+app.use('/api', authenticateToken, bootstrapRoutes);
+app.use('/api/products', authenticateToken, productRoutes);
+app.use('/api/clients', authenticateToken, clientRoutes);
+app.use('/api/sales', authenticateToken, saleRoutes);
+app.use('/api/expenses', authenticateToken, expenseRoutes);
+app.use('/api/suppliers', authenticateToken, supplierRoutes);
+app.use('/api/purchase-orders', authenticateToken, purchaseOrderRoutes);
+app.use('/api/quotations', authenticateToken, quotationRoutes);
+app.use('/api/returns', authenticateToken, returnRoutes);
+app.use('/api/settings', authenticateToken, settingsRoutes);
 
 // API 404 fallback — frontend is hosted separately on Vercel
 app.use('/api', (req, res) => {
@@ -85,14 +111,36 @@ app.use((err, req, res, next) => {
 
 mongoose.set('strictQuery', false);
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nexus_erp')
+// Connect to MongoDB with robust options for serverless environments
+const mongoOptions = {
+  serverSelectionTimeoutMS: 10000,
+  socketTimeoutMS: 45000,
+  maxPoolSize: 10,
+  minPoolSize: 1,
+  retryWrites: true,
+  retryReads: true,
+};
+
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nexus_erp', mongoOptions)
   .then(() => {
     console.log('✅ MongoDB connected');
   })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err.message);
   });
+
+// Handle MongoDB connection events for resilience
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err.message);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.warn('MongoDB disconnected. Attempting to reconnect...');
+});
+
+mongoose.connection.on('reconnected', () => {
+  console.log('✅ MongoDB reconnected');
+});
 
 // Export the app for Vercel Serverless Functions
 export default app;

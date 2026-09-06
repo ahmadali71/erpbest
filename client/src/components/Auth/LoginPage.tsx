@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 
 export const LoginPage: React.FC = () => {
-  const { login, isAuthenticated } = useAuth();
+  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      window.location.href = '/';
-    }
-  }, [isAuthenticated]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +15,8 @@ export const LoginPage: React.FC = () => {
 
     try {
       await login(username, password);
-      window.location.href = '/';
+      // No need to redirect — AuthContext state change will re-render App
+      // and show the dashboard instead of login page
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
