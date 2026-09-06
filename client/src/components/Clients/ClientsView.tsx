@@ -13,6 +13,7 @@ import {
   Trash2,
   AlertCircle,
   CheckCircle2,
+  FileText,
 } from 'lucide-react';
 import { useERP } from '../../context/ERPContext';
 import { Client } from '../../types/erp';
@@ -22,6 +23,7 @@ interface ClientsViewProps {
   onOpenEditClient: (client: Client) => void;
   onSelectClientLedger: (client: Client) => void;
   onOpenNewSaleForClient: (client: Client) => void;
+  onOpenCustomerReports?: (clientId?: string) => void;
 }
 
 export const ClientsView: React.FC<ClientsViewProps> = ({
@@ -29,6 +31,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
   onOpenEditClient,
   onSelectClientLedger,
   onOpenNewSaleForClient,
+  onOpenCustomerReports,
 }) => {
   const { clients, sales, deleteClient } = useERP();
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -144,13 +147,26 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
           </div>
         </div>
 
-        <button
-          onClick={onOpenAddClient}
-          className="px-3.5 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-2xl text-xs font-semibold shadow-sm transition-colors flex items-center justify-center gap-1.5 self-stretch sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add Client</span>
-        </button>
+        <div className="flex items-center gap-2">
+          {onOpenCustomerReports && (
+            <button
+              onClick={() => onOpenCustomerReports()}
+              className="px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-2xl text-xs font-semibold shadow-2xs transition-colors flex items-center justify-center gap-1.5 self-stretch sm:self-auto"
+              title="Open Statement & Customer Reports"
+            >
+              <FileText className="w-4 h-4 text-indigo-600" />
+              <span>Statements & Reports</span>
+            </button>
+          )}
+
+          <button
+            onClick={onOpenAddClient}
+            className="px-3.5 py-2 bg-[var(--accent-color)] hover:bg-[var(--accent-color-dark)] text-white rounded-2xl text-xs font-semibold shadow-sm transition-colors flex items-center justify-center gap-1.5 self-stretch sm:self-auto"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Client</span>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Card List (< md) */}
@@ -209,13 +225,24 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                  <button
-                    onClick={() => onSelectClientLedger(client)}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => onSelectClientLedger(client)}
                       className="text-xs text-[var(--accent-color)] font-semibold hover:underline flex items-center gap-1"
-                  >
-                    <History className="w-3.5 h-3.5" />
-                    <span>View Ledger</span>
-                  </button>
+                    >
+                      <History className="w-3.5 h-3.5" />
+                      <span>Ledger</span>
+                    </button>
+                    {onOpenCustomerReports && (
+                      <button
+                        onClick={() => onOpenCustomerReports(client.id)}
+                        className="text-xs text-indigo-600 font-semibold hover:underline flex items-center gap-1"
+                      >
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>Statement</span>
+                      </button>
+                    )}
+                  </div>
 
                   <div className="flex items-center gap-2">
                     <button
@@ -345,10 +372,19 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                            <button
                              onClick={() => onSelectClientLedger(client)}
                              className="p-1.5 text-slate-500 hover:text-[var(--accent-color)] hover:bg-[var(--accent-color-light)] rounded-2xl transition-colors"
-                             title="View Transaction History / Ledger"
+                             title="View Customer 360 History & Ledger"
                            >
                             <History className="w-3.5 h-3.5" />
                           </button>
+                          {onOpenCustomerReports && (
+                            <button
+                              onClick={() => onOpenCustomerReports(client.id)}
+                              className="p-1.5 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 rounded-2xl transition-colors"
+                              title="Open Customer Reports & Statement of Account"
+                            >
+                              <FileText className="w-3.5 h-3.5" />
+                            </button>
+                          )}
                            <button
                              onClick={() => onOpenEditClient(client)}
                              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-2xl transition-colors"

@@ -92,6 +92,25 @@ const MainAppContent: React.FC = () => {
 
   const [isLiveFeedOpen, setIsLiveFeedOpen] = useState(false);
 
+  // Cross-view reports navigation state
+  const [reportInitialTab, setReportInitialTab] = useState<
+    'pnl' | 'product_profit' | 'customer_history' | 'products' | 'clients' | 'payment_methods' | undefined
+  >(undefined);
+  const [reportProductId, setReportProductId] = useState<string | undefined>();
+  const [reportClientId, setReportClientId] = useState<string | undefined>();
+
+  const handleOpenProductProfitGraph = (productId?: string) => {
+    setReportInitialTab('product_profit');
+    setReportProductId(productId);
+    setActiveTab('reports');
+  };
+
+  const handleOpenCustomerReports = (clientId?: string) => {
+    setReportInitialTab('customer_history');
+    setReportClientId(clientId);
+    setActiveTab('reports');
+  };
+
   // Handlers
   const handleOpenNewSale = (clientId?: string) => {
     setNewSaleInitialClientId(clientId);
@@ -208,6 +227,7 @@ const MainAppContent: React.FC = () => {
               onOpenRestock={handleOpenRestock}
               onOpenManageCategories={() => setIsCategoriesModalOpen(true)}
               onNavigateTab={setActiveTab}
+              onOpenProductProfitGraph={handleOpenProductProfitGraph}
             />
           )}
 
@@ -239,6 +259,7 @@ const MainAppContent: React.FC = () => {
               onOpenEditClient={handleOpenEditClient}
               onSelectClientLedger={handleOpenClientLedger}
               onOpenNewSaleForClient={(client) => handleOpenNewSale(client.id)}
+              onOpenCustomerReports={handleOpenCustomerReports}
             />
           )}
 
@@ -257,7 +278,16 @@ const MainAppContent: React.FC = () => {
             <ExpensesView onOpenAddExpense={() => setIsExpenseModalOpen(true)} />
           )}
 
-          {activeTab === 'reports' && <ReportsView />}
+          {activeTab === 'reports' && (
+            <ReportsView
+              initialTab={reportInitialTab}
+              initialProductId={reportProductId}
+              initialClientId={reportClientId}
+              onSelectInvoice={handleOpenInvoiceDetails}
+              onOpenRecordPayment={handleOpenRecordPayment}
+              onOpenNewSale={(client) => handleOpenNewSale(client.id)}
+            />
+          )}
 
           {activeTab === 'stock_logs' && <StockMovementLogs />}
 

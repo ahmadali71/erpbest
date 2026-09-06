@@ -12,6 +12,7 @@ import {
   Tag,
   DollarSign,
   Boxes,
+  TrendingUp,
 } from 'lucide-react';
 import { useERP } from '../../context/ERPContext';
 import { Product } from '../../types/erp';
@@ -22,6 +23,7 @@ interface InventoryViewProps {
   onOpenRestock: (productId?: string) => void;
   onOpenManageCategories: () => void;
   onNavigateTab: (tab: any) => void;
+  onOpenProductProfitGraph?: (productId?: string) => void;
 }
 
 export const InventoryView: React.FC<InventoryViewProps> = ({
@@ -30,6 +32,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
   onOpenRestock,
   onOpenManageCategories,
   onNavigateTab,
+  onOpenProductProfitGraph,
 }) => {
   const {
     products,
@@ -173,6 +176,17 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center gap-2 justify-end">
+            {onOpenProductProfitGraph && (
+              <button
+                onClick={() => onOpenProductProfitGraph()}
+                className="px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-2xl transition-colors flex items-center gap-1.5 shadow-2xs"
+                title="View Product Profit Graphs & Comparison"
+              >
+                <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Profit Graphs</span>
+              </button>
+            )}
+
             <button
               onClick={onOpenManageCategories}
               className="px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-2xl transition-colors flex items-center gap-1.5"
@@ -299,6 +313,15 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
                     )}
                   </div>
                   <div className="flex items-center gap-2">
+                    {onOpenProductProfitGraph && (
+                      <button
+                        onClick={() => onOpenProductProfitGraph(product.id)}
+                        className="p-1.5 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-2xl"
+                        title="Profit Graph"
+                      >
+                        <TrendingUp className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                     <button
                       onClick={() => onOpenRestock(product.id)}
                       className="px-2.5 py-1 bg-[var(--accent-color-light)] hover:bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-2xl text-xs font-semibold flex items-center gap-1"
@@ -449,9 +472,18 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
 
                       {/* Action buttons */}
                       <td className="px-5 py-3.5 text-right">
-                        <div className="flex items-center justify-end gap-1.5">
-                           <button
-                             onClick={() => onOpenRestock(product.id)}
+                         <div className="flex items-center justify-end gap-1.5">
+                            {onOpenProductProfitGraph && (
+                              <button
+                                onClick={() => onOpenProductProfitGraph(product.id)}
+                                className="p-1.5 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-2xl transition-colors"
+                                title="View Profit Graph for this product"
+                              >
+                                <TrendingUp className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                            <button
+                              onClick={() => onOpenRestock(product.id)}
                              className="px-2 py-1 bg-[var(--accent-color-light)] hover:bg-[var(--accent-color-light)] text-[var(--accent-color-dark)] rounded-2xl text-[11px] font-semibold flex items-center gap-1 transition-colors"
                              title="Restock this product"
                            >

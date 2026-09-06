@@ -29,9 +29,27 @@ import {
   Cell,
 } from 'recharts';
 import { useERP } from '../../context/ERPContext';
-import { TimeRange } from '../../types/erp';
+import { TimeRange, SaleInvoice, Client } from '../../types/erp';
+import { ProductProfitGraphs } from './ProductProfitGraphs';
+import { CustomerHistoryReports } from './CustomerHistoryReports';
 
-export const ReportsView: React.FC = () => {
+export interface ReportsViewProps {
+  initialTab?: 'pnl' | 'product_profit' | 'customer_history' | 'products' | 'clients' | 'payment_methods';
+  initialProductId?: string;
+  initialClientId?: string;
+  onSelectInvoice?: (invoice: SaleInvoice) => void;
+  onOpenRecordPayment?: (invoice: SaleInvoice) => void;
+  onOpenNewSale?: (client: Client) => void;
+}
+
+export const ReportsView: React.FC<ReportsViewProps> = ({
+  initialTab,
+  initialProductId,
+  initialClientId,
+  onSelectInvoice,
+  onOpenRecordPayment,
+  onOpenNewSale,
+}) => {
   const {
     sales,
     expenses,
@@ -48,7 +66,9 @@ export const ReportsView: React.FC = () => {
   } = useERP();
 
   const [timeRange, setTimeRange] = useState<TimeRange>('monthly');
-  const [reportTab, setReportTab] = useState<'pnl' | 'products' | 'clients' | 'payment_methods'>('pnl');
+  const [reportTab, setReportTab] = useState<
+    'pnl' | 'product_profit' | 'customer_history' | 'products' | 'clients' | 'payment_methods'
+  >(initialTab || 'pnl');
 
   const performanceData = getFinancialPerformanceData(timeRange);
 
@@ -262,10 +282,32 @@ export const ReportsView: React.FC = () => {
           <button
             onClick={() => setReportTab('pnl')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              reportTab === 'pnl' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              reportTab === 'pnl' ? 'bg-white text-[var(--accent-color-dark)] shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Profit & Loss Statement
+          </button>
+          <button
+            onClick={() => setReportTab('product_profit')}
+            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap flex items-center gap-1.5 ${
+              reportTab === 'product_profit'
+                ? 'bg-white text-emerald-700 shadow-xs font-bold ring-1 ring-emerald-200'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Product Profit Graphs (Manual)</span>
+          </button>
+          <button
+            onClick={() => setReportTab('customer_history')}
+            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap flex items-center gap-1.5 ${
+              reportTab === 'customer_history'
+                ? 'bg-white text-indigo-700 shadow-xs font-bold ring-1 ring-indigo-200'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Users className="w-3.5 h-3.5 text-indigo-600" />
+            <span>Customer History & Statements</span>
           </button>
           <button
             onClick={() => setReportTab('products')}
@@ -340,6 +382,25 @@ export const ReportsView: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Tab: Product Profit Graphs */}
+        {reportTab === 'product_profit' && (
+          <div className="p-4 sm:p-6">
+            <ProductProfitGraphs initialProductId={initialProductId} />
+          </div>
+        )}
+
+        {/* Tab: Customer History & Statements */}
+        {reportTab === 'customer_history' && (
+          <div className="p-4 sm:p-6">
+            <CustomerHistoryReports
+              initialClientId={initialClientId}
+              onSelectInvoice={onSelectInvoice}
+              onOpenRecordPayment={onOpenRecordPayment}
+              onOpenNewSale={onOpenNewSale}
+            />
           </div>
         )}
 
